@@ -1,0 +1,82 @@
+{
+	"libRoot": "%{wks.location}/ThirdParty/",
+	"projectRoot": "%{wks.location}/",
+	"projects": [
+		{
+			"name": "GenesisEngine-Client",
+			"location": "GenesisEngine/Client/src/main/",
+			"includes": "GenesisEngine/Client/src/main/include/"
+		},
+		{
+			"name": "GenesisEngine-Server",
+			"location": "GenesisEngine/Server/src/main/",
+			"includes": "GenesisEngine/Server/src/main/include/"
+		},
+		{
+			"name": "GenesisEngine-Core",
+			"location": "GenesisEngine/Core/src/main/",
+			"includes": "GenesisEngine/Core/src/main/include/"
+		},
+		{
+			"name": "Sandbox-Server",
+			"location": "Sandbox/Server/src/main/",
+			"includes": "Sandbox/Server/src/main/include/"
+		}
+	],
+	"dependencies": [
+		{
+			"name": "spdlog",
+			"packet": {
+				"type": "git",
+				"repo": "https://github.com/gmasterhd/spdlog"
+			},
+			"library": {
+				"type": "premake",
+				"script": "provided",
+				"includeDir": "include/"
+			}
+		}
+	],
+	"links": {
+		"Sandbox-Server": [
+			"GenesisEngine-Core", "GenesisEngine-Server",
+			"spdlog"
+		],
+		"Sandbox-Client": [ 
+			"GenesisEngine-Core", "GenesisEngine-Client", "GenesisEngine-Server", "Sandbox-Server",
+			"spdlog"
+		],
+		"Sandbox-ServerLauncher": [
+			"GenesisEngine-Core", "GenesisEngine-Server",
+			"spdlog"
+		],
+		"GenesisEngine-Editor": [ 
+			"GenesisEngine-Core", "GenesisEngine-Client", "GenesisEngine-Server",
+			"spdlog"
+		],
+		"GenesisEngine-Client": [
+			"GenesisEngine-Core", "GenesisEngine-Client",
+			"spdlog"
+		],
+		"GenesisEngine-Client-Test": [
+			"GenesisEngine-Core", "GenesisEngine-Client",
+			"spdlog"
+		],
+		"GenesisEngine-Server": [
+			"GenesisEngine-Core", "GenesisEngine-Server",
+			"spdlog"
+		],
+		"GenesisEngine-Server-Test": [
+			"GenesisEngine-Core", "GenesisEngine-Server",
+			"spdlog"
+		],
+		"GenesisEngine-Core": [
+			"GenesisEngine-Core",
+			"spdlog"
+		],
+		"GenesisEngine-Core-Test": [
+			"GenesisEngine-Core",
+			"spdlog"
+		]
+	}
+}

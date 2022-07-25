@@ -19,11 +19,11 @@ project(cfg_name.."-Client-Test")
 	}
 
 	includedirs {
-		includeDirs["Sandbox"]["Client"]
+		includeDirs["Sandbox-Client-Test"]
 	}
 
 	links {
-		dependencies["Sandbox"]["Client"]
+		dependencies["Sandbox-Client-Test"]
 	}
 
 	defines { "_CRT_SECURE_NO_WARNINGS" }
@@ -68,11 +68,11 @@ project(cfg_name.."-Client")
 	}
 
 	includedirs {
-		includeDirs["Sandbox"]["Client"]
+		includeDirs["Sandbox-Client"]
 	}
 
 	links {
-		dependencies["Sandbox"]["Client"]
+		dependencies["Sandbox-Client"]
 	}
 
 	defines { "_CRT_SECURE_NO_WARNINGS" }

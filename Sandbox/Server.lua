@@ -19,11 +19,11 @@ project(cfg_name.."-Server-Test")
 	}
 
 	includedirs {
-		includeDirs["Sandbox"]["Server"]
+		includeDirs["Sandbox-Server-Test"]
 	}
 
 	links {
-		dependencies["Sandbox"]["Server"]
+		dependencies["Sandbox-Server-Test"]
 	}
 
 	defines { "_CRT_SECURE_NO_WARNINGS" }
@@ -68,11 +68,10 @@ project(cfg_name.."-Server")
 	}
 
 	includedirs {
-		includeDirs["Sandbox"]["Server"]
+		includeDirs["Sandbox-Server"]
 	}
 
 	links {
-		dependencies["Sandbox"]["Server"]
 	}
 
 	defines { "_CRT_SECURE_NO_WARNINGS" }
@@ -116,11 +115,11 @@ project(cfg_name.."-ServerLauncher")
 	}
 
 	includedirs {
-		includeDirs["Sandbox"]["ServerLauncher"]
+		includeDirs["Sandbox-ServerLauncher"]
 	}
 
 	links {
-		dependencies["Sandbox"]["ServerLauncher"]
+		dependencies["Sandbox-ServerLauncher"]
 	}
 
 	defines { "_CRT_SECURE_NO_WARNINGS" }

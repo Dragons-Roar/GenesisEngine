@@ -8,4 +8,6 @@ doc/
 *.vcxproj.filters
 *.vcxproj.user
 
+node_modules/
+
 premake5.exe

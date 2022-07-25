@@ -19,7 +19,7 @@ project("GenesisEngine-Client-Test")
 	}
 
 	includedirs {
-		includeDirs["GenesisEngine"]["Client"]
+		includeDirs["%{prj.name}"]
 	}
 
 	links {
@@ -67,7 +67,7 @@ project("GenesisEngine-Client")
 	}
 
 	includedirs {
-		includeDirs["GenesisEngine"]["Client"]
+		includeDirs["%{prj.name}"]
 	}
 
 	links {
