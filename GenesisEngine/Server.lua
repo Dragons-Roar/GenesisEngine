@@ -7,9 +7,9 @@ project("GenesisEngine-Server-Test")
 	cppdialect(cfg_cxxStandard)
 	location "%{wks.location}/GenesisEngine/Server/src/test/"
 
-	debugdir("%{wks.location}/bin/"..outdir.."/Server")
-	targetdir("%{wks.location}/bin/"..outdir.."/Server")
-	objdir("%{wks.location}/bin-int/"..outdir.."/Server")
+	debugdir("%{wks.location}/bin/"..outdir)
+	targetdir("%{wks.location}/bin/"..outdir)
+	objdir("%{wks.location}/bin-int/"..outdir)
 
 	files {
 		"%{prj.location}/**.c",
@@ -24,6 +24,8 @@ project("GenesisEngine-Server-Test")
 
 	links {
 	}
+
+	defines { "_CRT_SECURE_NO_WARNINGS" }
 
 	filter "configurations:Debug*"
 		symbols "On"
@@ -53,9 +55,9 @@ project("GenesisEngine-Server")
 	cppdialect(cfg_cxxStandard)
 	location "%{wks.location}/GenesisEngine/Server/src/main/"
 	
-	debugdir("%{wks.location}/bin/"..outdir.."/Server")
-	targetdir("%{wks.location}/bin/"..outdir.."/Server")
-	objdir("%{wks.location}/bin-int/"..outdir.."/Server")
+	debugdir("%{wks.location}/bin/"..outdir)
+	targetdir("%{wks.location}/bin/"..outdir)
+	objdir("%{wks.location}/bin-int/"..outdir)
 
 	files {
 		"%{prj.location}/**.c",
@@ -70,6 +72,8 @@ project("GenesisEngine-Server")
 
 	links {
 	}
+
+	defines { "_CRT_SECURE_NO_WARNINGS" }
 
 	filter "configurations:Debug*"
 		symbols "On"

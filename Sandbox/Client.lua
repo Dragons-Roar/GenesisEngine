@@ -7,9 +7,9 @@ project(cfg_name.."-Client-Test")
 	cppdialect(cfg_cxxStandard)
 	location "%{wks.location}/Sandbox/Client/src/test/"
 
-	debugdir("%{wks.location}/bin/"..outdir.."/Client")
-	targetdir("%{wks.location}/bin/"..outdir.."/Client")
-	objdir("%{wks.location}/bin-int/"..outdir.."/Client")
+	debugdir("%{wks.location}/bin/"..outdir)
+	targetdir("%{wks.location}/bin/"..outdir)
+	objdir("%{wks.location}/bin-int/"..outdir)
 
 	files {
 		"%{prj.location}/**.c",
@@ -25,6 +25,8 @@ project(cfg_name.."-Client-Test")
 	links {
 		dependencies["Sandbox"]["Client"]
 	}
+
+	defines { "_CRT_SECURE_NO_WARNINGS" }
 
 	filter "configurations:Debug*"
 		symbols "On"
@@ -54,9 +56,9 @@ project(cfg_name.."-Client")
 	cppdialect(cfg_cxxStandard)
 	location "%{wks.location}/Sandbox/Client/src/main/"
 	
-	debugdir("%{wks.location}/bin/"..outdir.."/Client")
-	targetdir("%{wks.location}/bin/"..outdir.."/Client")
-	objdir("%{wks.location}/bin-int/"..outdir.."/Client")
+	debugdir("%{wks.location}/bin/"..outdir)
+	targetdir("%{wks.location}/bin/"..outdir)
+	objdir("%{wks.location}/bin-int/"..outdir)
 
 	files {
 		"%{prj.location}/**.c",
@@ -72,6 +74,8 @@ project(cfg_name.."-Client")
 	links {
 		dependencies["Sandbox"]["Client"]
 	}
+
+	defines { "_CRT_SECURE_NO_WARNINGS" }
 
 	filter "configurations:Debug*"
 		symbols "On"

@@ -7,9 +7,9 @@ project(cfg_name.."-Server-Test")
 	cppdialect(cfg_cxxStandard)
 	location "%{wks.location}/Sandbox/Server/src/test/"
 
-	debugdir("%{wks.location}/bin/"..outdir.."/Server")
-	targetdir("%{wks.location}/bin/"..outdir.."/Server")
-	objdir("%{wks.location}/bin-int/"..outdir.."/Server")
+	debugdir("%{wks.location}/bin/"..outdir)
+	targetdir("%{wks.location}/bin/"..outdir)
+	objdir("%{wks.location}/bin-int/"..outdir)
 
 	files {
 		"%{prj.location}/**.c",
@@ -25,6 +25,8 @@ project(cfg_name.."-Server-Test")
 	links {
 		dependencies["Sandbox"]["Server"]
 	}
+
+	defines { "_CRT_SECURE_NO_WARNINGS" }
 
 	filter "configurations:Debug*"
 		symbols "On"
@@ -54,9 +56,9 @@ project(cfg_name.."-Server")
 	cppdialect(cfg_cxxStandard)
 	location "%{wks.location}/Sandbox/Server/src/main/"
 	
-	debugdir("%{wks.location}/bin/"..outdir.."/Server")
-	targetdir("%{wks.location}/bin/"..outdir.."/Server")
-	objdir("%{wks.location}/bin-int/"..outdir.."/Server")
+	debugdir("%{wks.location}/bin/"..outdir)
+	targetdir("%{wks.location}/bin/"..outdir)
+	objdir("%{wks.location}/bin-int/"..outdir)
 
 	files {
 		"%{prj.location}/**.c",
@@ -72,6 +74,8 @@ project(cfg_name.."-Server")
 	links {
 		dependencies["Sandbox"]["Server"]
 	}
+
+	defines { "_CRT_SECURE_NO_WARNINGS" }
 
 	filter "configurations:Debug*"
 		symbols "On"
@@ -100,9 +104,9 @@ project(cfg_name.."-ServerLauncher")
 	cppdialect(cfg_cxxStandard)
 	location "%{wks.location}/Sandbox/ServerLauncher/src/"
 	
-	debugdir("%{wks.location}/bin/"..outdir.."/ServerLauncher")
-	targetdir("%{wks.location}/bin/"..outdir.."/ServerLauncher")
-	objdir("%{wks.location}/bin-int/"..outdir.."/ServerLauncher")
+	debugdir("%{wks.location}/bin/"..outdir)
+	targetdir("%{wks.location}/bin/"..outdir)
+	objdir("%{wks.location}/bin-int/"..outdir)
 
 	files {
 		"%{prj.location}/**.c",
@@ -118,6 +122,8 @@ project(cfg_name.."-ServerLauncher")
 	links {
 		dependencies["Sandbox"]["ServerLauncher"]
 	}
+
+	defines { "_CRT_SECURE_NO_WARNINGS" }
 
 	filter "configurations:Debug*"
 		symbols "On"

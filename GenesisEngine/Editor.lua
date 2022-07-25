@@ -7,9 +7,9 @@ project("GenesisEngine-Editor-Test")
 	cppdialect(cfg_cxxStandard)
 	location "%{wks.location}/GenesisEngine/Editor/src/test/"
 
-	debugdir("%{wks.location}/bin/"..outdir.."/Editor")
-	targetdir("%{wks.location}/bin/"..outdir.."/Editor")
-	objdir("%{wks.location}/bin-int/"..outdir.."/Editor")
+	debugdir("%{wks.location}/bin/"..outdir)
+	targetdir("%{wks.location}/bin/"..outdir)
+	objdir("%{wks.location}/bin-int/"..outdir)
 
 	files {
 		"%{prj.location}/**.c",
@@ -25,6 +25,8 @@ project("GenesisEngine-Editor-Test")
 	links {
 		dependencies["GenesisEngine"]["Editor"]
 	}
+
+	defines { "_CRT_SECURE_NO_WARNINGS" }
 
 	filter "configurations:Debug*"
 		symbols "On"
@@ -54,9 +56,9 @@ project("GenesisEngine-Editor")
 	cppdialect(cfg_cxxStandard)
 	location "%{wks.location}/GenesisEngine/Editor/src/main/"
 	
-	debugdir("%{wks.location}/bin/"..outdir.."/Editor")
-	targetdir("%{wks.location}/bin/"..outdir.."/Editor")
-	objdir("%{wks.location}/bin-int/"..outdir.."/Editor")
+	debugdir("%{wks.location}/bin/"..outdir)
+	targetdir("%{wks.location}/bin/"..outdir)
+	objdir("%{wks.location}/bin-int/"..outdir)
 
 	files {
 		"%{prj.location}/**.c",
@@ -72,6 +74,8 @@ project("GenesisEngine-Editor")
 	links {
 		dependencies["GenesisEngine"]["Editor"]
 	}
+
+	defines { "_CRT_SECURE_NO_WARNINGS" }
 
 	filter "configurations:Debug*"
 		symbols "On"
