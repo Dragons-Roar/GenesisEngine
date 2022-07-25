@@ -19,10 +19,11 @@ project("GenesisEngine-Client-Test")
 	}
 
 	includedirs {
-		includeDirs["%{prj.name}"]
+		includeDirs["GenesisEngine-Client-Test"]
 	}
 
 	links {
+		dependencies["GenesisEngine-Client-Test"]
 	}
 
 	defines { "_CRT_SECURE_NO_WARNINGS" }
@@ -67,7 +68,7 @@ project("GenesisEngine-Client")
 	}
 
 	includedirs {
-		includeDirs["%{prj.name}"]
+		includeDirs["GenesisEngine-Client"]
 	}
 
 	links {

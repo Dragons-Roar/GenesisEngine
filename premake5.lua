@@ -18,7 +18,11 @@ workspace "GenesisEngine"
 		architecture "x86_64"
 		defines { "GE_X64" }
 
-	group "Libs"
+	group "ThirdParty"
+		for _, k in pairs(luaIncludes) do
+			print("Including "..k)
+			include(k)
+		end
 
 	-- Engine
 	include "GenesisEngine/Core.lua"

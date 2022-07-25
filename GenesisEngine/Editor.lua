@@ -68,11 +68,11 @@ project("GenesisEngine-Editor")
 	}
 
 	includedirs {
-		includeDirs["GenesisEngine-Editor-Test"]
+		includeDirs["GenesisEngine-Editor"]
 	}
 
 	links {
-		dependencies["GenesisEngine-Editor-Test"]
+		dependencies["GenesisEngine-Editor"]
 	}
 
 	defines { "_CRT_SECURE_NO_WARNINGS" }

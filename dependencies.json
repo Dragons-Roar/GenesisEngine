@@ -1,5 +1,5 @@
 {
-	"libRoot": "%{wks.location}/ThirdParty/",
+	"libRoot": "ThirdParty/",
 	"projectRoot": "%{wks.location}/",
 	"projects": [
 		{
@@ -39,7 +39,7 @@
 	],
 	"links": {
 		"Sandbox-Server": [
-			"GenesisEngine-Core", "GenesisEngine-Server",
+			"GenesisEngine-Core", "GenesisEngine-Server", "Sandbox-Server",
 			"spdlog"
 		],
 		"Sandbox-Client": [ 
@@ -47,7 +47,7 @@
 			"spdlog"
 		],
 		"Sandbox-ServerLauncher": [
-			"GenesisEngine-Core", "GenesisEngine-Server",
+			"GenesisEngine-Core", "GenesisEngine-Server", "Sandbox-Server",
 			"spdlog"
 		],
 		"GenesisEngine-Editor": [ 
@@ -55,7 +55,7 @@
 			"spdlog"
 		],
 		"GenesisEngine-Client": [
-			"GenesisEngine-Core", "GenesisEngine-Client",
+			"GenesisEngine-Core", "GenesisEngine-Server", "GenesisEngine-Client",
 			"spdlog"
 		],
 		"GenesisEngine-Client-Test": [

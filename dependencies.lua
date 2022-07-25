@@ -1,11 +1,11 @@
 includeDirs = {}
 dependencies = {}
 local libraries = {}
-local luaIncludes = {}
+luaIncludes = {}
 local projects = {}
 
 local Json = require 'json'
-local data = Json.decode(readFile('./dependencies.jsonc'))
+local data = Json.decode(readFile('./dependencies.json'))
 
 -- Read json data
 local jDependencies = data["dependencies"]
@@ -23,8 +23,8 @@ for _, v in pairs(jDependencies) do
 	local m = libraries[v["name"]]
 	m["type"] = v["library"]["type"]
 	m["script"] = v["library"]["script"] == "provided"
-	m["includes"] = jLibRoot..v["name"].."/"..v["library"]["includeDir"]
-	table.insert(luaIncludes, jLibRoot..v["name"]..".lua")
+	m["includes"] = "%{wks.location}/"..jLibRoot..v["name"].."/"..v["library"]["includeDir"]
+	table.insert(luaIncludes, jLibRoot..v["name"].."/premake5.lua")
 end
 
 -- Parse Project Dependencies
