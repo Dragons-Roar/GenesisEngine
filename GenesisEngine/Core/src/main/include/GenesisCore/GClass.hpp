@@ -4,6 +4,9 @@
 namespace ge {
 	namespace core {
 		class GClass {
+		public:
+			
+		private:
 		};
 	}
 }

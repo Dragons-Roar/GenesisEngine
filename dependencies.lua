@@ -24,7 +24,13 @@ for _, v in pairs(jDependencies) do
 	m["type"] = v["library"]["type"]
 	m["script"] = v["library"]["script"] == "provided"
 	m["includes"] = "%{wks.location}/"..jLibRoot..v["name"].."/"..v["library"]["includeDir"]
-	table.insert(luaIncludes, jLibRoot..v["name"].."/premake5.lua")
+
+	if m["type"] == "premake" then
+		print("Adding "..v["name"].." as a premake library...")
+		table.insert(luaIncludes, jLibRoot..v["name"].."/premake5.lua")
+	elseif m["type"] == "header" then
+		print("Adding "..v["name"].." as a header only library...")
+	end
 end
 
 -- Parse Project Dependencies
@@ -52,13 +58,13 @@ for prj, v in pairs(jLinks) do
 			if(libraries[lib] == nil) then
 				error(lib.." could not be found in libs nor in projects!")
 			else
-				if(projects[prj] == nil) then
+				if(projects[prj] == nil and (libraries[lib] == nil or libraries[lib] == "premake")) then
 					table.insert(dep, lib)
 				end
 				table.insert(iDir, libraries[lib]["includes"])
 			end
-		else 
-			if(projects[prj] == nil) then
+		else
+			if(projects[prj] == nil and (libraries[lib] == nil or libraries[lib] == "premake")) then
 				table.insert(dep, lib)
 			end
 			table.insert(iDir, projects[lib]["includes"])

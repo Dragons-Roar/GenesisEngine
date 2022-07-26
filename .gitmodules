@@ -4,3 +4,6 @@
 [submodule "ThirdParty/gtest"]
 	path = ThirdParty/gtest
 	url = https://github.com/gmasterhd/googletest
+[submodule "ThirdParty/boost/preprocessor"]
+	path = ThirdParty/boost/preprocessor
+	url = https://github.com/boostorg/preprocessor

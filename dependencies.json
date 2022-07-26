@@ -47,12 +47,23 @@
 				"script": "provided",
 				"includeDir": "gtest/include/"
 			}
+		},
+		{
+			"name": "boost/preprocessor",
+			"packet": {
+				"type": "git",
+				"repo": "https://github.com/boostorg/preprocessor"
+			},
+			"library": {
+				"type": "header",
+				"includeDir": "include/"
+			}
 		}
 	],
 	"links": {
 		"Sandbox-Server": [
 			"GenesisEngine-Core", "GenesisEngine-Server", "Sandbox-Server",
-			"spdlog"
+			"spdlog", "boost/preprocessor"
 		],
 		"Sandbox-Client": [ 
 			"GenesisEngine-Core", "GenesisEngine-Client", "GenesisEngine-Server", "Sandbox-Server",
@@ -72,31 +83,31 @@
 		],
 		"GenesisEngine-Editor": [ 
 			"GenesisEngine-Core", "GenesisEngine-Client", "GenesisEngine-Server",
-			"spdlog"
+			"spdlog", "boost/preprocessor"
 		],
 		"GenesisEngine-Client": [
 			"GenesisEngine-Core", "GenesisEngine-Server", "GenesisEngine-Client",
-			"spdlog"
+			"spdlog", "boost/preprocessor"
 		],
 		"GenesisEngine-Client-Test": [
 			"GenesisEngine-Core", "GenesisEngine-Client",
-			"spdlog", "gtest"
+			"spdlog", "gtest", "boost/preprocessor"
 		],
 		"GenesisEngine-Server": [
 			"GenesisEngine-Core", "GenesisEngine-Server",
-			"spdlog"
+			"spdlog", "boost/preprocessor"
 		],
 		"GenesisEngine-Server-Test": [
 			"GenesisEngine-Core", "GenesisEngine-Server",
-			"spdlog", "gtest"
+			"spdlog", "gtest", "boost/preprocessor"
 		],
 		"GenesisEngine-Core": [
 			"GenesisEngine-Core",
-			"spdlog"
+			"spdlog", "boost/preprocessor"
 		],
 		"GenesisEngine-Core-Test": [
 			"GenesisEngine-Core",
-			"spdlog", "gtest"
+			"spdlog", "gtest", "boost/preprocessor"
 		]
 	}
 }
