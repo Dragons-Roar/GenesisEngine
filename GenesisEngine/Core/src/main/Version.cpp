@@ -1,11 +1,22 @@
 #include <GenesisCore/Version.hpp>
+#include <GenesisCore/List.hpp>
 
 namespace ge {
 	namespace core {
 		Version::Version(const String& str) {
 			build = 0;
 			if(str.contains('+')) {
-				String build = str.substring(str.find('+') + 1);
+				std::cout << str.substring(str.find('+') + 1) << std::endl;
+				build = str.substring(str.find('+') + 1).toUint32();
+			}
+
+			List<uint32> list;
+			str.substring(0, str.find('+')).splitNum(list, ',');
+			
+			switch(list.size()) {
+				case 3: patch = list[2];
+				case 2: minor = list[1];
+				case 1: major = list[0];
 			}
 		}
 

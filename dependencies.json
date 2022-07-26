@@ -35,6 +35,18 @@
 				"script": "provided",
 				"includeDir": "include/"
 			}
+		},
+		{
+			"name": "gtest",
+			"packet": {
+				"type": "git",
+				"repo": "https://github.com/gmasterhd/googletest"
+			},
+			"library": {
+				"type": "premake",
+				"script": "provided",
+				"includeDir": "gtest/include/"
+			}
 		}
 	],
 	"links": {
@@ -45,6 +57,14 @@
 		"Sandbox-Client": [ 
 			"GenesisEngine-Core", "GenesisEngine-Client", "GenesisEngine-Server", "Sandbox-Server",
 			"spdlog"
+		],
+		"Sandbox-Client-Test": [ 
+			"GenesisEngine-Core", "GenesisEngine-Client", "GenesisEngine-Server", "Sandbox-Server",
+			"spdlog", "gtest"
+		],
+		"Sandbox-Server-Test": [
+			"GenesisEngine-Core", "GenesisEngine-Server", "Sandbox-Server",
+			"spdlog", "gtest"
 		],
 		"Sandbox-ServerLauncher": [
 			"GenesisEngine-Core", "GenesisEngine-Server", "Sandbox-Server",
@@ -60,7 +80,7 @@
 		],
 		"GenesisEngine-Client-Test": [
 			"GenesisEngine-Core", "GenesisEngine-Client",
-			"spdlog"
+			"spdlog", "gtest"
 		],
 		"GenesisEngine-Server": [
 			"GenesisEngine-Core", "GenesisEngine-Server",
@@ -68,7 +88,7 @@
 		],
 		"GenesisEngine-Server-Test": [
 			"GenesisEngine-Core", "GenesisEngine-Server",
-			"spdlog"
+			"spdlog", "gtest"
 		],
 		"GenesisEngine-Core": [
 			"GenesisEngine-Core",
@@ -76,7 +96,7 @@
 		],
 		"GenesisEngine-Core-Test": [
 			"GenesisEngine-Core",
-			"spdlog"
+			"spdlog", "gtest"
 		]
 	}
 }

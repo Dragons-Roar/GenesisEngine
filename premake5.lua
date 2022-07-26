@@ -1,5 +1,5 @@
 outdir = "%{cfg.system}/%{cfg.longname}/%{prj.name}"
-outputdir = outdir
+outputdir = outdir -- Some of my forked repos use outputdir instead of outdir
 
 include "defines.lua"
 include "config.lua"

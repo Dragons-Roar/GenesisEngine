@@ -17,8 +17,6 @@ data.dependencies.forEach(d => {
 	console.log(`Installing ${name}...`)
 
 	if(packet.type == 'git') {
-		addSubmodule(packet.repo, `.${data.libRoot}${d.name}`)
+		addSubmodule(packet.repo, `${data.libRoot}${d.name}`)
 	}
-
-	console.log('Finished installing!')
 })

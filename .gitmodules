@@ -1,3 +1,6 @@
 [submodule "ThirdParty/spdlog"]
 	path = ThirdParty/spdlog
 	url = https://github.com/gmasterhd/spdlog
+[submodule "ThirdParty/gtest"]
+	path = ThirdParty/gtest
+	url = https://github.com/gmasterhd/googletest
