@@ -1,22 +1,23 @@
 #include <GenesisCore/Version.hpp>
+#include <GenesisCore/Datatypes.hpp>
 #include <GenesisCore/List.hpp>
+#include <GenesisCore/Utils.hpp>
 
 namespace ge {
 	namespace core {
 		Version::Version(const String& str) {
 			build = 0;
 			if(str.contains('+')) {
-				std::cout << str.substring(str.find('+') + 1) << std::endl;
-				build = str.substring(str.find('+') + 1).toUint32();
+				build = UInt32::parse(str.substr(str.find('+') + 1));
 			}
 
-			List<uint32> list;
-			str.substring(0, str.find('+')).splitNum(list, ',');
+			List<String> list;
+			Utils::splitString(list, str.substr(0, str.find('+')), '.');
 			
 			switch(list.size()) {
-				case 3: patch = list[2];
-				case 2: minor = list[1];
-				case 1: major = list[0];
+				case 3: patch = UInt32::parse(list[2]);
+				case 2: minor = UInt32::parse(list[1]);
+				case 1: major = UInt32::parse(list[0]);
 			}
 		}
 
@@ -72,6 +73,12 @@ namespace ge {
 
 		bool Version::isCompatible(const Version& v) {
 			return major == v.major && minor == v.minor;
+		}
+
+		const String Version::toString() const {
+			std::stringstream ss;
+			ss << "Version{major:" << major << ",minor:" << minor << ",patch:" << patch << ",build:" << build << "}";
+			return ss.str();
 		}
 	}
 }

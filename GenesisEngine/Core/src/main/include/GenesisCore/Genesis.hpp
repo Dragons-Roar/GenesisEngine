@@ -2,5 +2,6 @@
 #include "./Defines.hpp"
 #include "./GClass.hpp"
 #include "./GenesisCore.hpp"
-#include "./List.hpp"
 #include "./Version.hpp"
+#include "./List.hpp"
+#include "./Formatter.hpp"

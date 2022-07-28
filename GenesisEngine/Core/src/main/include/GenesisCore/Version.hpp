@@ -1,10 +1,10 @@
 #pragma once
 #include "Defines.hpp"
-#include "./String.hpp"
+#include "./GClass.hpp"
 
 namespace ge {
 	namespace core {
-		class Version {
+		class Version: public GClass {
 		public:
 			Version(): Version(0, 0, 0, 0) { }
 			Version(uint32 major, uint32 minor, uint32 patch, uint32 build): 
@@ -41,6 +41,8 @@ namespace ge {
 			/// <param name="v">The version to check</param>
 			/// <returns></returns>
 			bool isCompatible(const Version& v);
+
+			const String toString() const override;
 
 		private:
 			uint32 major, minor, patch, build;

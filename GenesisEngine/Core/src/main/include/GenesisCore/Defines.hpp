@@ -11,6 +11,7 @@
 #include <fstream>
 #include <algorithm>
 #include <iostream>
+#include <iomanip>
 #include <iterator>
 #include <string_view>
 #include <format>
@@ -37,3 +38,5 @@ typedef int64_t int64;
 typedef float float32;
 /// A 64 Bit sized floating point number
 typedef double float64;
+/// A standard std::string
+typedef std::string String;

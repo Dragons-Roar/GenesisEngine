@@ -2,37 +2,30 @@
 
 namespace ge {
 	namespace core {
+		/* ---> NumberSuffix <--- */
 		const NumberSuffix NumberSuffix::K(1000, 'k');
 		const NumberSuffix NumberSuffix::M(1000000, 'M');
 		const NumberSuffix NumberSuffix::G(1000000000, 'G');
 		const NumberSuffix NumberSuffix::T(1000000000000, 'T');
 
-		const std::array<const NumberSuffix*, 4> NumberSuffix::suffixes = {
-			&NumberSuffix::K,
-			&NumberSuffix::M,
-			&NumberSuffix::G,
-			&NumberSuffix::T
+		std::array<const NumberSuffix*, GE_NumberSuffix_SuffixCount> NumberSuffix::suffixes = {
+			nullptr
 		};
 
-		Formatter::Formatter(uint8 decimalPlaces, uint8 forcedDecimalPlaces, 
-			bool forceDecimalPlacesInts, bool splitThousands, bool bigNumbers):
-				decimalPlaces(decimalPlaces), forcedDecimalPlaces(forcedDecimalPlaces),
-				forceDecimalPlacesInts(forceDecimalPlacesInts), splitThousands(splitThousands),
-				bigNumbers(bigNumbers) {
+		void NumberSuffix::init() {
+			suffixes[0] = &NumberSuffix::K;
+			suffixes[1] = &NumberSuffix::M;
+			suffixes[2] = &NumberSuffix::G;
+			suffixes[3] = &NumberSuffix::T;
 		}
 
-		String Formatter::formatUint32(uint32 i) {
-			std::ostringstream out;
+		/* ---> Formatter <--- */
+		Formatter::Formatter(uint8 decimalPlaces, bool forceDecimalPlaces, bool splitThousands):
+				decimalPlaces(decimalPlaces), forceDecimalPlaces(forceDecimalPlaces), splitThousands(splitThousands) {
+		}
 
-			if(bigNumbers) {
-				String s = std::to_string(i);
-				uint32 places = s.length();
-
-				for(const NumberSuffix* suff : NumberSuffix::suffixes) {
-
-				}
-			}
-			return String();
+		void Formatter::init() {
+			NumberSuffix::init();
 		}
 	}
 }

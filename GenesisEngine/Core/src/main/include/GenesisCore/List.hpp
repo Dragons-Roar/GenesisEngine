@@ -1,11 +1,10 @@
 #pragma once
 #include "./Defines.hpp"
 #include "./GClass.hpp"
-#include "./String.hpp"
 
 namespace ge {
 	namespace core {
-		template <typename T, typename Index>
+		template <typename T, typename Index = size_t>
 		class List: public GClass {
 		public:
 			typedef std::function<void(T&)> LoopFunction;
@@ -101,7 +100,7 @@ namespace ge {
 			/// </summary>
 			/// <param name="seperator">The seperator</param>
 			/// <returns>The string</returns>
-			std::string join(std::string seperator) {
+			String join(std::string seperator) {
 				std::stringstream ss;
 				for(Index i = 0; i < size(); ++i) {
 					ss << get(i);
@@ -109,6 +108,12 @@ namespace ge {
 						ss << seperator;
 					}
 				}
+				return ss.str();
+			}
+
+			const String toString() const override {
+				std::stringstream ss;
+				ss << "List<" << typeid(T).name() << "," << typeid(Index).name() << ">{size:" << handle.size() << "}";
 				return ss.str();
 			}
 
