@@ -16,6 +16,63 @@ namespace ge {
 			float64 getFloat64(String key) const;
 			bool getBool(String key) const;
 
+			/// <summary>
+			/// Gets a int/uint list
+			/// </summary>
+			/// <typeparam name="T">The int type (e.g. uint32, int32, unsinged int, ...)</typeparam>
+			/// <param name="key">The key</param>
+			/// <returns>The list</returns>
+			template <typename T>
+			List<T> getIntList(String key) const {
+				List<T> out;
+				toml::array* arr = handle->get(key)->as_array();
+				for(uint32 i = 0; i < arr->size(); ++i) {
+					out.add(static_cast<T>(arr->get(i)->as_integer()->get()));
+				}
+				return out;
+			}
+			/// <summary>
+			/// Gets a float/double list
+			/// </summary>
+			/// <typeparam name="T">The float typ (e.g float32, float64, ...)</typeparam>
+			/// <param name="key">The key</param>
+			/// <returns>The list</returns>
+			template <typename T>
+			List<T> getFloatingList(String key) const {
+				List<T> out;
+				toml::array* arr = handle->get(key)->as_array();
+				for(uint32 i = 0; i < arr->size(); ++i) {
+					out.add(static_cast<T>(arr->get(i)->as_floating_point()->get()));
+				}
+				return out;
+			}
+			/// <summary>
+			/// Gets a string list
+			/// </summary>
+			/// <param name="key">The key</param>
+			/// <returns>The list</returns>
+			List<String> getStringList(String key) const {
+				List<String> out;
+				toml::array* arr = handle->get(key)->as_array();
+				for(uint32 i = 0; i < arr->size(); ++i) {
+					out.add(arr->get(i)->as_string()->get());
+				}
+				return out;
+			}
+			/// <summary>
+			/// Gets a bool list
+			/// </summary>
+			/// <param name="key">The key</param>
+			/// <returns>The list</returns>
+			List<bool> getBoolList(String key) const {
+				List<bool> out;
+				toml::array* arr = handle->get(key)->as_array();
+				for(uint32 i = 0; i < arr->size(); ++i) {
+					out.add(arr->get(i)->as_boolean()->get());
+				}
+				return out;
+			}
+
 			void setString(String key, String value);
 			void setInt32(String key, int32 value);
 			void setUInt32(String key, uint32 value);
@@ -51,18 +108,23 @@ namespace ge {
 			~ConfigFile();
 
 			/// <summary>
-			/// Loads the file into the ram
+			/// Loads the file into memory
 			/// </summary>
 			void load();
 			/// <summary>
-			/// Loads a file into the ram
+			/// Loads a specific file into memory
 			/// </summary>
 			/// <param name="file">The file to load</param>
 			void load(String file);
 			/// <summary>
-			/// Saves a file at the file's path
+			/// Saves a file to the loaded file's path
 			/// </summary>
 			void save();
+			/// <summary>
+			/// Saves s file to a speicifc path
+			/// </summary>
+			/// <param name="">The file path</param>
+			void save(String file);
 
 			/// <summary>
 			/// Gets a section from the file
@@ -73,6 +135,7 @@ namespace ge {
 
 		private:
 			void _load();
+			void _save(const String& file);
 
 			String file;
 			toml::table handle;

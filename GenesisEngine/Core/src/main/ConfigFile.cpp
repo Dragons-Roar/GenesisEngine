@@ -15,7 +15,9 @@ namespace ge {
 			this->ConfigSection::handle = &handle;
 		}
 
-		void ConfigFile::save() {
+		void ConfigFile::save() { _save(file); }
+		void ConfigFile::save(String file) { _save(file); }
+		void ConfigFile::_save(const String& file) {
 			std::fstream fout(file, std::ios::out);
 			fout << handle << std::endl;
 			fout.close();
@@ -45,7 +47,6 @@ namespace ge {
 		bool ConfigSection::getBool(String key) const {
 			return handle->get(key)->as_boolean()->get();
 		}
-
 		void ConfigSection::setString(String key, String value) {
 			handle->insert_or_assign(key, value);
 		}
