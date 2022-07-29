@@ -5,12 +5,7 @@
 #include <unordered_set>
 #include <vector>
 #include <functional>
-#include <istream>
-#include <ostream>
-#include <sstream>
-#include <fstream>
 #include <algorithm>
-#include <iostream>
 #include <iomanip>
 #include <iterator>
 #include <string_view>
@@ -18,8 +13,12 @@
 #include <utility>
 #include <array>
 
-#define TOML_HEADER_ONLY 0
-#include <toml++/toml.h>
+/* ---> Streams <--- */
+#include <istream>
+#include <ostream>
+#include <fstream>
+#include <sstream>
+#include <iostream>
 
 /// A 8 Bit sized unsigned integer
 typedef uint8_t uint8;

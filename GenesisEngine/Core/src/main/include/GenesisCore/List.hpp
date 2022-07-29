@@ -1,6 +1,7 @@
 #pragma once
 #include "./Defines.hpp"
 #include "./GClass.hpp"
+#include <toml++/toml.h>
 
 namespace ge {
 	namespace core {
@@ -10,6 +11,8 @@ namespace ge {
 			typedef std::function<void(T&)> LoopFunction;
 			typedef std::function<void(T&, Index)> LoopIndexFunction;
 			typedef std::function<bool(const T&, const T&)> SortFunction;
+
+			List() { }
 
 			/// <summary>
 			/// Pushes an element on top of the list
