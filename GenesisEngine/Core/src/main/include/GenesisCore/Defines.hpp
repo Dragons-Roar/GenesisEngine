@@ -18,6 +18,9 @@
 #include <utility>
 #include <array>
 
+#define TOML_HEADER_ONLY 0
+#include <toml++/toml.h>
+
 /// A 8 Bit sized unsigned integer
 typedef uint8_t uint8;
 /// A 16 Bit sized unsigned integer

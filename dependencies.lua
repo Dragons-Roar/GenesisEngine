@@ -23,10 +23,12 @@ for _, v in pairs(jDependencies) do
 	local m = libraries[v["name"]]
 	m["type"] = v["library"]["type"]
 	m["script"] = v["library"]["script"] == "provided"
+
 	m["includes"] = "%{wks.location}/"..jLibRoot..v["name"].."/"..v["library"]["includeDir"]
 
 	if m["type"] == "premake" then
 		print("Adding "..v["name"].." as a premake library...")
+
 		table.insert(luaIncludes, jLibRoot..v["name"].."/premake5.lua")
 	elseif m["type"] == "header" then
 		print("Adding "..v["name"].." as a header only library...")

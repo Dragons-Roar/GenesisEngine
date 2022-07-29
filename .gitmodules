@@ -7,3 +7,6 @@
 [submodule "ThirdParty/boost/preprocessor"]
 	path = ThirdParty/boost/preprocessor
 	url = https://github.com/boostorg/preprocessor
+[submodule "ThirdParty/toml++"]
+	path = ThirdParty/toml++
+	url = https://github.com/gmasterhd/tomlplusplus

@@ -25,4 +25,6 @@ int main(int argc, char** argv) {
 
 	std::cout << list.join(",") << std::endl;
 	std::cout << list.toString() << std::endl;
+
+	ge::core::Serializer::init();
 }
