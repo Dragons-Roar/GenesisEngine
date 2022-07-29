@@ -69,63 +69,77 @@
 				"type": "premake",
 				"includeDir": "include/"
 			}
+		},
+		{
+			"name": "json",
+			"group": "nlohmann",
+			"packet": {
+				"type": "file",
+				"name": "json.hpp",
+				"path": "include/nlohmann/",
+				"url": "https://raw.githubusercontent.com/nlohmann/json/develop/single_include/nlohmann/json.hpp"
+			},
+			"library": {
+				"type": "header",
+				"includeDir": "include/"
+			}
 		}
 	],
 	"links": {
 		"Sandbox-Server": [
 			"GenesisEngine-Core", "GenesisEngine-Server", "Sandbox-Server",
-			"spdlog", "toml++", 
+			"spdlog", "toml++", "json",
 			"boost/preprocessor"
 		],
 		"Sandbox-Client": [ 
 			"GenesisEngine-Core", "GenesisEngine-Client", "GenesisEngine-Server", "Sandbox-Server",
-			"spdlog", "toml++"
+			"spdlog", "toml++", "json"
 		],
 		"Sandbox-Client-Test": [ 
 			"GenesisEngine-Core", "GenesisEngine-Client", "GenesisEngine-Server", "Sandbox-Server",
-			"spdlog", "gtest", "toml++"
+			"spdlog", "gtest", "toml++", "json"
 		],
 		"Sandbox-Server-Test": [
 			"GenesisEngine-Core", "GenesisEngine-Server", "Sandbox-Server",
-			"spdlog", "gtest", "toml++"
+			"spdlog", "gtest", "toml++", "json"
 		],
 		"Sandbox-ServerLauncher": [
 			"GenesisEngine-Core", "GenesisEngine-Server", "Sandbox-Server",
-			"spdlog", "toml++"
+			"spdlog", "toml++", "json"
 		],
 		"GenesisEngine-Editor": [ 
 			"GenesisEngine-Core", "GenesisEngine-Client", "GenesisEngine-Server",
-			"spdlog", "toml++",
+			"spdlog", "toml++", "json",
 			"boost/preprocessor"
 		],
 		"GenesisEngine-Client": [
 			"GenesisEngine-Core", "GenesisEngine-Server", "GenesisEngine-Client",
-			"spdlog", "toml++",
+			"spdlog", "toml++", "json",
 			"boost/preprocessor"
 		],
 		"GenesisEngine-Client-Test": [
 			"GenesisEngine-Core", "GenesisEngine-Client",
-			"spdlog", "gtest", "toml++",
+			"spdlog", "gtest", "toml++", "json",
 			"boost/preprocessor"
 		],
 		"GenesisEngine-Server": [
 			"GenesisEngine-Core", "GenesisEngine-Server",
-			"spdlog", "toml++",
+			"spdlog", "toml++", "json",
 			"boost/preprocessor"
 		],
 		"GenesisEngine-Server-Test": [
 			"GenesisEngine-Core", "GenesisEngine-Server",
-			"spdlog", "gtest", "toml++",
+			"spdlog", "gtest", "toml++", "json",
 			"boost/preprocessor"
 		],
 		"GenesisEngine-Core": [
 			"GenesisEngine-Core",
-			"spdlog", "toml++",
+			"spdlog", "toml++", "json",
 			"boost/preprocessor"
 		],
 		"GenesisEngine-Core-Test": [
 			"GenesisEngine-Core",
-			"spdlog", "gtest", "toml++",
+			"spdlog", "gtest", "toml++", "json",
 			"boost/preprocessor"
 		]
 	}

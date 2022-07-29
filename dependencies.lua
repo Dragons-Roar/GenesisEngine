@@ -1,8 +1,9 @@
 includeDirs = {}
 dependencies = {}
-local libraries = {}
 luaIncludes = {}
+local libraries = {}
 local projects = {}
+local singleFiles = {}
 
 local Json = require 'json'
 local data = Json.decode(readFile('./dependencies.json'))
@@ -19,19 +20,29 @@ print("ProjectRoot: "..jProjectRoot)
 
 -- Parse Dependency Packets
 for _, v in pairs(jDependencies) do
-	libraries[v["name"]] = {}
-	local m = libraries[v["name"]]
-	m["type"] = v["library"]["type"]
-	m["script"] = v["library"]["script"] == "provided"
+	if v["packet"]["type"] == "file" then
+		-- These are header only single file dependencies
+		singleFiles[v["name"]] = {}
+		local s = singleFiles[v["name"]]
+		s["path"] = "%{wks.location}/"..jLibRoot..v["group"].."/"..v["packet"]["path"]
+		s["include"] = "%{wks.location}/"..jLibRoot..v["group"].."/"..v["library"]["includeDir"]
+		s["url"] = v["packet"]["url"]
+	else
+		-- These are dependencies that are needed to build and included
+		libraries[v["name"]] = {}
+		local m = libraries[v["name"]]
+		m["type"] = v["library"]["type"]
+		m["script"] = v["library"]["script"] == "provided"
 
-	m["includes"] = "%{wks.location}/"..jLibRoot..v["name"].."/"..v["library"]["includeDir"]
+		m["includes"] = "%{wks.location}/"..jLibRoot..v["name"].."/"..v["library"]["includeDir"]
 
-	if m["type"] == "premake" then
-		print("Adding "..v["name"].." as a premake library...")
+		if m["type"] == "premake" then
+			print("Adding "..v["name"].." as a premake library...")
 
-		table.insert(luaIncludes, jLibRoot..v["name"].."/premake5.lua")
-	elseif m["type"] == "header" then
-		print("Adding "..v["name"].." as a header only library...")
+			table.insert(luaIncludes, jLibRoot..v["name"].."/premake5.lua")
+		elseif m["type"] == "header" then
+			print("Adding "..v["name"].." as a header only library...")
+		end
 	end
 end
 
@@ -56,20 +67,24 @@ for prj, v in pairs(jLinks) do
 	end
 
 	for _, lib in pairs(v) do
-		if(projects[lib] == nil) then
-			if(libraries[lib] == nil) then
-				error(lib.." could not be found in libs nor in projects!")
+		if(singleFiles[lib] ~= nil) then
+			table.insert(iDir, singleFiles[lib]["include"])
+		else
+			if(projects[lib] == nil) then
+				if(libraries[lib] == nil) then
+					error(lib.." could not be found in libs nor in projects!")
+				else
+					if(projects[prj] == nil and (libraries[lib] == nil or libraries[lib] == "premake")) then
+						table.insert(dep, lib)
+					end
+					table.insert(iDir, libraries[lib]["includes"])
+				end
 			else
 				if(projects[prj] == nil and (libraries[lib] == nil or libraries[lib] == "premake")) then
 					table.insert(dep, lib)
 				end
-				table.insert(iDir, libraries[lib]["includes"])
+				table.insert(iDir, projects[lib]["includes"])
 			end
-		else
-			if(projects[prj] == nil and (libraries[lib] == nil or libraries[lib] == "premake")) then
-				table.insert(dep, lib)
-			end
-			table.insert(iDir, projects[lib]["includes"])
 		end
 	end
 end

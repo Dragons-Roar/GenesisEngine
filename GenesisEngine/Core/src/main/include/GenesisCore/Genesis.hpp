@@ -5,4 +5,3 @@
 #include "./Version.hpp"
 #include "./List.hpp"
 #include "./Formatter.hpp"
-#include "./Serializer.hpp"
