@@ -47,23 +47,36 @@ namespace ge {
 		bool ConfigSection::getBool(String key) const {
 			return handle->get(key)->as_boolean()->get();
 		}
-		void ConfigSection::setString(String key, String value) {
-			handle->insert_or_assign(key, value);
+
+		String ConfigSection::getDefaultString(String key, String def) {
+			if(contains(key)) return getString(key);
+			set<String>(key, def);
+			return def;
 		}
-		void ConfigSection::setInt32(String key, int32 value) {
-			handle->insert_or_assign(key, value);
+		int32 ConfigSection::getDefaultInt32(String key, int32 def) {
+			if(contains(key)) return getInt32(key);
+			set<int32>(key, def);
+			return def;
 		}
-		void ConfigSection::setUInt32(String key, uint32 value) {
-			handle->insert_or_assign(key, value);
+		uint32 ConfigSection::getDefaultUInt32(String key, uint32 def) {
+			if(contains(key)) return getUInt32(key);
+			set<uint32>(key, def);
+			return def;
 		}
-		void ConfigSection::setFloat32(String key, float32 value) {
-			handle->insert_or_assign(key, value);
+		float32 ConfigSection::getDefaultFloat32(String key, float32 def) {
+			if(contains(key)) return getFloat32(key);
+			set<float32>(key, def);
+			return def;
 		}
-		void ConfigSection::setFloat64(String key, float64 value) {
-			handle->insert_or_assign(key, value);
+		float64 ConfigSection::getDefaultFloat64(String key, float64 def) {
+			if(contains(key)) return getFloat64(key);
+			set<float64>(key, def);
+			return def;
 		}
-		void ConfigSection::setBool(String key, bool value) {
-			handle->insert_or_assign(key, value);
+		bool ConfigSection::getDefaultBool(String key, bool def) {
+			if(contains(key)) return getBool(key);
+			set<bool>(key, def);
+			return def;
 		}
 
 		void ConfigSection::erase(String key) {

@@ -17,6 +17,49 @@ namespace ge {
 			bool getBool(String key) const;
 
 			/// <summary>
+			/// Gets a value at this key, if the key does not exist, it returns and sets the key to the default parameter
+			/// </summary>
+			/// <param name="key">The key</param>
+			/// <param name="def">The default value if nothing is found</param>
+			/// <returns>The value at the key or the default value</returns>
+			String getDefaultString(String key, String def);
+			/// <summary>
+			/// Gets a value at this key, if the key does not exist, it returns and sets the key to the default parameter
+			/// </summary>
+			/// <param name="key">The key</param>
+			/// <param name="def">The default value if nothing is found</param>
+			/// <returns>The value at the key or the default value</returns>
+			int32 getDefaultInt32(String key, int32 def);
+			/// <summary>
+			/// Gets a value at this key, if the key does not exist, it returns and sets the key to the default parameter
+			/// </summary>
+			/// <param name="key">The key</param>
+			/// <param name="def">The default value if nothing is found</param>
+			/// <returns>The value at the key or the default value</returns>
+			uint32 getDefaultUInt32(String key, uint32 def);
+			/// <summary>
+			/// Gets a value at this key, if the key does not exist, it returns and sets the key to the default parameter
+			/// </summary>
+			/// <param name="key">The key</param>
+			/// <param name="def">The default value if nothing is found</param>
+			/// <returns>The value at the key or the default value</returns>
+			float32 getDefaultFloat32(String key, float32 def);
+			/// <summary>
+			/// Gets a value at this key, if the key does not exist, it returns and sets the key to the default parameter
+			/// </summary>
+			/// <param name="key">The key</param>
+			/// <param name="def">The default value if nothing is found</param>
+			/// <returns>The value at the key or the default value</returns>
+			float64 getDefaultFloat64(String key, float64 def);
+			/// <summary>
+			/// Gets a value at this key, if the key does not exist, it returns and sets the key to the default parameter
+			/// </summary>
+			/// <param name="key">The key</param>
+			/// <param name="def">The default value if nothing is found</param>
+			/// <returns>The value at the key or the default value</returns>
+			bool getDefaultBool(String key, bool def);
+
+			/// <summary>
 			/// Gets a int/uint list
 			/// </summary>
 			/// <typeparam name="T">The int type (e.g. uint32, int32, unsinged int, ...)</typeparam>
@@ -73,12 +116,22 @@ namespace ge {
 				return out;
 			}
 
-			void setString(String key, String value);
-			void setInt32(String key, int32 value);
-			void setUInt32(String key, uint32 value);
-			void setFloat32(String key, float32 value);
-			void setFloat64(String key, float64 value);
-			void setBool(String key, bool value);
+			template <typename T>
+			List<T> getDefaultIntList(String key, List<T> list) {
+				if(contains(key)) return getIntList<T>(key);
+				toml::array arr;
+				arr.resize(list.size(), 0);
+				for(uint32 i = 0; i < list.size(); ++i) {
+					arr.push_back(list[i]);
+				}
+				set<toml::array>(key, arr);
+				return List<T>(list);
+			}
+
+			template <typename T>
+			void set(String key, T value) {
+				handle->insert_or_assign(key, value);
+			}
 
 			void erase(String key);
 

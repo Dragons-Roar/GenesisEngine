@@ -18,6 +18,11 @@
 			"includes": "GenesisEngine/Core/src/main/include/"
 		},
 		{
+			"name": "GenesisEngine-Client-Core",
+			"location": "GenesisEngine/ClientCore/src/main/",
+			"includes": "GenesisEngine/ClientCore/src/main/include/"
+		},
+		{
 			"name": "Sandbox-Server",
 			"location": "Sandbox/Server/src/main/",
 			"includes": "Sandbox/Server/src/main/include/"
@@ -139,6 +144,16 @@
 		],
 		"GenesisEngine-Core-Test": [
 			"GenesisEngine-Core",
+			"spdlog", "gtest", "toml++", "json",
+			"boost/preprocessor"
+		],
+		"GenesisEngine-Client-Core": [
+			"GenesisEngine-Core", "GenesisEngine-Client-Core",
+			"spdlog", "toml++", "json",
+			"boost/preprocessor"
+		],
+		"GenesisEngine-Client-Core-Test": [
+			"GenesisEngine-Core", "GenesisEngine-Client-Core",
 			"spdlog", "gtest", "toml++", "json",
 			"boost/preprocessor"
 		]

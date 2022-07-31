@@ -13,6 +13,17 @@ namespace ge {
 			typedef std::function<bool(const T&, const T&)> SortFunction;
 
 			List() { }
+			List(std::vector<T>& v) {
+				resize(v.size());
+				for(Index i = 0; i < v.size(); ++i) {
+					add(v[i]);
+				}
+			}
+
+			List(std::initializer_list<T> list) {
+				resize(list.size());
+				handle.insert(list.end(), list.begin(), list.end());
+			}
 
 			/// <summary>
 			/// Pushes an element on top of the list

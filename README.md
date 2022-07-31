@@ -28,9 +28,10 @@ Currently there are no features as this project is still in development
 | Path | Description |
 |------|-------------|
 | GenesisEngine/ | Here are the sources for the Engine Modules |
-| GenesisEngine/Client/ | Here are sources stored that are needed for the Client. Those sources range from Renderer, to Audio and so on |
+| GenesisEngine/Client/ | Here are the client runtime sources stored. These sources are e.g. Scene Loader |
 | GenesisEngine/Server/ | This project stores sources for the Server. Those sources range from Networking, Server, Authentification and so on |
 | GenesisEngine/Core/ | Here are sources stored that are needed for the entire engine. The project also holds sources for abstractions |
+| GenesisEngine/ClientCore/ | Here are the source files stored, that are only needed for the client. These sources range from rendering to sounds, gui, ...
 | GenesisEngine/Editor | This project stores the sources that are needed to run the Genesis Editor |
 | Sandbox/ | Here are the sources of the game stored |
 | Sandbox/Client | Here is the client code stored |

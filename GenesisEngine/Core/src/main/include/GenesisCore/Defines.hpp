@@ -12,6 +12,7 @@
 #include <format>
 #include <utility>
 #include <array>
+#include <vector>
 
 /* ---> Streams <--- */
 #include <istream>
