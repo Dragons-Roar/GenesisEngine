@@ -6,3 +6,5 @@
 #include "./List.hpp"
 #include "./Formatter.hpp"
 #include "./ConfigFile.hpp"
+#include "./Random.hpp"
+#include "./UUID.hpp"

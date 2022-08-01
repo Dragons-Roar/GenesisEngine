@@ -13,6 +13,9 @@
 #include <utility>
 #include <array>
 #include <vector>
+#include <stdlib.h>
+#include <random>
+#include <type_traits>
 
 /* ---> Streams <--- */
 #include <istream>
@@ -43,3 +46,26 @@ typedef float float32;
 typedef double float64;
 /// A standard std::string
 typedef std::string String;
+
+// Combines certain values to hashes together
+inline void hash_combine(std::size_t& seed) { }
+template <typename T, typename... Rest>
+inline void hash_combine(std::size_t& seed, const T& v, Rest... rest) {
+    std::hash<T> hasher;
+    seed ^= hasher(v) + 0x9e3779b9 + (seed << 6) + (seed >> 2);
+    hash_combine(seed, rest...);
+}
+
+// Makes a class hashable (fields have to start with t.)
+#define GE_MakeHashable(type, ...) \
+    namespace std {\
+        template<> struct hash<type> {\
+            std::size_t operator()(const type &t) const {\
+                std::size_t ret = 0;\
+                hash_combine(ret, __VA_ARGS__);\
+                return ret;\
+            }\
+        };\
+    }
+
+#define GE_BIT(x) 1 << x;

@@ -21,8 +21,7 @@ namespace ge {
 			}
 
 			List(std::initializer_list<T> list) {
-				resize(list.size());
-				handle.insert(list.end(), list.begin(), list.end());
+				handle = std::vector<T>(list);
 			}
 
 			/// <summary>

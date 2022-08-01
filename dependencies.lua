@@ -4,6 +4,7 @@ luaIncludes = {}
 local libraries = {}
 local projects = {}
 local singleFiles = {}
+local headerOnlies = {}
 
 local Json = require 'json'
 local data = Json.decode(readFile('./dependencies.json'))
@@ -27,6 +28,11 @@ for _, v in pairs(jDependencies) do
 		s["path"] = "%{wks.location}/"..jLibRoot..v["group"].."/"..v["packet"]["path"]
 		s["include"] = "%{wks.location}/"..jLibRoot..v["group"].."/"..v["library"]["includeDir"]
 		s["url"] = v["packet"]["url"]
+	elseif v["packet"]["type"] == "local" then
+		-- These are local dependencies
+		headerOnlies[v["name"]] = {}
+		local h = headerOnlies[v["name"]]
+		h["include"] = "%{wks.location}/"..jLibRoot..v["group"].."/"..v["library"]["includeDir"]
 	else
 		-- These are dependencies that are needed to build and included
 		libraries[v["name"]] = {}
@@ -69,6 +75,8 @@ for prj, v in pairs(jLinks) do
 	for _, lib in pairs(v) do
 		if(singleFiles[lib] ~= nil) then
 			table.insert(iDir, singleFiles[lib]["include"])
+		elseif(headerOnlies[lib] ~= nil) then
+			table.insert(iDir, headerOnlies[lib]["include"])
 		else
 			if(projects[lib] == nil) then
 				if(libraries[lib] == nil) then
