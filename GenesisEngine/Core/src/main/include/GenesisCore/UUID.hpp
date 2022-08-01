@@ -9,7 +9,12 @@ namespace ge {
 		/// </summary>
 		class UUID: public GClass {
 		public:
+			typedef struct {
+				uint64 a, b;
+			} Handle;
+
 			UUID();
+			UUID(Handle handle);
 			UUID(uint64 a, uint64 b);
 
 			static const UUID nil;
@@ -17,6 +22,8 @@ namespace ge {
 			static UUID fromString(String str);
 			String formatTrimmed() const;
 			String format() const;
+
+			Handle getHandle() { return handle; }
 
 			const String toString() const override;
 
@@ -27,18 +34,15 @@ namespace ge {
 			bool operator>(const UUID& a) const;
 			bool operator<(const UUID& a) const;
 
-			friend std::ostream& operator<<(std::ostream& out, const UUID& u);
-			friend std::istream& operator>>(std::istream& in, UUID& u);
-
 			virtual ~UUID();
-			std::array<uint64, 2> handle;
+			Handle handle;
 		private:
 			#ifndef GE_DIST
 			// This string is used to view in a variables tab by your IDE while debugging to clearly see the uuid's value
-			String uuidString;
+			String d_uuidString;
 			#endif
 		};
 	}
 }
 
-GE_MakeHashable(ge::core::UUID, t.handle[0], t.handle[1]);
+GE_MakeHashable(ge::core::UUID, t.handle.a, t.handle.b);

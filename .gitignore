@@ -9,5 +9,6 @@ doc/
 *.vcxproj.user
 
 node_modules/
+packages/
 
 premake5.exe

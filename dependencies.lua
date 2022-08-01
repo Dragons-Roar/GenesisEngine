@@ -73,6 +73,8 @@ for prj, v in pairs(jLinks) do
 	end
 
 	for _, lib in pairs(v) do
+		print("Searching "..lib.." for "..prj)
+
 		if(singleFiles[lib] ~= nil) then
 			table.insert(iDir, singleFiles[lib]["include"])
 		elseif(headerOnlies[lib] ~= nil) then
@@ -82,7 +84,8 @@ for prj, v in pairs(jLinks) do
 				if(libraries[lib] == nil) then
 					error(lib.." could not be found in libs nor in projects!")
 				else
-					if(projects[prj] == nil and (libraries[lib] == nil or libraries[lib] == "premake")) then
+					if(projects[prj] == nil and (libraries[lib] == nil or libraries[lib]["type"] == "premake")) then
+						print("Adding "..lib.." to dependencies!")
 						table.insert(dep, lib)
 					end
 					table.insert(iDir, libraries[lib]["includes"])
