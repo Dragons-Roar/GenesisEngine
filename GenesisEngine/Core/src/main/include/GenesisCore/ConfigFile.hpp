@@ -120,14 +120,24 @@ namespace ge {
 			ConfigSection getSection(String key);
 
 			/// <summary>
-			/// Gets every key in a tom::table
+			/// Gets every key in a toml::table
 			/// </summary>
 			/// <param name="deep">toml::tables in toml::tables will be parsed too</param>
 			/// <param name="sort">Sorts the list of keys by the key length</param>
 			/// <returns>The list of keys</returns>
 			List<String> keys(bool deep = false, bool sort = false) const;
 
+			/// <summary>
+			/// Gets every key in a toml::table and passes it to a function
+			/// </summary>
+			/// <param name="deep">toml::tables in toml::tables will be parsed too</param>
+			/// <param name="func">The function where the keys will get passed to</param>
 			void keys(bool deep, KeyParseFunction func) const;
+			/// <summary>
+			/// Gets every key in a toml::table and passes it to a function
+			/// </summary>
+			/// <param name="func">The function where the keys will get passed to</param>
+			inline void keys(KeyParseFunction func) const { keys(false, func); }
 
 			/// <summary>
 			/// Gets a int/uint list
