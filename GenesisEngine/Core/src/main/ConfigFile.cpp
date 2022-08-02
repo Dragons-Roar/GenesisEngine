@@ -32,14 +32,46 @@ namespace ge {
 				list.reverse();
 				return _getString(handle, list);
 			} else {
-				return handle->get(key)->as_string()->get();
+				if(!handle->contains(key)) { GE_ThrowException(exceptions::KeyNotFound(key)); return ""; }
+				auto val = handle->get(key);
+				switch(val->type()) {
+					case toml::node_type::string:
+						return val->as_string()->get();
+						break;
+					case toml::node_type::boolean:
+						return val->as_boolean()->get() ? "true" : "false";
+						break;
+					case toml::node_type::integer:
+						return std::to_string(val->as_integer()->get());
+						break;
+					case toml::node_type::floating_point:
+						return std::to_string(val->as_floating_point()->get());
+						break;
+				}
+				GE_ThrowException(exceptions::WrongValueType(key, "bool"));
 			}
 		}
 		String ConfigSection::_getString(toml::table* table, List<String>& keys) const {
 			String key = keys.popLast();
 			if(table->contains(key)) {
 				auto val = table->get(key);
-				if(keys.size() == 0) return val->as_string()->get();
+				if(keys.size() == 0) {
+					switch(val->type()) {
+						case toml::node_type::string:
+							return val->as_string()->get();
+							break;
+						case toml::node_type::boolean:
+							return val->as_boolean()->get() ? "true" : "false";
+							break;
+						case toml::node_type::integer:
+							return std::to_string(val->as_integer()->get());
+							break;
+						case toml::node_type::floating_point:
+							return std::to_string(val->as_floating_point()->get());
+							break;
+					}
+					GE_ThrowException(exceptions::WrongValueType(key, "string"));
+				}
 				if(val->is_table()) {
 					return _getString(val->as_table(), keys);
 				}
@@ -96,22 +128,58 @@ namespace ge {
 				list.reverse();
 				return _getBool(handle, list);
 			} else {
-				return handle->get(key)->as_boolean()->get();
+				if(!handle->contains(key)) { GE_ThrowException(exceptions::KeyNotFound(key)); return ""; }
+				auto val = handle->get(key);
+				switch(val->type()) {
+					case toml::node_type::boolean: {
+						return handle->get(key)->as_boolean()->get();
+					}
+					case toml::node_type::string: {
+						String str = val->as_string()->get();
+						std::transform(str.begin(), str.end(), str.begin(), ::tolower);
+						if(str == "true" || str == "on") return true;
+						if(str == "false" || str == "off") return false;
+						break;
+					}
+					case toml::node_type::integer: {
+						return val->as_integer()->get() != 0;
+						break;
+					}
+				}
+				GE_ThrowException(exceptions::WrongValueType(key, "bool"));
 			}
 		}
 		bool ConfigSection::_getBool(toml::table* table, List<String>& keys) const {
 			String key = keys.popLast();
 			if(table->contains(key)) {
 				auto val = table->get(key);
-
-				if(keys.size() == 0) return val->as_boolean()->get();
+				if(keys.size() == 0) {
+					switch(val->type()) {
+						case toml::node_type::boolean: {
+							return handle->get(key)->as_boolean()->get();
+						}
+						case toml::node_type::string: {
+							String str = val->as_string()->get();
+							std::transform(str.begin(), str.end(), str.begin(), ::tolower);
+							if(str == "true" || str == "on") return true;
+							if(str == "false" || str == "off") return false;
+							break;
+						}
+						case toml::node_type::integer: {
+							return val->as_integer()->get() != 0;
+							break;
+						}
+					}
+					GE_ThrowException(exceptions::WrongValueType(key, "bool"));
+					return false;
+				}
 
 				if(val->is_table()) {
 					return _getBool(val->as_table(), keys);
 				}
 			} else {
 				GE_ThrowException(exceptions::KeyNotFound(key.c_str()));
-				return "";
+				return false;
 			}
 		}
 
