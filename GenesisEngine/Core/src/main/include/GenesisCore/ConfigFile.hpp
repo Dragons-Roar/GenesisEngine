@@ -222,7 +222,7 @@ namespace ge {
 			/// <param name="key">The key</param>
 			/// <param name="value">The value</param>
 			template <typename T>
-			void set(String key, T value) {
+			inline void set(String key, T value) {
 				handle->insert_or_assign(key, value);
 			}
 
@@ -230,38 +230,38 @@ namespace ge {
 			/// Clears a key out of the list
 			/// </summary>
 			/// <param name="key">The key</param>
-			void erase(String key);
+			inline void erase(String key);
 
 			/// <summary>
 			/// Checks if the value at the key exists and is a string
 			/// </summary>
 			/// <param name="key">The key</param>
 			/// <returns>True if it exists and is a string</returns>
-			bool isString(String key) const;
+			inline bool isString(String key) const;
 			/// <summary>
 			/// Checks if the value at the key exists and is a int / uint
 			/// </summary>
 			/// <param name="key">The key</param>
 			/// <returns>True if it exists and is a int / uint</returns>
-			bool isInt(String key) const;
+			inline bool isInt(String key) const;
 			/// <summary>
 			/// Checks if the value at the key exists and is a float32 / float64
 			/// </summary>
 			/// <param name="key">The key</param>
 			/// <returns>True if it exists and is a float32 / float64</returns>
-			bool isFloat(String key) const;
+			inline bool isFloat(String key) const;
 			/// <summary>
 			/// Checks if the value at the key exists and is a number (int or float)
 			/// </summary>
 			/// <param name="key">The key</param>
 			/// <returns>True if it exists and is a number (int or float)</returns>
-			bool isNumber(String key) const;
+			inline bool isNumber(String key) const;
 			/// <summary>
 			/// Checks if the value at the key exists and is a bool
 			/// </summary>
 			/// <param name="key">The key</param>
 			/// <returns>True if it exists and is a bool</returns>
-			bool isBool(String key) const;
+			inline bool isBool(String key) const;
 
 			/// <summary>
 			/// Checks if the key exists

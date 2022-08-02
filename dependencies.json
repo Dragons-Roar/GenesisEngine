@@ -88,6 +88,17 @@
 				"type": "header",
 				"includeDir": "include/"
 			}
+		},
+		{
+			"name": "glm",
+			"group": "glm",
+			"packet": {
+				"type": "git",
+				"repo": "https://github.com/g-truc/glm"
+			},
+			"library": {
+				""
+			}
 		}
 	],
 	"links": {
