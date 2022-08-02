@@ -1,6 +1,6 @@
 #pragma once
 #include "./Defines.hpp"
-#include "./GClass.hpp"
+#include "./GenesisBase.hpp"
 #include "./GenesisCore.hpp"
 #include "./Version.hpp"
 #include "./List.hpp"
@@ -8,3 +8,4 @@
 #include "./ConfigFile.hpp"
 #include "./Random.hpp"
 #include "./UUID.hpp"
+#include "./Map.hpp"

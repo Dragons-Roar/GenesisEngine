@@ -1,20 +1,73 @@
 #pragma once
-#include "./Defines.hpp"
-#include "./List.hpp"
 #include <toml++/toml.h>
+#include <GenesisCore/Logger.hpp>
+#include "./GenesisBase.hpp"
+#include "./List.hpp"
+#include "./Defines.hpp"
 
 namespace ge {
 	namespace core {
-		class ConfigSection {
+		namespace exceptions {
+			/// Throws if a key in this section was requested but not found
+			struct KeyNotFound: public ge::core::exceptions::GenesisRuntimeException {
+				KeyNotFound(String key): GenesisRuntimeException("Key '" + key + "' could not be found!") {}
+				const String name() const override { return "ge::core::exceptions::KeyNotFound"; }
+			};
+			/// Throws if a key in this section was found but had an unexpected value
+			struct WrongValueType: public ge::core::exceptions::GenesisRuntimeException {
+				WrongValueType(String key, String assumed): GenesisRuntimeException("Key '" + key + "' has the wrong value type, " + assumed + " assumed!") {}
+				const String name() const override { return "ge::core::exceptions::WrongValueType"; }
+			};
+		}
+
+		class ConfigSection: public GClass {
 		public:
+			typedef std::function<void(const String&)> KeyParseFunction;
+
 			ConfigSection(toml::table* table): handle(table) { }
 
-			String getString(String key) const;
-			int32 getInt32(String key) const;
-			uint32 getUInt32(String key) const;
-			float32 getFloat32(String key) const;
-			float64 getFloat64(String key) const;
-			bool getBool(String key) const;
+			/// <summary>
+			/// Gets a string at a specific key
+			/// </summary>
+			/// <param name="key">The key</param>
+			/// <param name="deep">If the key should searched deep</param>
+			/// <returns>The value</returns>
+			String getString(String key, bool deep = true) const;
+			/// <summary>
+			/// Gets a int32 at a specific key
+			/// </summary>
+			/// <param name="key">The key</param>
+			/// <param name="deep">If the key should searched deep</param>
+			/// <returns>The value</returns>
+			int32 getInt32(String key, bool deep = true) const;
+			/// <summary>
+			/// Gets a uint32 at a specific key
+			/// </summary>
+			/// <param name="key">The key</param>
+			/// <param name="deep">If the key should searched deep</param>
+			/// <returns>The value</returns>
+			uint32 getUInt32(String key, bool deep = true) const;
+			/// <summary>
+			/// Gets a float32 at a specific key
+			/// </summary>
+			/// <param name="key">The key</param>
+			/// <param name="deep">If the key should searched deep</param>
+			/// <returns>The value</returns>
+			float32 getFloat32(String key, bool deep = true) const;
+			/// <summary>
+			/// Gets a float64 at a specific key
+			/// </summary>
+			/// <param name="key">The key</param>
+			/// <param name="deep">If the key should searched deep</param>
+			/// <returns>The value</returns>
+			float64 getFloat64(String key, bool deep = true) const;
+			/// <summary>
+			/// Gets a bool at a specific key
+			/// </summary>
+			/// <param name="key">The key</param>
+			/// <param name="deep">If the key should searched deep</param>
+			/// <returns>The value</returns>
+			bool getBool(String key, bool deep = true) const;
 
 			/// <summary>
 			/// Gets a value at this key, if the key does not exist, it returns and sets the key to the default parameter
@@ -58,6 +111,23 @@ namespace ge {
 			/// <param name="def">The default value if nothing is found</param>
 			/// <returns>The value at the key or the default value</returns>
 			bool getDefaultBool(String key, bool def);
+
+			/// <summary>
+			/// Gets a section from the file
+			/// </summary>
+			/// <param name="key">The section</param>
+			/// <returns>The config file section</returns>
+			ConfigSection getSection(String key);
+
+			/// <summary>
+			/// Gets every key in a tom::table
+			/// </summary>
+			/// <param name="deep">toml::tables in toml::tables will be parsed too</param>
+			/// <param name="sort">Sorts the list of keys by the key length</param>
+			/// <returns>The list of keys</returns>
+			List<String> keys(bool deep = false, bool sort = false) const;
+
+			void keys(bool deep, KeyParseFunction func) const;
 
 			/// <summary>
 			/// Gets a int/uint list
@@ -116,6 +186,13 @@ namespace ge {
 				return out;
 			}
 
+			/// <summary>
+			/// Gets a list, if the list is not found it will be set and returned
+			/// </summary>
+			/// <typeparam name="T">The type of the list</typeparam>
+			/// <param name="key">The key where to find the lsit</param>
+			/// <param name="list">The default list</param>
+			/// <returns>The list</returns>
 			template <typename T>
 			List<T> getDefaultIntList(String key, List<T> list) {
 				if(contains(key)) return getIntList<T>(key);
@@ -128,30 +205,110 @@ namespace ge {
 				return List<T>(list);
 			}
 
+			/// <summary>
+			/// Sets a value at a key
+			/// </summary>
+			/// <typeparam name="T">The value type</typeparam>
+			/// <param name="key">The key</param>
+			/// <param name="value">The value</param>
 			template <typename T>
 			void set(String key, T value) {
 				handle->insert_or_assign(key, value);
 			}
 
+			/// <summary>
+			/// Clears a key out of the list
+			/// </summary>
+			/// <param name="key">The key</param>
 			void erase(String key);
 
+			/// <summary>
+			/// Checks if the value at the key exists and is a string
+			/// </summary>
+			/// <param name="key">The key</param>
+			/// <returns>True if it exists and is a string</returns>
 			bool isString(String key) const;
+			/// <summary>
+			/// Checks if the value at the key exists and is a int / uint
+			/// </summary>
+			/// <param name="key">The key</param>
+			/// <returns>True if it exists and is a int / uint</returns>
 			bool isInt(String key) const;
-			bool isFloat32(String key) const;
-			bool isFloat64(String key) const;
+			/// <summary>
+			/// Checks if the value at the key exists and is a float32 / float64
+			/// </summary>
+			/// <param name="key">The key</param>
+			/// <returns>True if it exists and is a float32 / float64</returns>
+			bool isFloat(String key) const;
+			/// <summary>
+			/// Checks if the value at the key exists and is a number (int or float)
+			/// </summary>
+			/// <param name="key">The key</param>
+			/// <returns>True if it exists and is a number (int or float)</returns>
 			bool isNumber(String key) const;
+			/// <summary>
+			/// Checks if the value at the key exists and is a bool
+			/// </summary>
+			/// <param name="key">The key</param>
+			/// <returns>True if it exists and is a bool</returns>
 			bool isBool(String key) const;
 
+			/// <summary>
+			/// Checks if the key exists
+			/// </summary>
+			/// <param name="key"></param>
+			/// <returns></returns>
 			inline bool contains(String key) const;
+
+			const String toString() const override {
+				std::stringstream ss;
+				ss << "ge::core::ConfigSection" << std::endl;
+				return ss.str();
+			}
 
 		protected:
 			toml::table* handle;
+
+		private:
+			String _getString(toml::table* table, List<String>& keys) const;
+			template <typename T>
+			T _getInt(toml::table* table, List<String>& keys) const {
+				String key = keys.popLast();
+				if(table->contains(key)) {
+					auto val = table->get(key);
+					if(keys.size() == 0) return val->as_integer()->get();
+					if(val->is_table()) {
+						return _getInt<T>(val->as_table(), keys);
+					}
+				} else {
+					GE_ThrowException(exceptions::KeyNotFound(key.c_str()));
+					return 0;
+				}
+			}
+			template <typename T>
+			T _getFloating(toml::table* table, List<String>& keys) const {
+				String key = keys.popLast();
+				if(table->contains(key)) {
+					auto val = table->get(key);
+					if(keys.size() == 0) return val->as_floating_point()->get();
+					if(val->is_table()) {
+						return _getInt<T>(val->as_table(), keys);
+					}
+				} else {
+					GE_ThrowException(exceptions::KeyNotFound(key.c_str()));
+					return 0;
+				}
+			}
+			bool _getBool(toml::table* table, List<String>& keys) const;
+
+			void _keys(List<String>& prefix, toml::table* handle, List<String>& list) const;
+			void _keys(List<String>& prefix, toml::table* handle, KeyParseFunction func) const;
 		};
 
 		/// <summary>
 		/// A simple Toml config file wrapper
 		/// </summary>
-		class ConfigFile: public ConfigSection {
+		class ConfigFile: public ConfigSection, public GClass {
 		public:
 			/// <summary>
 			/// A simple config file
@@ -179,12 +336,11 @@ namespace ge {
 			/// <param name="">The file path</param>
 			void save(String file);
 
-			/// <summary>
-			/// Gets a section from the file
-			/// </summary>
-			/// <param name="key">The section</param>
-			/// <returns>The config file section</returns>
-			ConfigSection& getSection(String key);
+			const String toString() const override {
+				std::stringstream ss;
+				ss << "ge::core::ConfigSection{file:" << file << "}" << std::endl;
+				return ss.str();
+			}
 
 		private:
 			void _load();

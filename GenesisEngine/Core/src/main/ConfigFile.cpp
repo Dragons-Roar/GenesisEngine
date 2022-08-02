@@ -1,4 +1,5 @@
 #include <GenesisCore/ConfigFile.hpp>
+#include <GenesisCore/Utils.hpp>
 
 namespace ge {
 	namespace core {
@@ -23,33 +24,174 @@ namespace ge {
 			fout.close();
 		}
 
-		ConfigSection& ConfigFile::getSection(String key) {
-			ConfigSection sec(handle[key].as_table());
-			return sec;
+		/* ---> ConfigSection <--- */
+		String ConfigSection::getString(String key, bool deep) const {
+			if(deep) {
+				List<String> list;
+				Utils::splitString(list, key, '.');
+				list.reverse();
+				return _getString(handle, list);
+			} else {
+				return handle->get(key)->as_string()->get();
+			}
+		}
+		String ConfigSection::_getString(toml::table* table, List<String>& keys) const {
+			String key = keys.popLast();
+			if(table->contains(key)) {
+				auto val = table->get(key);
+				if(keys.size() == 0) return val->as_string()->get();
+				if(val->is_table()) {
+					return _getString(val->as_table(), keys);
+				}
+			} else {
+				GE_ThrowException(exceptions::KeyNotFound(key.c_str()));
+				return "";
+			}
 		}
 
-		/* ---> ConfigSection <--- */
-		String ConfigSection::getString(String key) const {
-			return handle->get(key)->as_string()->get();
+		int32 ConfigSection::getInt32(String key, bool deep) const {
+			if(deep) {
+				List<String> list;
+				Utils::splitString(list, key, '.');
+				list.reverse();
+				return _getInt<int32>(handle, list);
+			} else {
+				return handle->get(key)->as_integer()->get();
+			}
 		}
-		int32 ConfigSection::getInt32(String key) const {
-			return handle->get(key)->as_integer()->get();
+		uint32 ConfigSection::getUInt32(String key, bool deep) const {
+			if(deep) {
+				List<String> list;
+				Utils::splitString(list, key, '.');
+				list.reverse();
+				return _getInt<uint32>(handle, list);
+			} else {
+				return handle->get(key)->as_integer()->get();
+			}
 		}
-		uint32 ConfigSection::getUInt32(String key) const {
-			return handle->get(key)->as_integer()->get();
+		float32 ConfigSection::getFloat32(String key, bool deep) const {
+			if(deep) {
+				List<String> list;
+				Utils::splitString(list, key, '.');
+				list.reverse();
+				return _getInt<float32>(handle, list);
+			} else {
+				return handle->get(key)->as_floating_point()->get();
+			}
 		}
-		float32 ConfigSection::getFloat32(String key) const {
-			return handle->get(key)->as_floating_point()->get();
+		float64 ConfigSection::getFloat64(String key, bool deep) const {
+			if(deep) {
+				List<String> list;
+				Utils::splitString(list, key, '.');
+				list.reverse();
+				return _getInt<float64>(handle, list);
+			} else {
+				return handle->get(key)->as_floating_point()->get();
+			}
 		}
-		float64 ConfigSection::getFloat64(String key) const {
-			return handle->get(key)->as_floating_point()->get();
+		bool ConfigSection::getBool(String key, bool deep) const {
+			if(deep) {
+				List<String> list;
+				Utils::splitString(list, key, '.');
+				list.reverse();
+				return _getBool(handle, list);
+			} else {
+				return handle->get(key)->as_boolean()->get();
+			}
 		}
-		bool ConfigSection::getBool(String key) const {
-			return handle->get(key)->as_boolean()->get();
+		bool ConfigSection::_getBool(toml::table* table, List<String>& keys) const {
+			String key = keys.popLast();
+			if(table->contains(key)) {
+				auto val = table->get(key);
+
+				if(keys.size() == 0) return val->as_boolean()->get();
+
+				if(val->is_table()) {
+					return _getBool(val->as_table(), keys);
+				}
+			} else {
+				GE_ThrowException(exceptions::KeyNotFound(key.c_str()));
+				return "";
+			}
+		}
+
+		List<String> ConfigSection::keys(bool deep, bool sort) const {
+			List<String> out;
+			if(deep) {
+				List<String> prefix;
+				_keys(prefix, handle, out);
+				if(sort) {
+					out.sort([](const String& a, const String& b) {
+						return Utils::countChars(a, '.') < Utils::countChars(b, '.');
+					});
+				}
+			} else {
+				for(auto it = handle->begin(); it != handle->end(); ++it) {
+					out.add(String(it->first.str()));
+				}
+			}
+			return out;
+		}
+		void ConfigSection::keys(bool deep, KeyParseFunction func) const {
+			if(deep) {
+				List<String> prefix;
+				_keys(prefix, handle, func);
+			} else {
+				for(auto it = handle->begin(); it != handle->end(); ++it) {
+					func(String(it->first.str()));
+				}
+			}
+		}
+
+		void ConfigSection::_keys(List<String>& prefix, toml::table* handle, List<String>& list) const {
+			for(auto it = handle->begin(); it != handle->end(); ++it) {
+				if(it->second.is_table()) {
+					prefix.add(String(it->first.str()));
+					_keys(prefix, it->second.as_table(), list);
+				} else {
+					if(prefix.size() > 0) {
+						list.add(prefix.join(".") + "." + String(it->first.str()));
+					} else {
+						list.add(String(it->first.str()));
+					}
+				}
+			}
+			if(prefix.size() > 0) {
+				prefix.popLast();
+			}
+		}
+		void ConfigSection::_keys(List<String>& prefix, toml::table* handle, KeyParseFunction func) const {
+			for(auto it = handle->begin(); it != handle->end(); ++it) {
+				if(it->second.is_table()) {
+					prefix.add(String(it->first.str()));
+					_keys(prefix, it->second.as_table(), func);
+				} else {
+					if(prefix.size() > 0) {
+						func(prefix.join(".") + "." + String(it->first.str()));
+					} else {
+						func(String(it->first.str()));
+					}
+				}
+			}
+			if(prefix.size() > 0) {
+				prefix.popLast();
+			}
+		}
+
+		ConfigSection ConfigSection::getSection(String key) {
+			if(handle->contains(key)) {
+				ConfigSection sec = (handle->get(key)->as_table());
+				return sec;
+			} else {
+				std::cout << "Inserting table..." << std::endl;
+				handle->insert(key, toml::table());
+				ConfigSection sec = (handle->get(key)->as_table());
+				return sec;
+			}
 		}
 
 		String ConfigSection::getDefaultString(String key, String def) {
-			if(contains(key)) return getString(key);
+			if(contains(key)) return getString(key, false);
 			set<String>(key, def);
 			return def;
 		}
@@ -89,10 +231,7 @@ namespace ge {
 		bool ConfigSection::isInt(String key) const {
 			return handle->get(key)->is_integer();
 		}
-		bool ConfigSection::isFloat32(String key) const {
-			return handle->get(key)->is_floating_point();
-		}
-		bool ConfigSection::isFloat64(String key) const {
+		bool ConfigSection::isFloat(String key) const {
 			return handle->get(key)->is_floating_point();
 		}
 		bool ConfigSection::isBool(String key) const {

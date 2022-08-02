@@ -1,6 +1,6 @@
 #pragma once
 #include "./Defines.hpp"
-#include "./GClass.hpp"
+#include "./GenesisBase.hpp"
 #include <toml++/toml.h>
 
 namespace ge {
@@ -80,6 +80,21 @@ namespace ge {
 				for(Index i = 0; i < handle.size(); ++i) {
 					func(handle[i], i);
 				}
+			}
+
+			String popLast(bool remove = true) {
+				String out = handle.back();
+				if(remove) handle.pop_back();
+				return out;
+			}
+			void reverse() {
+				List<T> list;
+				std::vector<T> temp;
+				temp.reserve(size());
+				for(int32 i = handle.size() - 1; i >= 0; --i) {
+					temp.push_back(handle[i]);
+				}
+				handle = temp;
 			}
 
 			constexpr T& operator[](Index i) {

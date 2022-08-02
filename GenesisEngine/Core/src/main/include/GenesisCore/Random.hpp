@@ -1,9 +1,10 @@
 #pragma once
 #include "./Defines.hpp"
+#include "./GenesisBase.hpp"
 
 namespace ge {
 	namespace core {
-		class Random {
+		class Random: public GClass {
 		public:
 			Random(int64 seed);
 
@@ -45,6 +46,12 @@ namespace ge {
 			/// </summary>
 			/// <returns>The number</returns>
 			float64 random();
+
+			const String toString() const override {
+				std::stringstream ss;
+				ss << "ge::core::Random{seed:" << seed << "}";
+				return ss.str();
+			}
 
 		private:
 			uint64 seed;

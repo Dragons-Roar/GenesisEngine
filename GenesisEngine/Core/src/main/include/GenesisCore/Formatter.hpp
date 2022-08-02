@@ -1,36 +1,12 @@
 #pragma once
 #include "./Defines.hpp"
+#include "./GenesisBase.hpp"
 
 #define GE_NumberSuffix_SuffixCount 4
 
 namespace ge {
 	namespace core {
-		class NumberSuffix {
-		public:
-			static const NumberSuffix K;
-			static const NumberSuffix M;
-			static const NumberSuffix G;
-			static const NumberSuffix T;
-
-			static inline const NumberSuffix* getSuffix(uint8 id) { return suffixes[id]; }
-
-		private:
-			static std::array<const NumberSuffix*, GE_NumberSuffix_SuffixCount> suffixes;
-
-		public:
-			NumberSuffix(uint32 multiplier, char suffix): multiplier(multiplier), suffix(suffix) { }
-
-			static void init();
-
-			inline uint32 getMultiplier() const { return multiplier; }
-			inline char getSuffix() const { return suffix; }
-
-		private:
-			uint32 multiplier;
-			char suffix;
-		};
-
-		class Formatter {
+		class Formatter: public GClass {
 		public:
 			Formatter(uint8 decimalPlaces = 2, bool forceDecimalPlaces = true, bool splitThousands = true);
 
@@ -49,6 +25,12 @@ namespace ge {
 			}
 
 			static void init();
+
+			const String toString() const override {
+				std::stringstream ss;
+				ss << "ge::core::Formatter{decimalPlaces:" << decimalPlaces << ",forceDecimalPlaces" << forceDecimalPlaces << ",splitThousands:" << splitThousands << "}";
+				return ss.str();
+			}
 
 		private:
 			uint8 decimalPlaces;
