@@ -47,6 +47,9 @@ typedef double float64;
 /// A standard std::string
 typedef std::string String;
 
+/* ---> Utility Macros <--- */
+#define GE_BIT(x) (1 << x)
+
 // Combines certain values to hashes together
 inline void hash_combine(std::size_t& seed) { }
 template <typename T, typename... Rest>
@@ -67,5 +70,3 @@ inline void hash_combine(std::size_t& seed, const T& v, Rest... rest) {
             }\
         };\
     }
-
-#define GE_BIT(x) 1 << x;
