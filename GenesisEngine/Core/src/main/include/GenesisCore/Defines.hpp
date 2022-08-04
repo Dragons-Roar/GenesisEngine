@@ -50,6 +50,8 @@ typedef float float32;
 typedef double float64;
 /// A standard std::string
 typedef std::string String;
+/// A Genesis KeyCode
+typedef uint16 KeyCode;
 
 /* ---> Utility Macros <--- */
 #define GE_BIT(x) (1 << x)

@@ -7,7 +7,7 @@ namespace ge {
 	namespace clientcore {
 		Input* Input::instance = new WindowsInput();
 
-		bool WindowsInput::isKeyDownImpl(ge::core::KeyCode keycode) {
+		bool WindowsInput::isKeyDownImpl(KeyCode keycode) {
 			auto window = (GLFWwindow*) ge::clientcore::Application::getInstance().getWindow().getNativeWindow();
 			auto state = glfwGetKey(window, keycode);
 			return state == GLFW_PRESS || state == GLFW_REPEAT;

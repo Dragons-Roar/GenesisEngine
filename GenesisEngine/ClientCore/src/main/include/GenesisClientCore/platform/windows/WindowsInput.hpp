@@ -5,7 +5,7 @@ namespace ge {
 	namespace clientcore {
 		class WindowsInput: public Input {
 		protected:
-			virtual bool isKeyDownImpl(ge::core::KeyCode keycode) override;
+			virtual bool isKeyDownImpl(KeyCode keycode) override;
 			virtual bool isMouseDownImpl(int32 keycode) override;
 			virtual float32 getMouseXImpl() override;
 			virtual float32 getMouseYImpl() override;

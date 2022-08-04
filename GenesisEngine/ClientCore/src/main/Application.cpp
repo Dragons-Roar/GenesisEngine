@@ -24,11 +24,6 @@ namespace ge {
 		
 		void Application::onEvent(ge::core::Event& e) {
 			ge::core::EventDispatcher dispatcher(e);
-
-			if(e.getEventType() == ge::core::EventType::KeyTyped) {
-				std::cout << ((char) ((ge::core::KeyTypedEvent&) e).getKeyCode()) << std::endl;
-			}
-
 			// Dispatch event directly to internal functions
 			dispatcher.dispatch<ge::core::WindowCloseEvent>(GE_BindEventFunction(Application::onWindowClose));
 			dispatcher.dispatch<ge::core::WindowResizeEvent>(GE_BindEventFunction(Application::onWindowResize));
