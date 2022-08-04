@@ -7,7 +7,7 @@ namespace ge {
 		enum class EventType {
 			None = 0,
 			WindowClose, WindowResize, WindowFocus, WindowFocusLost, WindowMoved,
-			KeyDown, KeyUp,
+			KeyDown, KeyUp, KeyTyped,
 			MouseButtonDown, MouseButtonUp, MouseMoved, MouseScrolled
 		};
 		enum EventCategory {
@@ -33,6 +33,8 @@ namespace ge {
 			virtual const String toString() const override { return getName(); }
 
 			inline bool isInCategory(EventCategory category) { return getCategoryFlags() & category; }
+
+			inline bool isHandled() { return handled; }
 		protected:
 			bool handled = false;
 		};

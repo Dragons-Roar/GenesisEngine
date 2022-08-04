@@ -1,6 +1,12 @@
 #include <GenesisClientCore/platform/windows/WindowsWindow.hpp>
 #include <glad/glad.h>
 #include <GenesisClientCore/GraphicsContext.hpp>
+#include <GenesisCore/event/Event.hpp>
+#include <GenesisCore/event/KeyEvent.hpp>
+#include <GenesisCore/event/MouseEvent.hpp>
+#include <GenesisCore/event/WindowEvent.hpp>
+
+#define GE_GetWindowData() WindowData& data = *(WindowData*) glfwGetWindowUserPointer(window)
 
 namespace ge {
 	namespace clientcore {
@@ -64,8 +70,72 @@ namespace ge {
 
 			// Set GLFW Callbacks
 			glfwSetWindowSizeCallback(handle, [](GLFWwindow* window, int32 width, int32 height) {
-				WindowData& data = *(WindowData*) glfwGetWindowUserPointer(window);
+				GE_GetWindowData();
 				data.width = width; data.height = height;
+
+				ge::core::WindowResizeEvent e(width, height);
+				data.eventFunc(e);
+			});
+			glfwSetWindowCloseCallback(handle, [](GLFWwindow* window) {
+				GE_GetWindowData();
+
+				ge::core::WindowCloseEvent e;
+				data.eventFunc(e);
+			});
+			glfwSetKeyCallback(handle, [](GLFWwindow* window, int32 key, int32 scancode, int32 action, int32 mods) {
+				GE_GetWindowData();
+
+				switch(action) {
+					case GLFW_PRESS: {
+						ge::core::KeyDownEvent e(key, 0);
+						data.eventFunc(e);
+						break;
+					}
+					case GLFW_RELEASE: {
+						ge::core::KeyUpEvent e(key);
+						data.eventFunc(e);
+						break;
+					}
+					case GLFW_REPEAT: {
+						ge::core::KeyDownEvent e(key, true);
+						data.eventFunc(e);
+						break;
+					}
+				}
+			});
+			glfwSetCharCallback(handle, [](GLFWwindow* window, uint32 keycode) {
+				GE_GetWindowData();
+
+				ge::core::KeyTypedEvent e(keycode);
+				data.eventFunc(e);
+			});
+			glfwSetMouseButtonCallback(handle, [](GLFWwindow* window, int32 button, int32 action, int32 mods) {
+				GE_GetWindowData();
+
+				switch(action) {
+					case GLFW_PRESS: {
+						ge::core::MouseButtonDownEvent e(button);
+						data.eventFunc(e);
+						break;
+					}
+					case GLFW_RELEASE: {
+						ge::core::MouseButtonUpEvent e(button);
+						data.eventFunc(e);
+						break;
+					}
+				}
+			});
+			glfwSetScrollCallback(handle, [](GLFWwindow* window, float64 x, float64 y) {
+				GE_GetWindowData();
+
+				ge::core::MouseScrolledEvent e(x, y);
+				data.eventFunc(e);
+			});
+			glfwSetCursorPosCallback(handle, [](GLFWwindow* window, float64 x, float64 y) {
+				GE_GetWindowData();
+
+				ge::core::MouseMovedEvent e(x, y);
+				data.eventFunc(e);
 			});
 		}
 
@@ -80,6 +150,7 @@ namespace ge {
 		float32 WindowsWindow::getHeightF() const { return (float32) data.height; }
 
 		void WindowsWindow::setEventCallback(const EventCallback& func) {
+			data.eventFunc = func;
 		}
 		void WindowsWindow::setVSync(bool enable) {
 			data.vSync = enable;

@@ -16,7 +16,6 @@ namespace ge {
 			}
 
 			std::cout << "OpenGL Info:\n";
-			std::cout << "  Version: " << GLVersion.major << "." << GLVersion.minor << "\n";
 			std::cout << "  Vendor: " << glGetString(GL_VENDOR) << "\n";
 			std::cout << "  Renderer: " << glGetString(GL_RENDERER) << "\n";
 			std::cout << "  Version: " << glGetString(GL_VERSION) << std::endl;

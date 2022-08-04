@@ -7,7 +7,15 @@ namespace ge {
 		public:
 			MouseMovedEvent(float32 x, float32 y): x(x), y(y) { }
 
+			/// <summary>
+			/// Gets the absolute xpos
+			/// </summary>
+			/// <returns>The xpos</returns>
 			inline float32 getX() { return x; }
+			/// <summary>
+			/// Gets the absolute ypos
+			/// </summary>
+			/// <returns>The ypos</returns>y
 			inline float32 getY() { return y; }
 
 			const String toString() const override {

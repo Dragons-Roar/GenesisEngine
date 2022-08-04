@@ -48,5 +48,19 @@ namespace ge {
 
 			EVENT_CLASS_TYPE(KeyUp)
 		};
+
+		class KeyTypedEvent: public KeyEvent {
+		public:
+			KeyTypedEvent(const int32 keycode)
+				: KeyEvent(keycode) {}
+
+			const String toString() const override {
+				std::stringstream ss;
+				ss << "ge::core::KeyTypedEvent{" << this->KeyEvent::toString() << "}";
+				return ss.str();
+			}
+
+			EVENT_CLASS_TYPE(KeyTyped)
+		};
 	}
 }

@@ -74,3 +74,6 @@ inline void hash_combine(std::size_t& seed, const T& v, Rest... rest) {
             }\
         };\
     }
+
+// Bind a event function
+#define GE_BindEventFunction(fn) [this](auto&&... args) -> decltype(auto) { return this->fn(std::forward<decltype(args)>(args)...); }

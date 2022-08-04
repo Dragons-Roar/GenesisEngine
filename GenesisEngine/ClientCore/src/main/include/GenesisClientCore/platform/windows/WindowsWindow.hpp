@@ -1,5 +1,6 @@
 #pragma once
 #include "../../Defines.hpp"
+#define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
 #include "../../Window.hpp"
 #include "../opengl/OpenGLContext.hpp"
