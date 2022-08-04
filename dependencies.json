@@ -97,7 +97,32 @@
 				"repo": "https://github.com/g-truc/glm"
 			},
 			"library": {
-				""
+				"type": "header",
+				"includeDir": ""
+			}
+		},
+		{
+			"name": "glfw",
+			"packet": {
+				"type": "git",
+				"repo": "https://github.com/GMasterHD/glfw"
+			},
+			"library": {
+				"type": "premake",
+				"script": "provided",
+				"includeDir": "include/"
+			}
+		},
+		{
+			"name": "glad",
+			"packet": {
+				"type": "git",
+				"repo": "https://github.com/GMasterHD/glad"
+			},
+			"library": {
+				"type": "premake",
+				"script": "provided",
+				"includeDir": "include/"
 			}
 		}
 	],
@@ -108,12 +133,14 @@
 			"boost/preprocessor"
 		],
 		"Sandbox-Client": [ 
-			"GenesisEngine-Core", "GenesisEngine-Client", "GenesisEngine-Server", "Sandbox-Server",
-			"spdlog", "toml++", "json"
+			"GenesisEngine-Core", "GenesisEngine-Client-Core", "GenesisEngine-Client", "GenesisEngine-Server", "Sandbox-Server",
+			"spdlog", "toml++", "json", "glfw", "glad",
+			"opengl32.lib"
 		],
 		"Sandbox-Client-Test": [ 
 			"GenesisEngine-Core", "GenesisEngine-Client", "GenesisEngine-Server", "Sandbox-Server",
-			"spdlog", "gtest", "toml++", "json"
+			"spdlog", "gtest", "toml++", "json", "glfw", "glad",
+			"opengl32.lib"
 		],
 		"Sandbox-Server-Test": [
 			"GenesisEngine-Core", "GenesisEngine-Server", "Sandbox-Server",
@@ -125,18 +152,20 @@
 		],
 		"GenesisEngine-Editor": [ 
 			"GenesisEngine-Core", "GenesisEngine-Client", "GenesisEngine-Server",
-			"spdlog", "toml++", "json",
-			"boost/preprocessor"
+			"spdlog", "toml++", "json", "glfw", "glad",
+			"boost/preprocessor",
+			"opengl32.lib"
 		],
 		"GenesisEngine-Client": [
 			"GenesisEngine-Core", "GenesisEngine-Server", "GenesisEngine-Client",
-			"spdlog", "toml++", "json",
+			"spdlog", "toml++", "json", "glfw",
 			"boost/preprocessor"
 		],
 		"GenesisEngine-Client-Test": [
 			"GenesisEngine-Core", "GenesisEngine-Client",
-			"spdlog", "gtest", "toml++", "json",
-			"boost/preprocessor"
+			"spdlog", "gtest", "toml++", "json", "glfw", "glad",
+			"boost/preprocessor",
+			"opengl32.lib"
 		],
 		"GenesisEngine-Server": [
 			"GenesisEngine-Core", "GenesisEngine-Server",
@@ -160,7 +189,7 @@
 		],
 		"GenesisEngine-Client-Core": [
 			"GenesisEngine-Core", "GenesisEngine-Client-Core",
-			"spdlog", "toml++", "json",
+			"spdlog", "toml++", "json", "glfw", "glad",
 			"boost/preprocessor"
 		]
 	}

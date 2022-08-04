@@ -79,6 +79,8 @@ for prj, v in pairs(jLinks) do
 			table.insert(iDir, singleFiles[lib]["include"])
 		elseif(headerOnlies[lib] ~= nil) then
 			table.insert(iDir, headerOnlies[lib]["include"])
+		elseif(string.endswith(lib, ".lib")) then
+			table.insert(dep, lib)
 		else
 			if(projects[lib] == nil) then
 				if(libraries[lib] == nil) then

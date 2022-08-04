@@ -10,3 +10,12 @@
 [submodule "ThirdParty/toml++"]
 	path = ThirdParty/toml++
 	url = https://github.com/gmasterhd/tomlplusplus
+[submodule "ThirdParty/glm"]
+	path = ThirdParty/glm
+	url = https://github.com/g-truc/glm
+[submodule "ThirdParty/glfw"]
+	path = ThirdParty/glfw
+	url = https://github.com/GMasterHD/glfw
+[submodule "ThirdParty/glad"]
+	path = ThirdParty/glad
+	url = https://github.com/GMasterHD/glad

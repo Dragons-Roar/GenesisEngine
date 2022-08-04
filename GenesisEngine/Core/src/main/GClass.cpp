@@ -1,4 +1,4 @@
-#include <GenesisCore/GClass.hpp>
+#include <GenesisCore/GenesisBase.hpp>
 
 namespace ge {
 	namespace core {

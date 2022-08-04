@@ -1,4 +1,8 @@
 #pragma once
+// This file includes the core defines
+// This file is not meant to be used in applications!
+// For applications, include <GenesisCore/Genesis.hpp>
+
 #include <cstdint>
 #include <string>
 #include <unordered_map>

@@ -27,7 +27,7 @@ namespace ge {
 
 			const String toString() const override {
 				std::stringstream ss;
-				ss << "ge::core::KeyDownEvent{" << this->KeyEvent::toString() << ",keyCode:" << keyCode << " }";
+				ss << "ge::core::KeyDownEvent{" << this->KeyEvent::toString() << ",repeatCount:" << repeatCount << "}";
 				return ss.str();
 			}
 
