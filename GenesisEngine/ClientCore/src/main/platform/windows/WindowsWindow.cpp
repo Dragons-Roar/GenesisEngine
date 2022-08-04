@@ -5,6 +5,7 @@
 #include <GenesisCore/event/KeyEvent.hpp>
 #include <GenesisCore/event/MouseEvent.hpp>
 #include <GenesisCore/event/WindowEvent.hpp>
+#include <GenesisCore/Logger.hpp>
 
 #define GE_GetWindowData() WindowData& data = *(WindowData*) glfwGetWindowUserPointer(window)
 
@@ -13,7 +14,7 @@ namespace ge {
 		uint8 WindowsWindow::glfwWindowCount = 0;
 
 		static void GLFWErrorCallback(int error, const char* description) {
-			std::cout << "GLFW Error (" << error << "): " << description << std::endl;
+			GE_Fatal("GLFWError ({0}): {1}", error, description);
 		}
 
 		WindowsWindow::WindowsWindow(const WindowProps& props) {
@@ -41,13 +42,13 @@ namespace ge {
 			glfwWindowHint(GLFW_BLUE_BITS, 8);
 
 			// Create Window
-			std::cout << "Creating Window '" << props.title << "'" << std::endl;
+			GE_Info("Creating Window '{0}'...", data.title);
 			if(glfwWindowCount == 0) {
 				// If first window, initialize GLFW
-				std::cout << "Inititalizing GLFW..." << std::endl;
+				GE_Info("Initializing GLFW...");
 				int success = glfwInit();
 				if(!success) {
-					std::cerr << "Could not initialize GLFW!" << std::endl;
+					GE_Fatal("Could not initialize GLFW!");
 				}
 				glfwSetErrorCallback(GLFWErrorCallback);
 			}

@@ -1,12 +1,16 @@
 #include <GenesisClientCore/Application.hpp>
 #include <GenesisClientCore/imgui/ImGUILayer.hpp>
 #include <GenesisClientCore/Input.hpp>
+#include <GenesisCore/Logger.hpp>
 
 namespace ge {
 	namespace clientcore {
 		Application* Application::instance = nullptr;
 
 		Application::Application(const ApplicationConfiguration& config): appConfig(config) {
+			ge::core::Logger::init();
+			GE_Info("Initialized Logger!");
+
 			if(instance) std::cerr << "Application already exists!" << std::endl;
 			instance = this;
 

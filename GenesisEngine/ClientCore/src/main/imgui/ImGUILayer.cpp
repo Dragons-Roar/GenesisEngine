@@ -2,8 +2,8 @@
 #include <imgui.h>
 #include <backends/imgui_impl_glfw.h>
 #include <backends/imgui_impl_opengl3.h>
-
 #include <GenesisClientCore/Application.hpp>
+#include <GenesisCore/Logger.hpp>
 #include <glad/glad.h>
 
 #define GE_GetImGuiIO() ImGuiIO& io = ImGui::GetIO();
@@ -11,6 +11,7 @@
 namespace ge {
 	namespace clientcore {
 		void ImGUILayer::onAttach() {
+			GE_Info("Initializing ImGUI...");
 			IMGUI_CHECKVERSION();
 			ImGui::CreateContext();
 			GE_GetImGuiIO(); (void) io;

@@ -20,6 +20,7 @@
 #include <stdlib.h>
 #include <random>
 #include <type_traits>
+#include <memory>
 
 /* ---> Streams <--- */
 #include <istream>
