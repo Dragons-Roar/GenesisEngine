@@ -73,6 +73,7 @@
 			},
 			"library": {
 				"type": "premake",
+				"script": "provided",
 				"includeDir": "include/"
 			}
 		},
@@ -125,6 +126,18 @@
 				"script": "provided",
 				"includeDir": "include/"
 			}
+		},
+		{
+			"name": "imgui",
+			"packet": {
+				"type": "git",
+				"repo": "https://github.com/ocornut/imgui"
+			},
+			"library": {
+				"type": "premake",
+				"script": "imgui.lua",
+				"includeDir": ""
+			}
 		}
 	],
 	"links": {
@@ -135,12 +148,12 @@
 		],
 		"Sandbox-Client": [ 
 			"GenesisEngine-Core", "GenesisEngine-Client-Core", "GenesisEngine-Client", "GenesisEngine-Server", "Sandbox-Server",
-			"spdlog", "toml++", "json", "glfw", "glad",
+			"spdlog", "toml++", "json", "glfw", "glad", "imgui",
 			"opengl32.lib"
 		],
 		"Sandbox-Client-Test": [ 
 			"GenesisEngine-Core", "GenesisEngine-Client", "GenesisEngine-Server", "Sandbox-Server",
-			"spdlog", "gtest", "toml++", "json", "glfw", "glad",
+			"spdlog", "gtest", "toml++", "json", "glfw", "glad", "imgui",
 			"opengl32.lib"
 		],
 		"Sandbox-Server-Test": [
@@ -153,18 +166,18 @@
 		],
 		"GenesisEngine-Editor": [ 
 			"GenesisEngine-Core", "GenesisEngine-Client", "GenesisEngine-Server",
-			"spdlog", "toml++", "json", "glfw", "glad",
+			"spdlog", "toml++", "json", "glfw", "glad", "imgui",
 			"boost/preprocessor",
 			"opengl32.lib"
 		],
 		"GenesisEngine-Client": [
 			"GenesisEngine-Core", "GenesisEngine-Server", "GenesisEngine-Client",
-			"spdlog", "toml++", "json", "glfw",
+			"spdlog", "toml++", "json", "glfw", "imgui",
 			"boost/preprocessor"
 		],
 		"GenesisEngine-Client-Test": [
 			"GenesisEngine-Core", "GenesisEngine-Client",
-			"spdlog", "gtest", "toml++", "json", "glfw", "glad",
+			"spdlog", "gtest", "toml++", "json", "glfw", "glad", "imgui",
 			"boost/preprocessor",
 			"opengl32.lib"
 		],
@@ -189,9 +202,14 @@
 			"boost/preprocessor"
 		],
 		"GenesisEngine-Client-Core": [
-			"GenesisEngine-Core", "GenesisEngine-Client-Core",
-			"spdlog", "toml++", "json", "glfw", "glad",
+			"GenesisEngine-Client-Core", "GenesisEngine-Core",
+			"spdlog", "toml++", "json", "glfw", "glad", "imgui",
 			"boost/preprocessor"
+		]
+	},
+	"includes": {
+		"imgui": [
+			"glfw"
 		]
 	}
 }

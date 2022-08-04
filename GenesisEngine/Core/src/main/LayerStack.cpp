@@ -11,10 +11,12 @@ namespace ge {
 
 		void LayerStack::pushLayer(Layer* layer) {
 			layers.emplace(layers.begin() + layerInsertIndex, layer);
+			layer->onAttach();
 			layerInsertIndex++;
 		}
 		void LayerStack::pushOverlay(Layer* layer) {
 			layers.emplace_back(layer);
+			layer->onAttach();
 		}
 		void LayerStack::popLayer(Layer* layer) {
 			auto it = std::find(layers.begin(), layers.begin() + layerInsertIndex, layer);

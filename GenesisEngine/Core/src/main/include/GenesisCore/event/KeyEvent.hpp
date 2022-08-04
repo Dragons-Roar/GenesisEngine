@@ -1,11 +1,12 @@
 #pragma once
+#include "../KeyCode.hpp"
 #include "./Event.hpp"
 
 namespace ge {
 	namespace core {
 		class KeyEvent: public Event {
 		public:
-			inline int32 getKeyCode() const { return keyCode; }
+			inline KeyCode getKeyCode() const { return keyCode; }
 
 			const String toString() const override {
 				std::stringstream ss;
@@ -15,13 +16,13 @@ namespace ge {
 
 			EVENT_CLASS_CATEGORY(EventCategoryKeyboard | EventCategoryInput);
 		protected:
-			KeyEvent(int32 keyCode): keyCode(keyCode) { }
-			int32 keyCode;
+			KeyEvent(KeyCode keyCode): keyCode(keyCode) { }
+			KeyCode keyCode;
 		};
 
 		class KeyDownEvent: public KeyEvent {
 		public:
-			KeyDownEvent(int32 keyCode, uint32 repeatCount): KeyEvent(keyCode), repeatCount(repeatCount) { }
+			KeyDownEvent(KeyCode keyCode, uint32 repeatCount): KeyEvent(keyCode), repeatCount(repeatCount) { }
 
 			inline uint32 getRepeatCount() { return repeatCount; }
 
@@ -38,7 +39,7 @@ namespace ge {
 		};
 		class KeyUpEvent: public KeyEvent {
 		public:
-			KeyUpEvent(int32 keyCode): KeyEvent(keyCode) { }
+			KeyUpEvent(KeyCode keyCode): KeyEvent(keyCode) { }
 
 			const String toString() const override {
 				std::stringstream ss;
@@ -51,7 +52,7 @@ namespace ge {
 
 		class KeyTypedEvent: public KeyEvent {
 		public:
-			KeyTypedEvent(const int32 keycode)
+			KeyTypedEvent(const KeyCode keycode)
 				: KeyEvent(keycode) {}
 
 			const String toString() const override {

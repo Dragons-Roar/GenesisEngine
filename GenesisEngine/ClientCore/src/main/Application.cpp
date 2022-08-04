@@ -1,4 +1,5 @@
 #include <GenesisClientCore/Application.hpp>
+#include <GenesisClientCore/imgui/ImGUILayer.hpp>
 
 namespace ge {
 	namespace clientcore {
@@ -10,6 +11,8 @@ namespace ge {
 
 			window = IWindow::create(WindowProps(config.name));
 			window->setEventCallback(GE_BindEventFunction(Application::onEvent));
+
+			layerStack.pushLayer(new ge::clientcore::ImGUILayer());
 		}
 		Application::~Application() {
 		}
@@ -20,6 +23,10 @@ namespace ge {
 		
 		void Application::onEvent(ge::core::Event& e) {
 			ge::core::EventDispatcher dispatcher(e);
+
+			if(e.getEventType() == ge::core::EventType::KeyTyped) {
+				std::cout << ((char) ((ge::core::KeyTypedEvent&) e).getKeyCode()) << std::endl;
+			}
 
 			// Dispatch event directly to internal functions
 			dispatcher.dispatch<ge::core::WindowCloseEvent>(GE_BindEventFunction(Application::onWindowClose));

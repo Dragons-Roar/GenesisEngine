@@ -51,6 +51,8 @@ namespace ge {
 				return ss.str();
 			}
 
+			void* getNativeWindow() const override { return handle; }
+
 		private:
 			WindowData data;
 			GLFWwindow* handle;

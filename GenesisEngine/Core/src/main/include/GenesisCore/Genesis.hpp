@@ -11,6 +11,7 @@
 #include "./Random.hpp"
 #include "./UUID.hpp"
 #include "./Map.hpp"
+#include "./KeyCode.hpp"
 
 // Events
 #include "./event/Event.hpp"

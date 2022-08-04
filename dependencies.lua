@@ -16,6 +16,7 @@ local jLibRoot = data["libRoot"]
 local jProjectRoot = data["projectRoot"]
 local jLinks = data["links"]
 local jProjects = data["projects"]
+local jIncludes = data["includes"]
 
 print("LibraryRoot: "..jLibRoot)
 print("ProjectRoot: "..jProjectRoot)
@@ -41,14 +42,18 @@ for _, v in pairs(jDependencies) do
 		libraries[v["name"]] = {}
 		local m = libraries[v["name"]]
 		m["type"] = v["library"]["type"]
-		m["script"] = v["library"]["script"] == "provided"
+		m["script"] = v["library"]["script"]
 
 		m["includes"] = "%{wks.location}/"..jLibRoot..v["name"].."/"..v["library"]["includeDir"]
 
 		if m["type"] == "premake" then
 			print("Adding "..v["name"].." as a premake library...")
 
-			table.insert(luaIncludes, jLibRoot..v["name"].."/premake5.lua")
+			if m["script"] == "provided" then
+				table.insert(luaIncludes, jLibRoot..v["name"].."/premake5.lua")
+			else
+				table.insert(luaIncludes, jLibRoot..m["script"])
+			end
 		elseif m["type"] == "header" then
 			print("Adding "..v["name"].." as a header only library...")
 		end
@@ -63,8 +68,20 @@ for _, v in pairs(jProjects) do
 	p["includes"] = jProjectRoot..v["includes"]
 end
 
+for prj, v in pairs(jIncludes) do
+	includeDirs[prj] = {}
+
+	for _, lib in pairs(v) do
+		if libraries[lib]["includes"] ~= nil then
+			table.insert(includeDirs[prj], libraries[lib]["includes"])
+		end
+	end
+end
+
 -- Loop through generated data and add it to dependencies and includeDirs
 for prj, v in pairs(jLinks) do
+	depCount = 0
+
 	includeDirs[prj] = {}
 	local iDir = includeDirs[prj]
 
@@ -76,13 +93,14 @@ for prj, v in pairs(jLinks) do
 	end
 
 	for _, lib in pairs(v) do
-		print("Searching "..lib.." for "..prj)
-
 		if(singleFiles[lib] ~= nil) then
+			depCount = depCount + 1
 			table.insert(iDir, singleFiles[lib]["include"])
 		elseif(headerOnlies[lib] ~= nil) then
+			depCount = depCount + 1
 			table.insert(iDir, headerOnlies[lib]["include"])
 		elseif(string.endswith(lib, ".lib")) then
+			depCount = depCount + 1
 			table.insert(dep, lib)
 		else
 			if(projects[lib] == nil) then
@@ -90,13 +108,14 @@ for prj, v in pairs(jLinks) do
 					error(lib.." could not be found in libs nor in projects!")
 				else
 					if(projects[prj] == nil and (libraries[lib] == nil or libraries[lib]["type"] == "premake")) then
-						print("Adding "..lib.." to dependencies!")
+						depCount = depCount + 1
 						table.insert(dep, lib)
 					end
 					table.insert(iDir, libraries[lib]["includes"])
 				end
 			else
 				if(projects[prj] == nil and (libraries[lib] == nil or libraries[lib] == "premake")) then
+					depCount = depCount + 1
 					table.insert(dep, lib)
 				end
 				table.insert(iDir, projects[lib]["includes"])

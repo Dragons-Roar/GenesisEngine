@@ -23,9 +23,12 @@ namespace ge {
 			if(GLVersion.major < 4 || (GLVersion.major != 4 && GLVersion.minor < 5)) {
 				std::cerr << "Genesis Engine atleast needs OpenGL 4.5!" << std::endl;
 			}
+
+			glClearColor(0.f, 0.f, 0.f, 1.f);
 		}
 		void OpenGLContext::swapBuffers() {
 			glfwSwapBuffers(window);
+			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		}
 	}
 }
