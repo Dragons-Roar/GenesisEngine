@@ -26,7 +26,7 @@ project("GenesisEngine-Client-Core")
 	links {
 	}
 
-	defines { "_CRT_SECURE_NO_WARNINGS" }
+	defines { globalDefines }
 
 	filter "configurations:Debug*"
 		symbols "On"

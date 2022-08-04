@@ -26,7 +26,7 @@ project("GenesisEngine-Editor-Test")
 		dependencies["GenesisEngine-Editor-Test"]
 	}
 
-	defines { "_CRT_SECURE_NO_WARNINGS" }
+	defines { globalDefines }
 
 	filter "configurations:Debug*"
 		symbols "On"
@@ -75,7 +75,7 @@ project("GenesisEngine-Editor")
 		dependencies["GenesisEngine-Editor"]
 	}
 
-	defines { "_CRT_SECURE_NO_WARNINGS" }
+	defines { globalDefines }
 
 	filter "configurations:Debug*"
 		symbols "On"

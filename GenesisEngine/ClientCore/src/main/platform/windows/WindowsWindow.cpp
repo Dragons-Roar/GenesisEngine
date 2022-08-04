@@ -1,5 +1,6 @@
 #include <GenesisClientCore/platform/windows/WindowsWindow.hpp>
 #include <glad/glad.h>
+#include <GenesisClientCore/GraphicsContext.hpp>
 
 namespace ge {
 	namespace clientcore {
@@ -22,6 +23,17 @@ namespace ge {
 			data.width = props.width;
 			data.height = props.height;
 
+			glfwWindowHint(GLFW_CLIENT_API, GLFW_OPENGL_API);
+			glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+			glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 5);
+			glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+			glfwWindowHint(GLFW_DECORATED, true);
+			glfwWindowHint(GLFW_DOUBLEBUFFER, true);
+			glfwWindowHint(GLFW_ALPHA_BITS, 8);
+			glfwWindowHint(GLFW_RED_BITS, 8);
+			glfwWindowHint(GLFW_GREEN_BITS, 8);
+			glfwWindowHint(GLFW_BLUE_BITS, 8);
+
 			// Create Window
 			std::cout << "Creating Window '" << props.title << "'" << std::endl;
 			if(glfwWindowCount == 0) {
@@ -42,16 +54,10 @@ namespace ge {
 			// Now create the window and create the context
 			// Context will later be abstracted to support also directx and vulkan context
 			handle = glfwCreateWindow(data.width, data.height, data.title.c_str(), nullptr, nullptr);
-			glfwMakeContextCurrent(handle);
-
-			std::cout << "Initializing glad..." << std::endl;
-			int status = gladLoadGLLoader((GLADloadproc) glfwGetProcAddress);
-			if(!status) {
-				std::cerr << "Failed to initialize glad!" << std::endl;
-			}
+			context = (ge::clientcore::OpenGLContext*) ge::clientcore::IGraphicsContext::create(handle);
+			context->init();
 
 			setVSync(true);
-
 			glfwSetWindowUserPointer(handle, &data);
 
 			++glfwWindowCount;
@@ -65,7 +71,7 @@ namespace ge {
 
 		void WindowsWindow::onUpdate() {
 			glfwPollEvents();
-			glfwSwapBuffers(handle);
+			context->swapBuffers();
 		}
 		uint32 WindowsWindow::getWidth() const { return data.width; }
 		uint32 WindowsWindow::getHeight() const { return data.height; }
@@ -88,6 +94,8 @@ namespace ge {
 			--glfwWindowCount;
 
 			if(glfwWindowCount == 0) glfwTerminate();
+			
+			delete context;
 		}
 	}
 }

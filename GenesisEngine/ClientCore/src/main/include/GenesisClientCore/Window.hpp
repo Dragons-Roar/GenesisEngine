@@ -1,6 +1,7 @@
 #pragma once
 #include "./Defines.hpp"
 #include <GenesisCore/event/Event.hpp>
+#include <GenesisCore/GenesisBase.hpp>
 
 namespace ge {
 	namespace clientcore {
@@ -13,8 +14,10 @@ namespace ge {
 			}
 		};
 		
-		class IWindow {
+		class IWindow: public ge::core::GClass {
 		public:
+			IWindow() = default;
+
 			typedef std::function<void(ge::core::Event&)> EventCallback;
 
 			static IWindow* create(const WindowProps& props = WindowProps());
@@ -32,6 +35,8 @@ namespace ge {
 			virtual void setEventCallback(const EventCallback& func) = 0;
 			virtual void setVSync(bool enable) = 0;
 			virtual bool isVSync() const = 0;
+
+			virtual const String toString() const override = 0;
 
 		protected:
 

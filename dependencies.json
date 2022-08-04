@@ -1,6 +1,7 @@
 {
 	"libRoot": "ThirdParty/",
 	"projectRoot": "%{wks.location}/",
+	"defines": [ "GE_OPENGL", "_CRT_SECURE_NO_WARNINGS" ],
 	"projects": [
 		{
 			"name": "GenesisEngine-Client",

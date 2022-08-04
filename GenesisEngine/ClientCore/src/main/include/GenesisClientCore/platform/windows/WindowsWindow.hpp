@@ -2,10 +2,18 @@
 #include "../../Defines.hpp"
 #include <GLFW/glfw3.h>
 #include "../../Window.hpp"
+#include "../opengl/OpenGLContext.hpp"
 
 namespace ge {
 	namespace clientcore {
-		struct WindowData {
+		struct WindowData: public ge::core::GClass {
+		public:
+			const String toString() const override {
+				std::stringstream ss;
+				ss << "ge::clientcore::WindowData{title:" << title << ",width:" << width << ",height:" << height << ",vSync:" << vSync << "}";
+				return ss.str();
+			}
+
 			String title;
 			uint32 width, height;
 			bool vSync;
@@ -36,9 +44,16 @@ namespace ge {
 				return glfwWindowShouldClose(handle);
 			}
 
+			const String toString() const override {
+				std::stringstream ss;
+				ss << "ge::clientcore::WindowsWindow{data:" << data.toString() << ",#glfwWindowCount:" << glfwWindowCount << "}";
+				return ss.str();
+			}
+
 		private:
 			WindowData data;
 			GLFWwindow* handle;
+			OpenGLContext* context;
 
 			static uint8 glfwWindowCount;
 		};

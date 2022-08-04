@@ -26,7 +26,7 @@ project(cfg_name.."-Client-Test")
 		dependencies["Sandbox-Client-Test"]
 	}
 
-	defines { "_CRT_SECURE_NO_WARNINGS" }
+	defines { globalDefines }
 
 	filter "configurations:Debug*"
 		symbols "On"
@@ -75,7 +75,7 @@ project(cfg_name.."-Client")
 		dependencies["Sandbox-Client"]
 	}
 
-	defines { "_CRT_SECURE_NO_WARNINGS" }
+	defines { globalDefines }
 
 	filter "configurations:Debug*"
 		symbols "On"

@@ -10,6 +10,9 @@ int main(int argc, char** argv) {
 
 	ge::clientcore::WindowProps props("Genesis Engine Sandbox", 1920, 1080);
 	ge::clientcore::IWindow* window = ge::clientcore::IWindow::create(props);
+
+	std::cout << window->toString() << std::endl;
+
 	while(!window->shouldClose()) {
 		window->onUpdate();
 	}

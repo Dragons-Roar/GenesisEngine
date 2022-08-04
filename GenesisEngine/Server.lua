@@ -26,7 +26,7 @@ project("GenesisEngine-Server-Test")
 		dependencies["GenesisEngine-Server-Test"]
 	}
 
-	defines { "_CRT_SECURE_NO_WARNINGS" }
+	defines { globalDefines }
 
 	filter "configurations:Debug*"
 		symbols "On"
@@ -74,7 +74,7 @@ project("GenesisEngine-Server")
 	links {
 	}
 
-	defines { "_CRT_SECURE_NO_WARNINGS" }
+	defines { globalDefines }
 
 	filter "configurations:Debug*"
 		symbols "On"

@@ -1,6 +1,7 @@
 includeDirs = {}
 dependencies = {}
 luaIncludes = {}
+globalDefines = {}
 local libraries = {}
 local projects = {}
 local singleFiles = {}
@@ -18,6 +19,8 @@ local jProjects = data["projects"]
 
 print("LibraryRoot: "..jLibRoot)
 print("ProjectRoot: "..jProjectRoot)
+
+globalDefines = data["defines"]
 
 -- Parse Dependency Packets
 for _, v in pairs(jDependencies) do
@@ -102,6 +105,7 @@ for prj, v in pairs(jLinks) do
 	end
 end
 
+-- Print Include Results
 print("Includes:")
 for prj, v in pairs(includeDirs) do
 	print("  "..prj..":")
@@ -110,10 +114,17 @@ for prj, v in pairs(includeDirs) do
 	end
 end
 
+-- Print Link Results
 print("Links:")
 for prj, v in pairs(dependencies) do
 	print("  "..prj..":")
 	for _, dir in pairs(v) do
 		print("  - "..dir)
 	end
+end
+
+-- Print Define Results
+print("Defines:")
+for _, def in pairs(globalDefines) do
+	print("  "..def)
 end
