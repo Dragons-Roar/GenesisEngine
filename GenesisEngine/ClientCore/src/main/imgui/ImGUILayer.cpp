@@ -172,7 +172,6 @@ namespace ge {
 		}
 		bool ImGUILayer::onMouseButtonUpEvent(ge::core::MouseButtonUpEvent& e) {
 			GE_GetImGuiIO();
-
 			io.MouseDown[e.getButton()] = false;
 
 			return false;
@@ -209,11 +208,11 @@ namespace ge {
 		}
 		bool ImGUILayer::onKeyTypedEvent(ge::core::KeyTypedEvent& e) {
 			GE_GetImGuiIO();
-
 			int32 keycode = e.getKeyCode();
 			if(keycode > 0 && keycode < 0x10000) {
 				io.AddInputCharacter((unsigned short) keycode);
 			}
+
 			return false;
 		}
 		bool ImGUILayer::onWindowResizeEvent(ge::core::WindowResizeEvent& e) {

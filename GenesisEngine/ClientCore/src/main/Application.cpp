@@ -1,5 +1,6 @@
 #include <GenesisClientCore/Application.hpp>
 #include <GenesisClientCore/imgui/ImGUILayer.hpp>
+#include <GenesisClientCore/Input.hpp>
 
 namespace ge {
 	namespace clientcore {
