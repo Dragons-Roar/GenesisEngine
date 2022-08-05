@@ -91,7 +91,7 @@ namespace ge {
 				List<T> list;
 				std::vector<T> temp;
 				temp.reserve(size());
-				for(int32 i = handle.size() - 1; i >= 0; --i) {
+				for(size_t i = handle.size() - 1; i >= 0; --i) {
 					temp.push_back(handle[i]);
 				}
 				handle = temp;

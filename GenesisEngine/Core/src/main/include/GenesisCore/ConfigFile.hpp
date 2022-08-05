@@ -270,7 +270,7 @@ namespace ge {
 			/// <returns></returns>
 			inline bool contains(String key) const;
 
-			const String toString() const override {
+			virtual const String toString() const override {
 				std::stringstream ss;
 				ss << "ge::core::ConfigSection" << std::endl;
 				return ss.str();
@@ -286,7 +286,7 @@ namespace ge {
 				String key = keys.popLast();
 				if(table->contains(key)) {
 					auto val = table->get(key);
-					if(keys.size() == 0) return val->as_integer()->get();
+					if(keys.size() == 0) return static_cast<T>(val->as_integer()->get());
 					if(val->is_table()) {
 						return _getInt<T>(val->as_table(), keys);
 					}
@@ -294,6 +294,22 @@ namespace ge {
 					GE_ThrowException(exceptions::KeyNotFound(key.c_str()));
 					return 0;
 				}
+				return 0;
+			}
+			template <typename T>
+			T _getFloat(toml::table* table, List<String>& keys) const {
+				String key = keys.popLast();
+				if(table->contains(key)) {
+					auto val = table->get(key);
+					if(keys.size() == 0) return static_cast<T>(val->as_floating_point()->get());
+					if(val->is_table()) {
+						return _getFloat<T>(val->as_table(), keys);
+					}
+				} else {
+					GE_ThrowException(exceptions::KeyNotFound(key.c_str()));
+					return 0;
+				}
+				return static_cast<T>(0.f);
 			}
 			template <typename T>
 			T _getFloating(toml::table* table, List<String>& keys) const {
@@ -318,7 +334,7 @@ namespace ge {
 		/// <summary>
 		/// A simple Toml config file wrapper
 		/// </summary>
-		class ConfigFile: public ConfigSection, public GClass {
+		class ConfigFile: public ConfigSection {
 		public:
 			/// <summary>
 			/// A simple config file

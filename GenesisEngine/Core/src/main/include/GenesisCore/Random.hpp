@@ -6,7 +6,7 @@ namespace ge {
 	namespace core {
 		class Random: public GClass {
 		public:
-			Random(int64 seed);
+			Random(uint32 seed);
 
 			/// <summary>
 			/// Gets a pseudo random number
@@ -54,7 +54,7 @@ namespace ge {
 			}
 
 		private:
-			uint64 seed;
+			uint32 seed;
 
 			std::random_device rd;
 			std::default_random_engine dre;

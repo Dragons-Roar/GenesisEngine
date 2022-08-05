@@ -129,13 +129,13 @@ namespace ge {
 			glfwSetScrollCallback(handle, [](GLFWwindow* window, float64 x, float64 y) {
 				GE_GetWindowData();
 
-				ge::core::MouseScrolledEvent e(x, y);
+				ge::core::MouseScrolledEvent e(static_cast<float32>(x), static_cast<float32>(y));
 				data.eventFunc(e);
 			});
 			glfwSetCursorPosCallback(handle, [](GLFWwindow* window, float64 x, float64 y) {
 				GE_GetWindowData();
 
-				ge::core::MouseMovedEvent e(x, y);
+				ge::core::MouseMovedEvent e(static_cast<float32>(x), static_cast<float32>(y));
 				data.eventFunc(e);
 			});
 		}
@@ -147,8 +147,8 @@ namespace ge {
 		uint32 WindowsWindow::getWidth() const { return data.width; }
 		uint32 WindowsWindow::getHeight() const { return data.height; }
 
-		float32 WindowsWindow::getWidthF() const { return (float32) data.width; }
-		float32 WindowsWindow::getHeightF() const { return (float32) data.height; }
+		float32 WindowsWindow::getWidthF() const { return static_cast<float32>(data.width); }
+		float32 WindowsWindow::getHeightF() const { return static_cast<float32>(data.height); }
 
 		void WindowsWindow::setEventCallback(const EventCallback& func) {
 			data.eventFunc = func;

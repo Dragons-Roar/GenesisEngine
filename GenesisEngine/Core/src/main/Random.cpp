@@ -2,7 +2,7 @@
 
 namespace ge {
 	namespace core {
-		Random::Random(int64 seed): seed(seed) {
+		Random::Random(uint32 seed): seed(seed) {
 			std::srand(seed);
 
 			std::cout << seed << std::endl;

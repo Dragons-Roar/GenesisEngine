@@ -53,7 +53,7 @@ namespace ge {
 		void ImGUILayer::end() {
 			GE_GetImGuiIO();
 			Application& app = Application::getInstance();
-			io.DisplaySize = ImVec2(app.getWindow().getWidth(), app.getWindow().getHeight());
+			io.DisplaySize = ImVec2(static_cast<float32>(app.getWindow().getWidth()), static_cast<float32>(app.getWindow().getHeight()));
 
 			ImGui::Render();
 			ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());

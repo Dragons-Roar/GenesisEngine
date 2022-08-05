@@ -50,6 +50,7 @@ namespace ge {
 				}
 				GE_ThrowException(exceptions::WrongValueType(key, "bool"));
 			}
+			return "";
 		}
 		String ConfigSection::_getString(toml::table* table, List<String>& keys) const {
 			String key = keys.popLast();
@@ -77,8 +78,8 @@ namespace ge {
 				}
 			} else {
 				GE_ThrowException(exceptions::KeyNotFound(key.c_str()));
-				return "";
 			}
+			return "";
 		}
 
 		int32 ConfigSection::getInt32(String key, bool deep) const {
@@ -88,7 +89,7 @@ namespace ge {
 				list.reverse();
 				return _getInt<int32>(handle, list);
 			} else {
-				return handle->get(key)->as_integer()->get();
+				return static_cast<int32>(handle->get(key)->as_integer()->get());
 			}
 		}
 		uint32 ConfigSection::getUInt32(String key, bool deep) const {
@@ -98,7 +99,7 @@ namespace ge {
 				list.reverse();
 				return _getInt<uint32>(handle, list);
 			} else {
-				return handle->get(key)->as_integer()->get();
+				return static_cast<uint32>(handle->get(key)->as_integer()->get());
 			}
 		}
 		float32 ConfigSection::getFloat32(String key, bool deep) const {
@@ -106,9 +107,9 @@ namespace ge {
 				List<String> list;
 				Utils::splitString(list, key, '.');
 				list.reverse();
-				return _getInt<float32>(handle, list);
+				return _getFloat<float32>(handle, list);
 			} else {
-				return handle->get(key)->as_floating_point()->get();
+				return static_cast<float32>(handle->get(key)->as_floating_point()->get());
 			}
 		}
 		float64 ConfigSection::getFloat64(String key, bool deep) const {
@@ -116,9 +117,9 @@ namespace ge {
 				List<String> list;
 				Utils::splitString(list, key, '.');
 				list.reverse();
-				return _getInt<float64>(handle, list);
+				return _getFloat<float64>(handle, list);
 			} else {
-				return handle->get(key)->as_floating_point()->get();
+				return static_cast<float64>(handle->get(key)->as_floating_point()->get());
 			}
 		}
 		bool ConfigSection::getBool(String key, bool deep) const {
@@ -181,6 +182,7 @@ namespace ge {
 				GE_ThrowException(exceptions::KeyNotFound(key.c_str()));
 				return false;
 			}
+			return false;
 		}
 
 		List<String> ConfigSection::keys(bool deep, bool sort) const {
