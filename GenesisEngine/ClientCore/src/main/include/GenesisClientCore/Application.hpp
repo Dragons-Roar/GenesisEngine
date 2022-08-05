@@ -7,6 +7,8 @@
 #include <GenesisCore/event/WindowEvent.hpp>
 #include <GenesisCore/LayerStack.hpp>
 
+#include <GenesisClientCore/imgui/ImGUILayer.hpp>
+
 #ifdef GE_WINDOWS
 #	include <Windows.h>
 #endif
@@ -59,6 +61,8 @@ namespace ge {
 			friend int ::wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine, int nCmdShow);
 			#endif 
 			#endif
+
+			ImGUILayer* imGuiLayer;
 		};
 
 		// To be defined in Sandbox

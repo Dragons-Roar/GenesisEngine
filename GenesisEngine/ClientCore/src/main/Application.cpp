@@ -14,7 +14,8 @@ namespace ge {
 			window = IWindow::create(WindowProps(config.name));
 			window->setEventCallback(GE_BindEventFunction(Application::onEvent));
 
-			layerStack.pushLayer(new ge::clientcore::ImGUILayer());
+			imGuiLayer = new ImGUILayer();
+			layerStack.pushOverlay(imGuiLayer);
 		}
 		Application::~Application() {
 		}
@@ -42,6 +43,13 @@ namespace ge {
 					{
 						for(ge::core::Layer* layer : layerStack)
 							layer->onUpdate();
+					}
+					{
+						imGuiLayer->begin();
+						for(ge::core::Layer* layer : layerStack) {
+							layer->onImGUIRender();
+						}
+						imGuiLayer->end();
 					}
 				}
 

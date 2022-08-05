@@ -13,6 +13,7 @@ namespace ge {
 			virtual void onDetach() {}
 			virtual void onUpdate() {}
 			virtual void onEvent(Event& e) {}
+			virtual void onImGUIRender() {}
 
 			const String& getName() const { return debugName; }
 		private:
