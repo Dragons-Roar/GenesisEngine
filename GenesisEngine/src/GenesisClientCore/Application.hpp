@@ -9,6 +9,9 @@
 
 #include <GenesisClientCore/imgui/ImGUILayer.hpp>
 
+#include "renderer/Shader.hpp"
+#include "renderer/Buffer.hpp"
+
 #ifdef GE_WINDOWS
 #	include <Windows.h>
 #endif
@@ -67,7 +70,11 @@ namespace ge {
 			#endif 
 			#endif
 
-			GLuint vertexArray, vertexBuffer, indexBuffer;
+			std::unique_ptr<Shader> shader;
+			IVertexBuffer* vertexBuffer;
+			IIndexBuffer* indexBuffer;
+
+			GLuint vertexArray;
 
 			ImGUILayer* imGuiLayer;
 		};

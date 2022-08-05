@@ -23,8 +23,6 @@ namespace ge {
 			glGenVertexArrays(1, &vertexArray);
 			glBindVertexArray(vertexArray);
 
-			glGenBuffers(1, &vertexBuffer);
-			glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
 
 			float32 vertices[3 * 3] = {
 				-.5f, -.5f, 0.f,
@@ -32,15 +30,15 @@ namespace ge {
 				 0.f,  .5f, 0.f
 			};
 
-			glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+			vertexBuffer = IVertexBuffer::create(vertices, sizeof(vertices));
+
 			glEnableVertexAttribArray(0);
 			glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float32), nullptr);
 
-			glGenBuffers(1, &indexBuffer);
-			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
-
 			uint32 indices[3] = { 0, 1, 2 };
-			glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+			indexBuffer = IIndexBuffer::create(indices, sizeof(indices));
+
+			shader = std::make_unique<Shader>("assets/shader/basic.vert", "assets/shader/basic.frag");
 		}
 		Application::~Application() {
 		}
@@ -75,8 +73,9 @@ namespace ge {
 				if(!minimized) {
 					glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+					shader->bind();
 					glBindVertexArray(vertexArray);
-					glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, nullptr);
+					glDrawElements(GL_TRIANGLES, indexBuffer->getCount(), GL_UNSIGNED_INT, nullptr);
 
 					{
 						for(ge::core::Layer* layer : layerStack)
