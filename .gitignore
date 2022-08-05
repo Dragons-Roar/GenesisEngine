@@ -3,6 +3,12 @@ bin-int/
 doc/
 .vs/
 
+/ThirdParty/glfw
+/ThirdParty/gtest
+/ThirdParty/imgui
+/ThirdParty/spdlog
+/ThirdParty/toml++
+
 *.sln
 *.vcxproj
 *.vcxproj.filters
