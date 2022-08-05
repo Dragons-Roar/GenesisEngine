@@ -1,11 +1,11 @@
 # Genesis Engine
 The goal of the Genesis Engine is to be a simple, (lightweight) and easy to use game engine  
-The main goal of this engine is to make the production fo voxel games simple by adding default algorithms for performance  
+The main goal of this engine is to make the production of voxel games simple by adding default algorithms for performance  
 
 The Scripting Language will be C++ at the beginning but may be expanded to C# or JS  
 
 ## Current Features
-Currently there are no features as this project is still in development
+Currently there are no features as this project is still in development  
 
 ## How to install
 1. To Install the Engine you need [Node.js](https://nodejs.org/en/), [Git](https://git-scm.com) and [Premake5](https://premake.github.io)
@@ -28,11 +28,11 @@ Currently there are no features as this project is still in development
 | Path | Description |
 |------|-------------|
 | GenesisEngine/ | Here are the sources for the Engine Modules |
-| GenesisEngine/Client/ | Here are the client runtime sources stored. These sources are e.g. Scene Loader |
-| GenesisEngine/Server/ | This project stores sources for the Server. Those sources range from Networking, Server, Authentification and so on |
-| GenesisEngine/Core/ | Here are sources stored that are needed for the entire engine. The project also holds sources for abstractions |
-| GenesisEngine/ClientCore/ | Here are the source files stored, that are only needed for the client. These sources range from rendering to sounds, gui, ...
-| GenesisEngine/Editor | This project stores the sources that are needed to run the Genesis Editor |
+| GenesisEngine/src/GenesisClient/ | Here are the client runtime sources stored. These sources are e.g. Scene Loader |
+| GenesisEngine/src/GenesisServer/ | This project stores sources for the Server. Those sources range from Networking, Server, Authentification and so on |
+| GenesisEngine/src/GenesisCore/ | Here are sources stored that are needed for the entire engine. The project also holds sources for abstractions |
+| GenesisEngine/src/GenesisClientCore/ | Here are the source files stored, that are only needed for the client. These sources range from rendering to sounds, gui, ...
+| GenesisEngine/src/GenesisEditor/ | This project stores the sources that are needed to run the Genesis Editor |
 | Sandbox/ | Here are the sources of the game stored |
 | Sandbox/Client | Here is the client code stored |
 | Sandbox/Server | Here is special server code stored. In the most cases, no sources are needed in here because the engine already handles the most use cases |
