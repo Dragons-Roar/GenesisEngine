@@ -13,6 +13,11 @@
 #	include <Windows.h>
 #endif
 
+// Temporary
+#ifdef GE_OPENGL
+#	include <glad/glad.h>
+#endif
+
 int main(int argc, char** argv);
 
 namespace ge {
@@ -61,6 +66,8 @@ namespace ge {
 			friend int ::wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine, int nCmdShow);
 			#endif 
 			#endif
+
+			GLuint vertexArray, vertexBuffer, indexBuffer;
 
 			ImGUILayer* imGuiLayer;
 		};

@@ -3,6 +3,8 @@
 #include <GenesisClientCore/Input.hpp>
 #include <GenesisCore/Logger.hpp>
 
+#include <GLFW/glfw3.h>
+
 namespace ge {
 	namespace clientcore {
 		Application* Application::instance = nullptr;
@@ -16,6 +18,29 @@ namespace ge {
 
 			imGuiLayer = new ImGUILayer();
 			layerStack.pushOverlay(imGuiLayer);
+
+			// ---> Temporary OpenGL Code <--- //
+			glGenVertexArrays(1, &vertexArray);
+			glBindVertexArray(vertexArray);
+
+			glGenBuffers(1, &vertexBuffer);
+			glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
+
+			float32 vertices[3 * 3] = {
+				-.5f, -.5f, 0.f,
+				 .5f, -.5f, 0.f,
+				 0.f,  .5f, 0.f
+			};
+
+			glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+			glEnableVertexAttribArray(0);
+			glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float32), nullptr);
+
+			glGenBuffers(1, &indexBuffer);
+			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
+
+			uint32 indices[3] = { 0, 1, 2 };
+			glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 		}
 		Application::~Application() {
 		}
@@ -38,8 +63,21 @@ namespace ge {
 		}
 
 		void Application::run() {
+			GE_Info("Starting Application...");
+			/* 
+			 * The OpenGL code here is only temporary 
+			 * This will be abtracted and extracted into classes
+			 * to swap choose later between OpenGL and DirectX
+			*/
+			glClearColor(0.f, 0.f, 0.f, 1.f);
+
 			while(running) {
 				if(!minimized) {
+					glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+					glBindVertexArray(vertexArray);
+					glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, nullptr);
+
 					{
 						for(ge::core::Layer* layer : layerStack)
 							layer->onUpdate();
