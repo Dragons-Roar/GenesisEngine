@@ -11,8 +11,7 @@ namespace ge {
 
 		void OpenGLContext::init() {
 			glfwMakeContextCurrent(window);
-			int status = gladLoadGLLoader((GLADloadproc) glfwGetProcAddress);
-			if(!status) {
+			if(!gladLoadGLLoader((GLADloadproc) glfwGetProcAddress)) {
 				GE_Fatal("Failed to initialize glad!");
 			}
 
@@ -29,7 +28,6 @@ namespace ge {
 		}
 		void OpenGLContext::swapBuffers() {
 			glfwSwapBuffers(window);
-			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		}
 	}
 }

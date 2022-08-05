@@ -50,12 +50,14 @@ namespace ge {
 				if(!success) {
 					GE_Fatal("Could not initialize GLFW!");
 				}
+
+				GE_Info("Initializing GLFW error callback...");
 				glfwSetErrorCallback(GLFWErrorCallback);
 			}
 
 			// If not in distribution, enable opengl debug logs
 			#ifndef GE_DIST
-			glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GLFW_TRUE);
+			//glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GLFW_TRUE);
 			#endif
 
 			// Now create the window and create the context
