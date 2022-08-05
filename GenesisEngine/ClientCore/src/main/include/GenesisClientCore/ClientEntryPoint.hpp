@@ -1,15 +1,32 @@
 #pragma once
 #include "./Application.hpp"
+#include <GenesisCore/Logger.hpp>
 
 #ifdef GE_WINDOWS
-extern ge::clientcore::Application* ge::clientcore::createApplication();
+	#include <Windows.h>
+	extern ge::clientcore::Application* ge::clientcore::createApplication();
 
-int main(int argc, char** argv)
-{
-	// TODO: Init Logger and some other stuff
-	auto app = ge::clientcore::createApplication();
-	app->run();
+	#ifndef GE_DIST
+		int main(int argc, char** argv) {
+			ge::core::Logger::init();
+			GE_Info("Initialized Logger!");
 
-	delete app;
-}
+			auto app = ge::clientcore::createApplication();
+			app->run();
+
+			delete app;
+			return 0;
+		}
+	#else
+		int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine, int nCmdShow) {
+			ge::core::Logger::init();
+			GE_Info("Initialized Logger!");
+
+			auto app = ge::clientcore::createApplication();
+			app->run();
+
+			delete app;
+			return 0;
+		}
+	#endif
 #endif

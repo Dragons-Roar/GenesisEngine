@@ -8,9 +8,6 @@ namespace ge {
 		Application* Application::instance = nullptr;
 
 		Application::Application(const ApplicationConfiguration& config): appConfig(config) {
-			ge::core::Logger::init();
-			GE_Info("Initialized Logger!");
-
 			if(instance) std::cerr << "Application already exists!" << std::endl;
 			instance = this;
 

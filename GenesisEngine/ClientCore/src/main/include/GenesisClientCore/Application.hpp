@@ -7,6 +7,10 @@
 #include <GenesisCore/event/WindowEvent.hpp>
 #include <GenesisCore/LayerStack.hpp>
 
+#ifdef GE_WINDOWS
+#	include <Windows.h>
+#endif
+
 int main(int argc, char** argv);
 
 namespace ge {
@@ -47,7 +51,14 @@ namespace ge {
 			ge::core::LayerStack layerStack;
 
 			static Application* instance;
+
 			friend int ::main(int argc, char** argv);
+
+			#ifdef GE_WINDOWS 
+			#ifdef GE_DIST
+			friend int ::wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine, int nCmdShow);
+			#endif 
+			#endif
 		};
 
 		// To be defined in Sandbox
