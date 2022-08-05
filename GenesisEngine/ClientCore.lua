@@ -1,13 +1,11 @@
-group "GenesisEngine/Tests"
-
-group "GenesisEngine"
-project("GenesisEngine-Client-Core")
+group "Genesis"
+project "Genesis-ClientCore"
 	kind "StaticLib"
 	systemversion "latest"
 	language "C++"
 	cppdialect(cfg_cxxStandard)
-	location "%{wks.location}/GenesisEngine/ClientCore/src/main/"
-	
+	location "%{wks.location}/GenesisEngine/src/GenesisClientCore/"
+
 	debugdir("%{wks.location}/bin/"..outdir)
 	targetdir("%{wks.location}/bin/"..outdir)
 	objdir("%{wks.location}/bin-int/"..outdir)
@@ -20,10 +18,7 @@ project("GenesisEngine-Client-Core")
 	}
 
 	includedirs {
-		includeDirs["GenesisEngine-Client-Core"]
-	}
-
-	links {
+		includeDirs["Genesis-ClientCore"]
 	}
 
 	defines { globalDefines }
@@ -47,4 +42,3 @@ project("GenesisEngine-Client-Core")
 		defines { "GE_MACOSX", "GE_UNIX" }
 	filter "system:linux"
 		defines { "GE_LINUX", "GE_UNIX" }
-	

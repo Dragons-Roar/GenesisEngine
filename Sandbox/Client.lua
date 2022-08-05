@@ -98,4 +98,4 @@ project(cfg_name.."-Client")
 		defines { "GE_LINUX", "GE_UNIX" }
 	
 	filter { "system:windows", "configurations:Dist*" }
-		linkoptions ' /SUBSYSTEM:WINDOWS'
+		linkoptions '/SUBSYSTEM:WINDOWS'

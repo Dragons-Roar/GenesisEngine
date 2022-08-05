@@ -1,4 +1,3 @@
-#include <GenesisClient/GenesisClient.hpp>
 #include <GenesisCore/Genesis.hpp>
 #include <GenesisCore/event/Event.hpp>
 #include <GenesisClientCore/Genesis.hpp>

@@ -1,6 +1,4 @@
 #include <GenesisCore/GenesisCore.hpp>
-#include <GenesisClient/GenesisClient.hpp>
-#include <GenesisServer/GenesisServer.hpp>
 #include <iostream>
 
 int main(int argc, char** argv) {

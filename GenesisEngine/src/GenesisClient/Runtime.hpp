@@ -2,9 +2,9 @@
 
 namespace ge {
 	namespace server {
-		class GenesisServer {
+		class Runtime {
 		public:
-			static void init();
+			static void run();
 		};
 	}
 }

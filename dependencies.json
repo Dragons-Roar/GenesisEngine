@@ -4,24 +4,24 @@
 	"defines": [ "GE_OPENGL", "_CRT_SECURE_NO_WARNINGS" ],
 	"projects": [
 		{
-			"name": "GenesisEngine-Client",
-			"location": "GenesisEngine/Client/src/main/",
-			"includes": "GenesisEngine/Client/src/main/include/"
+			"name": "Genesis-Client",
+			"location": "GenesisEngine/src/GenesisClient/",
+			"includes": "GenesisEngine/src/"
 		},
 		{
-			"name": "GenesisEngine-Server",
-			"location": "GenesisEngine/Server/src/main/",
-			"includes": "GenesisEngine/Server/src/main/include/"
+			"name": "Genesis-Server",
+			"location": "GenesisEngine/src/GenesisServer/",
+			"includes": "GenesisEngine/src/"
 		},
 		{
-			"name": "GenesisEngine-Core",
-			"location": "GenesisEngine/Core/src/main/",
-			"includes": "GenesisEngine/Core/src/main/include/"
+			"name": "Genesis-Core",
+			"location": "GenesisEngine/src/GenesisCore/",
+			"includes": "GenesisEngine/src/"
 		},
 		{
-			"name": "GenesisEngine-Client-Core",
-			"location": "GenesisEngine/ClientCore/src/main/",
-			"includes": "GenesisEngine/ClientCore/src/main/include/"
+			"name": "Genesis-ClientCore",
+			"location": "GenesisEngine/src/GenesisClientCore/",
+			"includes": "GenesisEngine/src/"
 		},
 		{
 			"name": "Sandbox-Server",
@@ -142,67 +142,56 @@
 	],
 	"links": {
 		"Sandbox-Server": [
-			"GenesisEngine-Core", "GenesisEngine-Server", "Sandbox-Server",
+			"Genesis-Core", "Genesis-Server", "Sandbox-Server",
 			"spdlog", "toml++", "json", "glm",
 			"boost/preprocessor"
 		],
 		"Sandbox-Client": [ 
-			"GenesisEngine-Core", "GenesisEngine-Client-Core", "GenesisEngine-Client", "GenesisEngine-Server", "Sandbox-Server",
+			"Genesis-Core", "Genesis-ClientCore", "Genesis-Client", "Genesis-Server", "Sandbox-Server",
 			"spdlog", "toml++", "json", "glfw", "glad", "imgui", "glm",
 			"opengl32.lib"
 		],
 		"Sandbox-Client-Test": [ 
-			"GenesisEngine-Core", "GenesisEngine-Client", "GenesisEngine-Server", "Sandbox-Server",
+			"Genesis-Core", "Genesis-Client", "Genesis-Server", "Sandbox-Server",
 			"spdlog", "gtest", "toml++", "json", "glfw", "glad", "imgui", "glm",
 			"opengl32.lib"
 		],
 		"Sandbox-Server-Test": [
-			"GenesisEngine-Core", "GenesisEngine-Server", "Sandbox-Server",
+			"Genesis-Core", "Genesis-Server", "Sandbox-Server",
 			"spdlog", "gtest", "toml++", "json", "glm"
 		],
 		"Sandbox-ServerLauncher": [
-			"GenesisEngine-Core", "GenesisEngine-Server", "Sandbox-Server",
+			"Genesis-Core", "Genesis-Server", "Sandbox-Server",
 			"spdlog", "toml++", "json", "glm"
 		],
-		"GenesisEngine-Editor": [ 
-			"GenesisEngine-Core", "GenesisEngine-Client", "GenesisEngine-Server",
+		"Genesis-Editor": [ 
+			"Genesis-Core", "Genesis-Client", "Genesis-Server",
 			"spdlog", "toml++", "json", "glfw", "glad", "imgui", "glm",
 			"boost/preprocessor",
 			"opengl32.lib"
 		],
-		"GenesisEngine-Client": [
-			"GenesisEngine-Core", "GenesisEngine-Server", "GenesisEngine-Client",
+		"Genesis-Client": [
+			"Genesis-Core", "Genesis-Server", "Genesis-Client",
 			"spdlog", "toml++", "json", "glfw", "imgui", "glm",
 			"boost/preprocessor"
 		],
-		"GenesisEngine-Client-Test": [
-			"GenesisEngine-Core", "GenesisEngine-Client",
-			"spdlog", "gtest", "toml++", "json", "glfw", "glad", "imgui", "glm",
-			"boost/preprocessor",
-			"opengl32.lib"
-		],
-		"GenesisEngine-Server": [
-			"GenesisEngine-Core", "GenesisEngine-Server",
+		"Genesis-Server": [
+			"Genesis-Core", "Genesis-Server",
 			"spdlog", "toml++", "json", "glm",
 			"boost/preprocessor"
 		],
-		"GenesisEngine-Server-Test": [
-			"GenesisEngine-Core", "GenesisEngine-Server",
-			"spdlog", "gtest", "toml++", "json", "glm",
-			"boost/preprocessor"
-		],
-		"GenesisEngine-Core": [
-			"GenesisEngine-Core",
+		"Genesis-Core": [
+			"Genesis-Core",
 			"spdlog", "toml++", "json", "glm",
 			"boost/preprocessor"
 		],
-		"GenesisEngine-Core-Test": [
-			"GenesisEngine-Core",
+		"Genesis-Core-Test": [
+			"Genesis-Core",
 			"spdlog", "gtest", "toml++", "json", "glm",
 			"boost/preprocessor"
 		],
-		"GenesisEngine-Client-Core": [
-			"GenesisEngine-Client-Core", "GenesisEngine-Core",
+		"Genesis-ClientCore": [
+			"Genesis-ClientCore", "Genesis-Core",
 			"spdlog", "toml++", "json", "glfw", "glad", "imgui", "glm",
 			"boost/preprocessor"
 		]
