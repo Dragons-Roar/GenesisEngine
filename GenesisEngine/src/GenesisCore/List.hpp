@@ -82,6 +82,11 @@ namespace ge {
 				}
 			}
 
+			std::vector<T>::iterator begin() { return handle.begin(); }
+			std::vector<T>::iterator end() { return handle.end(); }
+			std::vector<T>::reverse_iterator rbegin() { return handle.rbegin(); }
+			std::vector<T>::reverse_iterator rend() { return handle.rend(); }
+
 			String popLast(bool remove = true) {
 				String out = handle.back();
 				if(remove) handle.pop_back();

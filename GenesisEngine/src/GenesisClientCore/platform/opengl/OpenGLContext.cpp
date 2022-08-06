@@ -3,6 +3,8 @@
 #include <glad/glad.h>
 #include <GenesisCore/Logger.hpp>
 
+#include "OpenGLError.hpp"
+
 namespace ge {
 	namespace clientcore {
 		OpenGLContext::OpenGLContext(GLFWwindow* window): window(window) {
@@ -23,6 +25,13 @@ namespace ge {
 			if(GLVersion.major < 4 || (GLVersion.major != 4 && GLVersion.minor < 5)) {
 				GE_Fatal("Genesis Engine atleast needs OpenGL 4.5!");
 			}
+
+			// Enable OpenGL Debug Callback
+			#if 0
+			glEnable(GL_DEBUG_OUTPUT);
+			glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
+			glDebugMessageCallback(openGLDebugCallback, 0);
+			#endif
 
 			glClearColor(0.f, 0.f, 0.f, 1.f);
 		}

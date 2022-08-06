@@ -11,8 +11,12 @@ namespace ge {
 			void bind() const override;
 			void unbind() const override;
 
+			void setLayout(const BufferLayout& layout) { this->layout = layout; }
+			const BufferLayout& getLayout() override { return layout; }
+
 		private:
 			uint32 handle;
+			BufferLayout layout;
 		};
 
 		class OpenGLIndexBuffer: public IIndexBuffer {

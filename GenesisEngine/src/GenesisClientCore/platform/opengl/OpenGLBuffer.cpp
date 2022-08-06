@@ -1,12 +1,13 @@
 #include "OpenGLBuffer.hpp"
 #include <glad/glad.h>
+#include "OpenGLError.hpp"
 
 namespace ge {
 	namespace clientcore {
 		OpenGLVertexBuffer::OpenGLVertexBuffer(float32* vertices, size_t size) {
-			glCreateBuffers(1, &handle);
-			glBindBuffer(GL_ARRAY_BUFFER, handle);
-			glBufferData(GL_ARRAY_BUFFER, size, vertices, GL_STATIC_DRAW);
+			glCheck(glCreateBuffers(1, &handle));
+			glCheck(glBindBuffer(GL_ARRAY_BUFFER, handle));
+			glCheck(glBufferData(GL_ARRAY_BUFFER, size, vertices, GL_STATIC_DRAW));
 		}
 		OpenGLVertexBuffer::~OpenGLVertexBuffer() {
 			glDeleteBuffers(1, &handle);
@@ -20,9 +21,9 @@ namespace ge {
 		}
 
 		OpenGLIndexBuffer::OpenGLIndexBuffer(uint32* indices, uint32 count): count(count) {
-			glCreateBuffers(1, &handle);
-			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, handle);
-			glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * sizeof(uint32), indices, GL_STATIC_DRAW);
+			glCheck(glCreateBuffers(1, &handle));
+			glCheck(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, handle));
+			glCheck(glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * sizeof(uint32), indices, GL_STATIC_DRAW));
 		}
 		OpenGLIndexBuffer::~OpenGLIndexBuffer() {
 			glDeleteBuffers(1, &handle);

@@ -7,6 +7,24 @@
 
 namespace ge {
 	namespace clientcore {
+		static GLenum shaderDataTypeToOpenGLBaseType(ShaderDataType type) {
+			switch(type) {
+				case ShaderDataType::FLOAT:		return GL_FLOAT;
+				case ShaderDataType::FLOAT2:	return GL_FLOAT;
+				case ShaderDataType::FLOAT3:	return GL_FLOAT;
+				case ShaderDataType::FLOAT4:	return GL_FLOAT;
+				case ShaderDataType::INT:		return GL_INT;
+				case ShaderDataType::INT2:		return GL_INT;
+				case ShaderDataType::INT3:		return GL_INT;
+				case ShaderDataType::INT4:		return GL_INT;
+				case ShaderDataType::MAT3:		return GL_FLOAT;
+				case ShaderDataType::MAT4:		return GL_FLOAT;
+				case ShaderDataType::BOOL:		return GL_BOOL;
+			}
+			GE_Assert(false, "Unknown shader data type!");
+			return 0;
+		}
+
 		Application* Application::instance = nullptr;
 
 		Application::Application(const ApplicationConfiguration& config): appConfig(config) {
@@ -23,20 +41,32 @@ namespace ge {
 			glGenVertexArrays(1, &vertexArray);
 			glBindVertexArray(vertexArray);
 
-
-			float32 vertices[3 * 3] = {
-				-.5f, -.5f, 0.f,
-				 .5f, -.5f, 0.f,
-				 0.f,  .5f, 0.f
+			float32 vertices[3 * 7] = {
+				-0.5f, -0.5f, 0.f, 1.f, 0.f, 0.f, 1.f,
+				 0.5f, -0.5f, 0.f, 0.f, 1.f, 0.f, 1.f,
+				 0.f,   0.5f, 0.f, 0.f, 0.f, 1.f, 1.f
 			};
 
-			vertexBuffer = IVertexBuffer::create(vertices, sizeof(vertices));
+			BufferLayout layout = {
+				{ ShaderDataType::FLOAT3, "a_pos" },
+				{ ShaderDataType::FLOAT4, "a_color" }
+			};
 
-			glEnableVertexAttribArray(0);
-			glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float32), nullptr);
+
+			uint32 index = 0;
+			vertexBuffer = IVertexBuffer::create(vertices, sizeof(vertices));
+			for(const auto& element : layout) {
+				glEnableVertexAttribArray(index);
+				glVertexAttribPointer(index, 
+					element.getComponentCount(),
+					shaderDataTypeToOpenGLBaseType(element.type), 
+					element.normalized ? GL_TRUE : GL_FALSE, layout.getStride(), (const void*) element.offset);
+
+				index++;
+			}
 
 			uint32 indices[3] = { 0, 1, 2 };
-			indexBuffer = IIndexBuffer::create(indices, sizeof(indices));
+			indexBuffer = IIndexBuffer::create(indices, 3);
 
 			shader = IShader::create("assets/shader/basic.vert", "assets/shader/basic.frag");
 		}
