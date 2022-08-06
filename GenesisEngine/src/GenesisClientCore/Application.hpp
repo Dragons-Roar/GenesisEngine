@@ -70,7 +70,7 @@ namespace ge {
 			#endif 
 			#endif
 
-			std::unique_ptr<Shader> shader;
+			IShader* shader;
 			IVertexBuffer* vertexBuffer;
 			IIndexBuffer* indexBuffer;
 

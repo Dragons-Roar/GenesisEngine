@@ -4,39 +4,27 @@
 
 namespace ge {
 	namespace clientcore {
-		class Shader {
+		class IShader {
 		public:
-			Shader(const String& vertexShaderFile, const String& fragmentShaderFile);
-			virtual ~Shader();
+			static IShader* create(const String& vertexFile, const String& fragmentFile);
 
-			void bind();
-			void unbind();
+		public:
+			virtual ~IShader() {}
 
-			bool setUniform1f(const String& uniform, float32 x);
-			bool setUniform2f(const String& uniform, float32 x, float32 y);
-			bool setUniform3f(const String& uniform, float32 x, float32 y, float32 z);
-			bool setUniform4f(const String& uniform, float32 x, float32 y, float32 z, float32 a);
-			bool setUniform1i(const String& uniform, int32 x);
-			bool setUniform2i(const String& uniform, int32 x, int32 y);
-			bool setUniform3i(const String& uniform, int32 x, int32 y, int32 z);
-			bool setUniform4i(const String& uniform, int32 x, int32 y, int32 z, int32 a);
-			bool setUniform1b(const String& uniform, bool x);
-			bool setUniformMatrix4fv(const String& uniform, const float32* data);
+			virtual void bind() const = 0;
+			virtual void unbind() const = 0;
 
-			GLuint getShaderID() {
-				return shaderID;
-			}
+			virtual bool setUniform1f(const String& uniform, float32 x) = 0;
+			virtual bool setUniform2f(const String& uniform, float32 x, float32 y) = 0;
+			virtual bool setUniform3f(const String& uniform, float32 x, float32 y, float32 z) = 0;
+			virtual bool setUniform4f(const String& uniform, float32 x, float32 y, float32 z, float32 a) = 0;
+			virtual bool setUniform1i(const String& uniform, int32 x) = 0;
+			virtual bool setUniform2i(const String& uniform, int32 x, int32 y) = 0;
+			virtual bool setUniform3i(const String& uniform, int32 x, int32 y, int32 z) = 0;
+			virtual bool setUniform4i(const String& uniform, int32 x, int32 y, int32 z, int32 a) = 0;
+			virtual bool setUniform1b(const String& uniform, bool x) = 0;
+			virtual bool setUniformMatrix4fv(const String& uniform, const float32* data) = 0;
 		private:
-			uint32 compile(const String& shaderSrc, GLenum type);
-			std::string parse(const String& file);
-			uint32 createShader(const String& vertexShaderFile, const String& fragmentShaderFile);
-
-			uint32 shaderID;
-
-			#ifdef GE_DEBUG
-			std::string d_vertexFile;
-			std::string d_fragmentFile;
-			#endif
 		};
 	}
 }

@@ -38,7 +38,7 @@ namespace ge {
 			uint32 indices[3] = { 0, 1, 2 };
 			indexBuffer = IIndexBuffer::create(indices, sizeof(indices));
 
-			shader = std::make_unique<Shader>("assets/shader/basic.vert", "assets/shader/basic.frag");
+			shader = IShader::create("assets/shader/basic.vert", "assets/shader/basic.frag");
 		}
 		Application::~Application() {
 		}
