@@ -1,18 +1,29 @@
 #pragma once
+#include "RendererAPI.hpp"
+#include "RenderCommand.hpp"
 
+#define GE_GetRenderAPI() ge::clientcore::RendererAPI::getAPI()
 namespace ge {
 	namespace clientcore {
-		// DirectX will later be added
-		enum class RendererAPI {
-			None = 0,
-			OpenGL = 1
-		};
-
 		class Renderer {
 		public:
-			inline static RendererAPI getAPI() { return rendererAPI; }
+			/// <summary>
+			/// Begins a new scene
+			/// </summary>
+			static void beginScene();
+			/// <summary>
+			/// Ends the current scene
+			/// </summary>
+			static void endScene();
+			
+			/// <summary>
+			/// Submits data to the scene
+			/// </summary>
+			/// <param name="arr">The vertex array to submit</param>
+			static void submit(const IVertexArray* arr);
+
+			inline static RendererAPI::API getAPI() { return RendererAPI::getAPI(); }
 		private:
-			static RendererAPI rendererAPI;
 		};
 	}
 }

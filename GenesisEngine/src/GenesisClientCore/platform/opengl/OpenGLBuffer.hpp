@@ -12,7 +12,7 @@ namespace ge {
 			void unbind() const override;
 
 			void setLayout(const BufferLayout& layout) { this->layout = layout; }
-			const BufferLayout& getLayout() override { return layout; }
+			const BufferLayout& getLayout() const override { return layout; }
 
 		private:
 			uint32 handle;

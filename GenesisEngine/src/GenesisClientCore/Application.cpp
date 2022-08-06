@@ -3,31 +3,16 @@
 #include <GenesisClientCore/Input.hpp>
 #include <GenesisCore/Logger.hpp>
 
-#include <GLFW/glfw3.h>
+#include "renderer/Renderer.hpp"
 
 namespace ge {
 	namespace clientcore {
-		static GLenum shaderDataTypeToOpenGLBaseType(ShaderDataType type) {
-			switch(type) {
-				case ShaderDataType::FLOAT:		return GL_FLOAT;
-				case ShaderDataType::FLOAT2:	return GL_FLOAT;
-				case ShaderDataType::FLOAT3:	return GL_FLOAT;
-				case ShaderDataType::FLOAT4:	return GL_FLOAT;
-				case ShaderDataType::INT:		return GL_INT;
-				case ShaderDataType::INT2:		return GL_INT;
-				case ShaderDataType::INT3:		return GL_INT;
-				case ShaderDataType::INT4:		return GL_INT;
-				case ShaderDataType::MAT3:		return GL_FLOAT;
-				case ShaderDataType::MAT4:		return GL_FLOAT;
-				case ShaderDataType::BOOL:		return GL_BOOL;
-			}
-			GE_Assert(false, "Unknown shader data type!");
-			return 0;
-		}
-
 		Application* Application::instance = nullptr;
 
-		Application::Application(const ApplicationConfiguration& config): appConfig(config) {
+		Application::Application(const ApplicationConfiguration& config):
+			appConfig(config),
+			camera(-1.f, 1.f, -1.f, 1.f)
+		{
 			if(instance) std::cerr << "Application already exists!" << std::endl;
 			instance = this;
 
@@ -38,8 +23,8 @@ namespace ge {
 			layerStack.pushOverlay(imGuiLayer);
 
 			// ---> Temporary OpenGL Code <--- //
-			glGenVertexArrays(1, &vertexArray);
-			glBindVertexArray(vertexArray);
+			vertexArray = IVertexArray::create();
+			vertexArray->unbind();
 
 			float32 vertices[3 * 7] = {
 				-0.5f, -0.5f, 0.f, 1.f, 0.f, 0.f, 1.f,
@@ -52,25 +37,22 @@ namespace ge {
 				{ ShaderDataType::FLOAT4, "a_color" }
 			};
 
-
 			uint32 index = 0;
 			vertexBuffer = IVertexBuffer::create(vertices, sizeof(vertices));
-			for(const auto& element : layout) {
-				glEnableVertexAttribArray(index);
-				glVertexAttribPointer(index, 
-					element.getComponentCount(),
-					shaderDataTypeToOpenGLBaseType(element.type), 
-					element.normalized ? GL_TRUE : GL_FALSE, layout.getStride(), (const void*) element.offset);
-
-				index++;
-			}
+			vertexBuffer->setLayout(layout);
+			vertexArray->addVertexBuffer(vertexBuffer);
 
 			uint32 indices[3] = { 0, 1, 2 };
 			indexBuffer = IIndexBuffer::create(indices, 3);
+			vertexArray->setIndexBuffer(indexBuffer);
 
 			shader = IShader::create("assets/shader/basic.vert", "assets/shader/basic.frag");
 		}
 		Application::~Application() {
+			delete indexBuffer;
+			delete vertexBuffer;
+			delete vertexArray;
+			delete shader;
 		}
 
 		void Application::close() {
@@ -97,15 +79,23 @@ namespace ge {
 			 * This will be abtracted and extracted into classes
 			 * to swap choose later between OpenGL and DirectX
 			*/
-			glClearColor(0.f, 0.f, 0.f, 1.f);
+			//glClearColor(0.f, 0.f, 0.f, 1.f);
+			RenderCommand::setClearColor({ 1.f, 0.f, 1.f, 1.f });
 
 			while(running) {
 				if(!minimized) {
-					glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+					//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+					RenderCommand::clear();
 
+					Renderer::beginScene();
 					shader->bind();
-					glBindVertexArray(vertexArray);
-					glDrawElements(GL_TRIANGLES, indexBuffer->getCount(), GL_UNSIGNED_INT, nullptr);
+					shader->setUniformMatrix4fv("u_viewProjectionMatrix", &camera.getViewProjectionMatrix()[0][0]);
+					Renderer::submit(vertexArray);
+					Renderer::endScene();
+
+					/*shader->bind();
+					vertexArray->bind();
+					glDrawElements(GL_TRIANGLES, indexBuffer->getCount(), GL_UNSIGNED_INT, nullptr);*/
 
 					{
 						for(ge::core::Layer* layer : layerStack)

@@ -12,11 +12,13 @@ namespace ge {
 		}
 
 		void OpenGLContext::init() {
+			// Set context and initialize glad
 			glfwMakeContextCurrent(window);
 			if(!gladLoadGLLoader((GLADloadproc) glfwGetProcAddress)) {
 				GE_Fatal("Failed to initialize glad!");
 			}
 
+			// Print some opengl system info
 			GE_Info("OpenGL Info");
 			GE_Info("  Vendor: {0}", glGetString(GL_VENDOR));
 			GE_Info("  Renderer: {0}", glGetString(GL_RENDERER));
@@ -33,6 +35,10 @@ namespace ge {
 			glDebugMessageCallback(openGLDebugCallback, 0);
 			#endif
 
+			// Sets the clear color to a standard
+			// Does not need to use RenderComand abstraction because
+			// this code will only be ran if OpenGL is the selected
+			// renderer api
 			glClearColor(0.f, 0.f, 0.f, 1.f);
 		}
 		void OpenGLContext::swapBuffers() {

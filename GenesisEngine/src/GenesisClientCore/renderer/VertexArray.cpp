@@ -1,14 +1,14 @@
-#include "Shader.hpp"
+#include "VertexArray.hpp"
 #include "Renderer.hpp"
 
-#include "../platform/opengl/OpenGLShader.hpp"
+#include "../platform/opengl/OpenGLVertexArray.hpp"
 
 namespace ge {
 	namespace clientcore {
-		IShader* IShader::create(const String& vertexFile, const String& fragmentFile) {
+		IVertexArray* IVertexArray::create() {
 			switch(GE_GetRenderAPI()) {
 				case GE_RendererAPI_None:		GE_Assert(false, "RendererAPI::None is currently not supported!"); return nullptr;
-				case GE_RendererAPI_OpenGL:		return new OpenGLShader(vertexFile, fragmentFile);
+				case GE_RendererAPI_OpenGL:		return new OpenGLVertexArray();
 			}
 			return nullptr;
 		}

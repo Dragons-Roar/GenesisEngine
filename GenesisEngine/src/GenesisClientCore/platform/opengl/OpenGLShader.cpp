@@ -109,7 +109,7 @@ namespace ge {
 			int32 location = glGetUniformLocation(shaderID, uniform.c_str());
 
 			#ifdef GE_DEBUG
-			if(!location != -1) {
+			if(location != -1) {
 				glUniform1f(location, x);
 				return true;
 			} else {
@@ -125,7 +125,7 @@ namespace ge {
 			int32 location = glGetUniformLocation(shaderID, uniform.c_str());
 
 			#ifdef GE_DEBUG
-			if(!location != -1) {
+			if(location != -1) {
 				glUniform2f(location, x, y);
 				return true;
 			} else {
@@ -141,7 +141,7 @@ namespace ge {
 			int32 location = glGetUniformLocation(shaderID, uniform.c_str());
 
 			#ifdef GE_DEBUG
-			if(!location != -1) {
+			if(location != -1) {
 				glUniform3f(location, x, y, z);
 				return true;
 			} else {
@@ -157,7 +157,7 @@ namespace ge {
 			int32 location = glGetUniformLocation(shaderID, uniform.c_str());
 
 			#ifdef GE_DEBUG
-			if(!location != -1) {
+			if(location != -1) {
 				glUniform4f(location, x, y, z, a);
 				return true;
 			} else {
@@ -173,7 +173,7 @@ namespace ge {
 			int32 location = glGetUniformLocation(shaderID, uniform.c_str());
 
 			#ifdef GE_DEBUG
-			if(!location != -1) {
+			if(location != -1) {
 				glUniform1i(location, x);
 				return true;
 			} else {
@@ -189,7 +189,7 @@ namespace ge {
 			int32 location = glGetUniformLocation(shaderID, uniform.c_str());
 
 			#ifdef GE_DEBUG
-			if(!location != -1) {
+			if(location != -1) {
 				glUniform2i(location, x, y);
 				return true;
 			} else {
@@ -205,7 +205,7 @@ namespace ge {
 			int32 location = glGetUniformLocation(shaderID, uniform.c_str());
 
 			#ifdef GE_DEBUG
-			if(!location != -1) {
+			if(location != -1) {
 				glUniform3i(location, x, y, z);
 				return true;
 			} else {
@@ -221,7 +221,7 @@ namespace ge {
 			int32 location = glGetUniformLocation(shaderID, uniform.c_str());
 
 			#ifdef GE_DEBUG
-			if(!location != -1) {
+			if(location != -1) {
 				glUniform4i(location, x, y, z, a);
 				return true;
 			} else {
@@ -237,7 +237,7 @@ namespace ge {
 			int32 location = glGetUniformLocation(shaderID, uniform.c_str());
 
 			#ifdef GE_DEBUG
-			if(!location != -1) {
+			if(location != -1) {
 				if(x) {
 					glUniform1i(location, 1);
 				} else {
@@ -263,7 +263,7 @@ namespace ge {
 			int32 location = glGetUniformLocation(shaderID, uniform.c_str());
 
 			#ifdef GE_DEBUG
-			if(!location != -1) {
+			if(location != -1) {
 				glUniformMatrix4fv(location, 1, GL_FALSE, data);
 				return true;
 			} else {

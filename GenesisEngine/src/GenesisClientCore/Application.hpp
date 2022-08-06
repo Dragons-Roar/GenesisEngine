@@ -11,6 +11,8 @@
 
 #include "renderer/Shader.hpp"
 #include "renderer/Buffer.hpp"
+#include "renderer/VertexArray.hpp"
+#include "renderer/Camera.hpp"
 
 #ifdef GE_WINDOWS
 #	include <Windows.h>
@@ -73,10 +75,11 @@ namespace ge {
 			IShader* shader;
 			IVertexBuffer* vertexBuffer;
 			IIndexBuffer* indexBuffer;
-
-			GLuint vertexArray;
+			IVertexArray* vertexArray;
 
 			ImGUILayer* imGuiLayer;
+
+			OrthographicCamera camera;
 		};
 
 		// To be defined in Sandbox

@@ -103,7 +103,7 @@ namespace ge {
 			virtual void unbind() const = 0;
 
 			virtual void setLayout(const BufferLayout& layout) = 0;
-			virtual const BufferLayout& getLayout() = 0;
+			virtual const BufferLayout& getLayout() const = 0;
 
 			static IVertexBuffer* create(float32* vertices, size_t size);
 		};
