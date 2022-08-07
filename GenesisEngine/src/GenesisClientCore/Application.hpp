@@ -47,6 +47,27 @@ namespace ge {
 
 			const ApplicationConfiguration& getAppConfig() const { return appConfig; }
 
+			/// <summary>
+			/// Push a new layer onto the application layer stack
+			/// </summary>
+			/// <param name="layer">The layer to push</param>
+			inline void pushLayer(ge::core::Layer* layer) { layerStack.pushLayer(layer); }
+			/// <summary>
+			/// Push a new overlay onto the application layer stack (overlays will always be at the top)
+			/// </summary>
+			/// <param name="layer">The overlay to push</param>
+			inline void pushOverlay(ge::core::Layer* layer) { layerStack.pushOverlay(layer); }
+			/// <summary>
+			/// Remove a layer from the application layer stack
+			/// </summary>
+			/// <param name="layer">The layer</param>
+			inline void popLayer(ge::core::Layer* layer) { layerStack.popLayer(layer); }
+			/// <summary>
+			/// Remove a overlay from the application layer stack
+			/// </summary>
+			/// <param name="layer">The overlay</param>
+			inline void popOverlay(ge::core::Layer* layer) { layerStack.popOverlay(layer); }
+
 		private:
 			void run();
 
@@ -72,14 +93,7 @@ namespace ge {
 			#endif 
 			#endif
 
-			IShader* shader;
-			IVertexBuffer* vertexBuffer;
-			IIndexBuffer* indexBuffer;
-			IVertexArray* vertexArray;
-
 			ImGUILayer* imGuiLayer;
-
-			OrthographicCamera camera;
 		};
 
 		// To be defined in Sandbox

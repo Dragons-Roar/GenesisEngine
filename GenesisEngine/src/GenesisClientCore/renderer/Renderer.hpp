@@ -1,6 +1,8 @@
 #pragma once
 #include "RendererAPI.hpp"
 #include "RenderCommand.hpp"
+#include "Camera.hpp"
+#include "Shader.hpp"
 
 #define GE_GetRenderAPI() ge::clientcore::RendererAPI::getAPI()
 namespace ge {
@@ -10,7 +12,7 @@ namespace ge {
 			/// <summary>
 			/// Begins a new scene
 			/// </summary>
-			static void beginScene();
+			static void beginScene(OrthographicCamera& camera);
 			/// <summary>
 			/// Ends the current scene
 			/// </summary>
@@ -20,10 +22,15 @@ namespace ge {
 			/// Submits data to the scene
 			/// </summary>
 			/// <param name="arr">The vertex array to submit</param>
-			static void submit(const IVertexArray* arr);
+			static void submit(const IShader* shader, const IVertexArray* arr);
 
 			inline static RendererAPI::API getAPI() { return RendererAPI::getAPI(); }
 		private:
+			struct SceneData {
+				glm::mat4 viewProjectionMatrix;
+			};
+
+			static SceneData* sceneData;
 		};
 	}
 }

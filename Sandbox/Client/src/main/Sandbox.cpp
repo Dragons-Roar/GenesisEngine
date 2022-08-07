@@ -1,12 +1,14 @@
-#include <GenesisCore/Genesis.hpp>
-#include <GenesisCore/event/Event.hpp>
 #include <GenesisClientCore/Genesis.hpp>
 #include <GenesisClientCore/ClientEntryPoint.hpp>
 #include <iostream>
 
+#include "SandboxLayer.hpp"
+
 class Sandbox: public ge::clientcore::Application {
 public:
-	Sandbox(const ge::clientcore::ApplicationConfiguration& config): ge::clientcore::Application(config) {}
+	Sandbox(const ge::clientcore::ApplicationConfiguration& config): ge::clientcore::Application(config) {
+		pushLayer(new sb::SandboxLayer());
+	}
 	~Sandbox() {}
 };
 

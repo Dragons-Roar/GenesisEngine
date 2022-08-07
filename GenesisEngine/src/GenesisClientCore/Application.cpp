@@ -10,49 +10,19 @@ namespace ge {
 		Application* Application::instance = nullptr;
 
 		Application::Application(const ApplicationConfiguration& config):
-			appConfig(config),
-			camera(-1.f, 1.f, -1.f, 1.f)
+			appConfig(config)
 		{
 			if(instance) std::cerr << "Application already exists!" << std::endl;
 			instance = this;
 
 			window = IWindow::create(WindowProps(config.name));
 			window->setEventCallback(GE_BindEventFunction(Application::onEvent));
+			window->setVSync(true);
 
 			imGuiLayer = new ImGUILayer();
 			layerStack.pushOverlay(imGuiLayer);
-
-			// ---> Temporary OpenGL Code <--- //
-			vertexArray = IVertexArray::create();
-			vertexArray->unbind();
-
-			float32 vertices[3 * 7] = {
-				-0.5f, -0.5f, 0.f, 1.f, 0.f, 0.f, 1.f,
-				 0.5f, -0.5f, 0.f, 0.f, 1.f, 0.f, 1.f,
-				 0.f,   0.5f, 0.f, 0.f, 0.f, 1.f, 1.f
-			};
-
-			BufferLayout layout = {
-				{ ShaderDataType::FLOAT3, "a_pos" },
-				{ ShaderDataType::FLOAT4, "a_color" }
-			};
-
-			uint32 index = 0;
-			vertexBuffer = IVertexBuffer::create(vertices, sizeof(vertices));
-			vertexBuffer->setLayout(layout);
-			vertexArray->addVertexBuffer(vertexBuffer);
-
-			uint32 indices[3] = { 0, 1, 2 };
-			indexBuffer = IIndexBuffer::create(indices, 3);
-			vertexArray->setIndexBuffer(indexBuffer);
-
-			shader = IShader::create("assets/shader/basic.vert", "assets/shader/basic.frag");
 		}
 		Application::~Application() {
-			delete indexBuffer;
-			delete vertexBuffer;
-			delete vertexArray;
-			delete shader;
 		}
 
 		void Application::close() {
@@ -84,19 +54,6 @@ namespace ge {
 
 			while(running) {
 				if(!minimized) {
-					//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-					RenderCommand::clear();
-
-					Renderer::beginScene();
-					shader->bind();
-					shader->setUniformMatrix4fv("u_viewProjectionMatrix", &camera.getViewProjectionMatrix()[0][0]);
-					Renderer::submit(vertexArray);
-					Renderer::endScene();
-
-					/*shader->bind();
-					vertexArray->bind();
-					glDrawElements(GL_TRIANGLES, indexBuffer->getCount(), GL_UNSIGNED_INT, nullptr);*/
-
 					{
 						for(ge::core::Layer* layer : layerStack)
 							layer->onUpdate();
