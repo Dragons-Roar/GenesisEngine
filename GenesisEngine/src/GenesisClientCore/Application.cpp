@@ -1,9 +1,14 @@
-#include <GenesisClientCore/Application.hpp>
-#include <GenesisClientCore/imgui/ImGUILayer.hpp>
-#include <GenesisClientCore/Input.hpp>
+#include "Application.hpp"
+
 #include <GenesisCore/Logger.hpp>
 
+#include "imgui/ImGUILayer.hpp"
+#include "Input.hpp"
+#include "Platform.hpp"
+
 #include "renderer/Renderer.hpp"
+
+#include <GLFW/glfw3.h>
 
 namespace ge {
 	namespace clientcore {
@@ -18,7 +23,7 @@ namespace ge {
 			window = IWindow::create(WindowProps(config.name));
 			window->setEventCallback(GE_BindEventFunction(Application::onEvent));
 			window->setVSync(true);
-
+			
 			imGuiLayer = new ImGUILayer();
 			layerStack.pushOverlay(imGuiLayer);
 		}
@@ -44,27 +49,23 @@ namespace ge {
 
 		void Application::run() {
 			GE_Info("Starting Application...");
-			/* 
-			 * The OpenGL code here is only temporary 
-			 * This will be abtracted and extracted into classes
-			 * to swap choose later between OpenGL and DirectX
-			*/
-			//glClearColor(0.f, 0.f, 0.f, 1.f);
-			RenderCommand::setClearColor({ 1.f, 0.f, 1.f, 1.f });
+			RenderCommand::setClearColor({ 0.f, 0.f, 0.f, 1.f });
 
 			while(running) {
-				if(!minimized) {
-					{
-						for(ge::core::Layer* layer : layerStack)
-							layer->onUpdate();
+				float32 time = Platform::getTime();
+				ge::core::Timestep timestep = time - lastTime;
+				lastTime = time;
+
+				{
+					for(ge::core::Layer* layer : layerStack)
+						layer->onUpdate(timestep);
+				}
+				{
+					imGuiLayer->begin();
+					for(ge::core::Layer* layer : layerStack) {
+						layer->onImGUIRender();
 					}
-					{
-						imGuiLayer->begin();
-						for(ge::core::Layer* layer : layerStack) {
-							layer->onImGUIRender();
-						}
-						imGuiLayer->end();
-					}
+					imGuiLayer->end();
 				}
 
 				window->onUpdate();

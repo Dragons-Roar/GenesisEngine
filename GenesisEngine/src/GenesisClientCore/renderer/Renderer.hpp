@@ -22,7 +22,7 @@ namespace ge {
 			/// Submits data to the scene
 			/// </summary>
 			/// <param name="arr">The vertex array to submit</param>
-			static void submit(const IShader* shader, const IVertexArray* arr);
+			static void submit(const IShader* shader, const IVertexArray* arr, const glm::mat4& transform = glm::mat4(1));
 
 			inline static RendererAPI::API getAPI() { return RendererAPI::getAPI(); }
 		private:

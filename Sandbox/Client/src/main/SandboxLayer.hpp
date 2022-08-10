@@ -1,5 +1,6 @@
 #pragma once
 #include <GenesisClientCore/Genesis.hpp>
+#include <glm/glm.hpp>
 
 namespace sb {
 	class SandboxLayer: public ge::core::Layer {
@@ -11,7 +12,7 @@ namespace sb {
 
 		void onAttach() override;
 		void onDetach() override;
-		void onUpdate() override;
+		void onUpdate(ge::core::Timestep ts) override;
 		void onImGUIRender() override;
 
 	private:

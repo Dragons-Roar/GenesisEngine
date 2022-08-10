@@ -1,204 +1,284 @@
 {
-	"libRoot": "ThirdParty/",
-	"projectRoot": "%{wks.location}/",
-	"defines": [ "GE_OPENGL", "_CRT_SECURE_NO_WARNINGS" ],
-	"projects": [
-		{
-			"name": "Genesis-Client",
-			"location": "GenesisEngine/src/GenesisClient/",
-			"includes": "GenesisEngine/src/"
-		},
-		{
-			"name": "Genesis-Server",
-			"location": "GenesisEngine/src/GenesisServer/",
-			"includes": "GenesisEngine/src/"
-		},
-		{
-			"name": "Genesis-Core",
-			"location": "GenesisEngine/src/GenesisCore/",
-			"includes": "GenesisEngine/src/"
-		},
-		{
-			"name": "Genesis-ClientCore",
-			"location": "GenesisEngine/src/GenesisClientCore/",
-			"includes": "GenesisEngine/src/"
-		},
-		{
-			"name": "Sandbox-Server",
-			"location": "Sandbox/Server/src/main/",
-			"includes": "Sandbox/Server/src/main/include/"
-		}
-	],
-	"dependencies": [
-		{
-			"name": "spdlog",
-			"packet": {
-				"type": "git",
-				"repo": "https://github.com/gmasterhd/spdlog"
-			},
-			"library": {
-				"type": "premake",
-				"script": "provided",
-				"includeDir": "include/"
-			}
-		},
-		{
-			"name": "gtest",
-			"packet": {
-				"type": "git",
-				"repo": "https://github.com/gmasterhd/googletest"
-			},
-			"library": {
-				"type": "premake",
-				"script": "provided",
-				"includeDir": "googletest/include/"
-			}
-		},
-		{
-			"name": "boost/preprocessor",
-			"packet": {
-				"type": "git",
-				"repo": "https://github.com/boostorg/preprocessor"
-			},
-			"library": {
-				"type": "header",
-				"includeDir": "include/"
-			}
-		},
-		{
-			"name": "toml++",
-			"packet": {
-				"type": "git",
-				"repo": "https://github.com/gmasterhd/tomlplusplus"
-			},
-			"library": {
-				"type": "premake",
-				"script": "provided",
-				"includeDir": "include/"
-			}
-		},
-		{
-			"name": "json",
-			"group": "nlohmann",
-			"packet": {
-				"type": "file",
-				"name": "json.hpp",
-				"path": "include/nlohmann/",
-				"url": "https://raw.githubusercontent.com/nlohmann/json/develop/single_include/nlohmann/json.hpp"
-			},
-			"library": {
-				"type": "header",
-				"includeDir": "include/"
-			}
-		},
-		{
-			"name": "glm",
-			"group": "glm",
-			"packet": {
-				"type": "git",
-				"repo": "https://github.com/g-truc/glm"
-			},
-			"library": {
-				"type": "header",
-				"includeDir": ""
-			}
-		},
-		{
-			"name": "glfw",
-			"packet": {
-				"type": "git",
-				"repo": "https://github.com/GMasterHD/glfw"
-			},
-			"library": {
-				"type": "premake",
-				"script": "provided",
-				"includeDir": "include/"
-			}
-		},
-		{
-			"name": "glad",
-			"packet": {
-				"type": "git",
-				"repo": "https://github.com/GMasterHD/glad"
-			},
-			"library": {
-				"type": "premake",
-				"script": "provided",
-				"includeDir": "include/"
-			}
-		},
-		{
-			"name": "imgui",
-			"packet": {
-				"type": "git",
-				"repo": "https://github.com/ocornut/imgui"
-			},
-			"library": {
-				"type": "premake",
-				"script": "imgui.lua",
-				"includeDir": ""
-			}
-		}
-	],
-	"links": {
-		"Sandbox-Server": [
-			"Genesis-Core", "Genesis-Server", "Sandbox-Server",
-			"spdlog", "toml++", "json", "glm",
-			"boost/preprocessor"
-		],
-		"Sandbox-Client": [ 
-			"Genesis-Core", "Genesis-ClientCore", "Genesis-Client", "Genesis-Server", "Sandbox-Server",
-			"spdlog", "toml++", "json", "glfw", "glad", "imgui", "glm",
-			"opengl32.lib"
-		],
-		"Sandbox-Client-Test": [ 
-			"Genesis-Core", "Genesis-Client", "Genesis-Server", "Sandbox-Server",
-			"spdlog", "gtest", "toml++", "json", "glfw", "glad", "imgui", "glm",
-			"opengl32.lib"
-		],
-		"Sandbox-Server-Test": [
-			"Genesis-Core", "Genesis-Server", "Sandbox-Server",
-			"spdlog", "gtest", "toml++", "json", "glm"
-		],
-		"Sandbox-ServerLauncher": [
-			"Genesis-Core", "Genesis-Server", "Sandbox-Server",
-			"spdlog", "toml++", "json", "glm"
-		],
-		"Genesis-Editor": [ 
-			"Genesis-Core", "Genesis-Client", "Genesis-Server",
-			"spdlog", "toml++", "json", "glfw", "glad", "imgui", "glm",
-			"boost/preprocessor",
-			"opengl32.lib"
-		],
-		"Genesis-Client": [
-			"Genesis-Core", "Genesis-Server", "Genesis-Client",
-			"spdlog", "toml++", "json", "glfw", "imgui", "glm",
-			"boost/preprocessor"
-		],
-		"Genesis-Server": [
-			"Genesis-Core", "Genesis-Server",
-			"spdlog", "toml++", "json", "glm",
-			"boost/preprocessor"
-		],
-		"Genesis-Core": [
-			"Genesis-Core",
-			"spdlog", "toml++", "json", "glm",
-			"boost/preprocessor"
-		],
-		"Genesis-Core-Test": [
-			"Genesis-Core",
-			"spdlog", "gtest", "toml++", "json", "glm",
-			"boost/preprocessor"
-		],
-		"Genesis-ClientCore": [
-			"Genesis-ClientCore", "Genesis-Core",
-			"spdlog", "toml++", "json", "glfw", "glad", "imgui", "glm",
-			"boost/preprocessor"
-		]
-	},
-	"includes": {
-		"imgui": [
-			"glfw"
-		]
-	}
+    "solutionName": "GenesisEngine",
+    "visualStudioVersion": "2022",
+    "libRoot": "ThirdParty/",
+    "projectRoot": "%{wks.location}/",
+    "defines": [
+        "GE_OPENGL",
+        "_CRT_SECURE_NO_WARNINGS"
+    ],
+    "applications": {
+        "Client": "bin/%{system}/%{config}/Sandbox-Client/Sandbox-Client.exe",
+        "Server": "bin/%{system}/%{config}/Sandbox-Server/Sandbox-Server.exe",
+        "Editor": "bin/%{system}/%{config}/Genesis-Editor/Genesis-Editor.exe"
+    },
+    "projects": [
+        {
+            "name": "Genesis-Client",
+            "location": "GenesisEngine/src/GenesisClient/",
+            "includes": "GenesisEngine/src/"
+        },
+        {
+            "name": "Genesis-Server",
+            "location": "GenesisEngine/src/GenesisServer/",
+            "includes": "GenesisEngine/src/"
+        },
+        {
+            "name": "Genesis-Core",
+            "location": "GenesisEngine/src/GenesisCore/",
+            "includes": "GenesisEngine/src/"
+        },
+        {
+            "name": "Genesis-ClientCore",
+            "location": "GenesisEngine/src/GenesisClientCore/",
+            "includes": "GenesisEngine/src/"
+        },
+        {
+            "name": "Sandbox-Server",
+            "location": "Sandbox/Server/src/main/",
+            "includes": "Sandbox/Server/src/main/include/"
+        }
+    ],
+    "dependencies": [
+        {
+            "name": "spdlog",
+            "packet": {
+                "type": "git",
+                "repo": "https://github.com/gmasterhd/spdlog"
+            },
+            "library": {
+                "type": "premake",
+                "script": "provided",
+                "includeDir": "include/"
+            }
+        },
+        {
+            "name": "gtest",
+            "packet": {
+                "type": "git",
+                "repo": "https://github.com/gmasterhd/googletest"
+            },
+            "library": {
+                "type": "premake",
+                "script": "provided",
+                "includeDir": "googletest/include/"
+            }
+        },
+        {
+            "name": "boost/preprocessor",
+            "packet": {
+                "type": "git",
+                "repo": "https://github.com/boostorg/preprocessor"
+            },
+            "library": {
+                "type": "header",
+                "includeDir": "include/"
+            }
+        },
+        {
+            "name": "toml++",
+            "packet": {
+                "type": "git",
+                "repo": "https://github.com/gmasterhd/tomlplusplus"
+            },
+            "library": {
+                "type": "premake",
+                "script": "provided",
+                "includeDir": "include/"
+            }
+        },
+        {
+            "name": "json",
+            "group": "nlohmann",
+            "packet": {
+                "type": "file",
+                "name": "json.hpp",
+                "path": "include/nlohmann/",
+                "url": "https://raw.githubusercontent.com/nlohmann/json/develop/single_include/nlohmann/json.hpp"
+            },
+            "library": {
+                "type": "header",
+                "includeDir": "include/"
+            }
+        },
+        {
+            "name": "glm",
+            "group": "glm",
+            "packet": {
+                "type": "git",
+                "repo": "https://github.com/g-truc/glm"
+            },
+            "library": {
+                "type": "header",
+                "includeDir": ""
+            }
+        },
+        {
+            "name": "glfw",
+            "packet": {
+                "type": "git",
+                "repo": "https://github.com/GMasterHD/glfw"
+            },
+            "library": {
+                "type": "premake",
+                "script": "provided",
+                "includeDir": "include/"
+            }
+        },
+        {
+            "name": "glad",
+            "packet": {
+                "type": "git",
+                "repo": "https://github.com/GMasterHD/glad"
+            },
+            "library": {
+                "type": "premake",
+                "script": "provided",
+                "includeDir": "include/"
+            }
+        },
+        {
+            "name": "imgui",
+            "packet": {
+                "type": "git",
+                "repo": "https://github.com/ocornut/imgui"
+            },
+            "library": {
+                "type": "premake",
+                "script": "imgui.lua",
+                "includeDir": ""
+            }
+        }
+    ],
+    "links": {
+        "Sandbox-Server": [
+            "Genesis-Core",
+            "Genesis-Server",
+            "Sandbox-Server",
+            "spdlog",
+            "toml++",
+            "json",
+            "glm",
+            "boost/preprocessor"
+        ],
+        "Sandbox-Client": [
+            "Genesis-Core",
+            "Genesis-ClientCore",
+            "Genesis-Client",
+            "Genesis-Server",
+            "Sandbox-Server",
+            "spdlog",
+            "toml++",
+            "json",
+            "glfw",
+            "glad",
+            "imgui",
+            "glm",
+            "opengl32.lib"
+        ],
+        "Sandbox-Client-Test": [
+            "Genesis-Core",
+            "Genesis-Client",
+            "Genesis-Server",
+            "Sandbox-Server",
+            "spdlog",
+            "gtest",
+            "toml++",
+            "json",
+            "glfw",
+            "glad",
+            "imgui",
+            "glm",
+            "opengl32.lib"
+        ],
+        "Sandbox-Server-Test": [
+            "Genesis-Core",
+            "Genesis-Server",
+            "Sandbox-Server",
+            "spdlog",
+            "gtest",
+            "toml++",
+            "json",
+            "glm"
+        ],
+        "Sandbox-ServerLauncher": [
+            "Genesis-Core",
+            "Genesis-Server",
+            "Sandbox-Server",
+            "spdlog",
+            "toml++",
+            "json",
+            "glm"
+        ],
+        "Genesis-Editor": [
+            "Genesis-Core",
+            "Genesis-Client",
+            "Genesis-Server",
+            "spdlog",
+            "toml++",
+            "json",
+            "glfw",
+            "glad",
+            "imgui",
+            "glm",
+            "boost/preprocessor",
+            "opengl32.lib"
+        ],
+        "Genesis-Client": [
+            "Genesis-Core",
+            "Genesis-Server",
+            "Genesis-Client",
+            "spdlog",
+            "toml++",
+            "json",
+            "glfw",
+            "imgui",
+            "glm",
+            "boost/preprocessor"
+        ],
+        "Genesis-Server": [
+            "Genesis-Core",
+            "Genesis-Server",
+            "spdlog",
+            "toml++",
+            "json",
+            "glm",
+            "boost/preprocessor"
+        ],
+        "Genesis-Core": [
+            "Genesis-Core",
+            "spdlog",
+            "toml++",
+            "json",
+            "glm",
+            "boost/preprocessor"
+        ],
+        "Genesis-Core-Test": [
+            "Genesis-Core",
+            "spdlog",
+            "gtest",
+            "toml++",
+            "json",
+            "glm",
+            "boost/preprocessor"
+        ],
+        "Genesis-ClientCore": [
+            "Genesis-ClientCore",
+            "Genesis-Core",
+            "spdlog",
+            "toml++",
+            "json",
+            "glfw",
+            "glad",
+            "imgui",
+            "glm",
+            "boost/preprocessor"
+        ]
+    },
+    "includes": {
+        "imgui": [
+            "glfw"
+        ]
+    },
+    "msbuildPath": "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Current\\Bin\\msbuild.exe"
 }

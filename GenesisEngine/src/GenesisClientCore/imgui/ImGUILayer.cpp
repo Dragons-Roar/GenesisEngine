@@ -65,10 +65,5 @@ namespace ge {
 				glfwMakeContextCurrent(backupCurrentContext);
 			}
 		}
-
-		void ImGUILayer::onImGUIRender() {
-			static bool show = true;
-			ImGui::ShowDemoWindow(&show);
-		}
 	}
 }

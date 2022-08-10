@@ -11,9 +11,11 @@ namespace ge {
 		void Renderer::endScene() {
 		}
 
-		void Renderer::submit(const IShader* shader, const IVertexArray* arr) {
+		void Renderer::submit(const IShader* shader, const IVertexArray* arr, const glm::mat4& transform) {
 			shader->bind();
 			shader->setUniformMatrix4fv("u_viewProjectionMatrix", sceneData->viewProjectionMatrix);
+			shader->setUniformMatrix4fv("u_transformMatrix", transform);
+
 			RenderCommand::drawIndexed(arr);
 		}
 	}

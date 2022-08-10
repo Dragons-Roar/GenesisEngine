@@ -26,7 +26,7 @@ Currently there are no features as this project is still in development
 
 ## Project Structure
 | Path | Description |
-|------|-------------|
+| --- | --- |
 | GenesisEngine/ | Here are the sources for the Engine Modules |
 | GenesisEngine/src/GenesisClient/ | Here are the client runtime sources stored. These sources are e.g. Scene Loader |
 | GenesisEngine/src/GenesisServer/ | This project stores sources for the Server. Those sources range from Networking, Server, Authentification and so on |

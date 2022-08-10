@@ -6,6 +6,7 @@
 #include <GenesisCore/event/MouseEvent.hpp>
 #include <GenesisCore/event/WindowEvent.hpp>
 #include <GenesisCore/LayerStack.hpp>
+#include <GenesisCore/Timestep.hpp>
 
 #include <GenesisClientCore/imgui/ImGUILayer.hpp>
 
@@ -94,6 +95,7 @@ namespace ge {
 			#endif
 
 			ImGUILayer* imGuiLayer;
+			float32 lastTime = 0.f;
 		};
 
 		// To be defined in Sandbox

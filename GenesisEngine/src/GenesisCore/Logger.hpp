@@ -24,13 +24,13 @@ namespace ge {
 	}
 }
 
-#ifndef CM_Dist
+#ifndef GE_DIST
 #	define GE_Info(...) SPDLOG_INFO(__VA_ARGS__)
 #	define GE_Warn(...) SPDLOG_WARN(__VA_ARGS__)
 #	define GE_Error(...) SPDLOG_ERROR(__VA_ARGS__)
 #	define GE_Fatal(...) SPDLOG_CRITICAL(__VA_ARGS__)
 #else
-#	define GE_Info(...)
+#	define GE_Info(...) SPDLOG_INFO(__VA_ARGS__)
 #	define GE_Warn(...) SPDLOG_WARN(__VA_ARGS__)
 #	define GE_Error(...) SPDLOG_ERROR(__VA_ARGS__)
 #	define GE_Fatal(...) SPDLOG_CRITICAL(__VA_ARGS__)

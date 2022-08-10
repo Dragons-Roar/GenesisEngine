@@ -1,6 +1,7 @@
 #pragma once
-#include "./Defines.hpp"
-#include "./event/Event.hpp"
+#include "Defines.hpp"
+#include "event/Event.hpp"
+#include "Timestep.hpp"
 
 namespace ge {
 	namespace core {
@@ -11,7 +12,7 @@ namespace ge {
 
 			virtual void onAttach() {}
 			virtual void onDetach() {}
-			virtual void onUpdate() {}
+			virtual void onUpdate(Timestep ts) {}
 			virtual void onEvent(Event& e) {}
 			virtual void onImGUIRender() {}
 

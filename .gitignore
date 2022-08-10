@@ -9,12 +9,19 @@ doc/
 /ThirdParty/spdlog
 /ThirdParty/toml++
 
+# Visual Studio
 *.sln
 *.vcxproj
 *.vcxproj.filters
 *.vcxproj.user
 
+# CodeLite
+*.workspace
+*.project
+
 node_modules/
 packages/
 
 premake5.exe
+
+*.log

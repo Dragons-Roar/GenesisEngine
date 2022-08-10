@@ -1,7 +1,27 @@
 {
   "dependencies": {
     "https": "^1.0.0",
+    "minimist": "^1.2.6",
+    "msbuild": "^1.2.0",
     "path": "^0.12.7",
     "simple-git": "^3.10.0"
-  }
+  },
+  "name": "genesisengine",
+  "description": "This is the JavaScript build system for Genesis Engine, a voxel game engine devlopoed by myself.",
+  "version": "1.0.0",
+  "main": "install.js",
+  "directories": {},
+  "scripts": {
+    "install": "node ./install.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gmasterhd/genesisengine.git"
+  },
+  "author": "GMasterHD",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gmasterhd/genesisengine/issues"
+  },
+  "homepage": "https://github.com/gmasterhd/genesisengine#readme"
 }

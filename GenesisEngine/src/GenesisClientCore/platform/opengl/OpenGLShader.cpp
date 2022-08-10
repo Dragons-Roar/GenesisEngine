@@ -95,11 +95,11 @@ namespace ge {
 			}
 
 			#ifndef GE_DEBUG
-			glDetachOpenGLShader(programID, vertexShaderID);
-			glDetachOpenGLShader(programID, fragmentShaderID);
+			glDetachShader(programID, vertexShaderID);
+			glDetachShader(programID, fragmentShaderID);
 
-			glDeleteOpenGLShader(vertexShaderID);
-			glDeleteOpenGLShader(fragmentShaderID);
+			glDeleteShader(vertexShaderID);
+			glDeleteShader(fragmentShaderID);
 			#endif
 
 			return programID;
@@ -271,7 +271,7 @@ namespace ge {
 				return false;
 			}
 			#else
-			glUniformMatrix4fv(location, 1, GL_FALSE, data);
+			glUniformMatrix4fv(location, 1, GL_FALSE, &data[0][0]);
 			return true;
 			#endif
 		}

@@ -1,6 +1,8 @@
 #include "SandboxLayer.hpp"
 #include <GenesisClientCore/Genesis.hpp>
 
+#include <glm/gtc/matrix_transform.hpp>
+
 #include <imgui.h>
 
 namespace sb {
@@ -38,23 +40,23 @@ namespace sb {
 		delete vertexArray;
 		delete shader;
 	}
-	void SandboxLayer::onUpdate() {
+	void SandboxLayer::onUpdate(ge::core::Timestep ts) {
 		if(ge::clientcore::Input::isKeyDown(ge::Key::W)) {
-			camera.setPosition(camera.getPosition() + glm::vec3(0.f, 0.1f, 0.f));
+			camera.setPosition(camera.getPosition() + glm::vec3(0.f, 3.f * ts, 0.f));
 		} else if(ge::clientcore::Input::isKeyDown(ge::Key::S)) {
-			camera.setPosition(camera.getPosition() + glm::vec3(0.f, -0.1f, 0.f));
+			camera.setPosition(camera.getPosition() + glm::vec3(0.f, -3.f * ts, 0.f));
 		}
 
 		if(ge::clientcore::Input::isKeyDown(ge::Key::A)) {
-			camera.setPosition(camera.getPosition() + glm::vec3(-0.1f, 0.f, 0.f));
+			camera.setPosition(camera.getPosition() + glm::vec3(-3.f * ts, 0.f, 0.f));
 		} else if(ge::clientcore::Input::isKeyDown(ge::Key::D)) {
-			camera.setPosition(camera.getPosition() + glm::vec3(0.1f, 0.f, 0.f));
+			camera.setPosition(camera.getPosition() + glm::vec3(3.f * ts, 0.f, 0.f));
 		}
 
 		if(ge::clientcore::Input::isKeyDown(ge::Key::Q)) {
-			camera.setRotation(camera.getRotation() + 1.f);
+			camera.setRotation(camera.getRotation() + 80.f * ts);
 		} else if(ge::clientcore::Input::isKeyDown(ge::Key::E)) {
-			camera.setRotation(camera.getRotation() - 1.f);
+			camera.setRotation(camera.getRotation() - 80.f * ts);
 		}
 
 		ge::clientcore::RenderCommand::clear();

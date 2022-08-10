@@ -4,6 +4,7 @@ outputdir = outdir -- Some of my forked repos use outputdir instead of outdir
 include "defines.lua"
 include "config.lua"
 include "dependencies.lua"
+include "actions.lua"
 
 workspace "GenesisEngine"
 	configurations {
