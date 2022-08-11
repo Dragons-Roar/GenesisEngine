@@ -2,7 +2,6 @@
   "dependencies": {
     "https": "^1.0.0",
     "minimist": "^1.2.6",
-    "msbuild": "^1.2.0",
     "path": "^0.12.7",
     "simple-git": "^3.10.0"
   },
@@ -12,7 +11,8 @@
   "main": "install.js",
   "directories": {},
   "scripts": {
-    "install": "node ./install.js"
+    "install": "node ./install.js",
+    "generate": "node ./generate.js"
   },
   "repository": {
     "type": "git",
