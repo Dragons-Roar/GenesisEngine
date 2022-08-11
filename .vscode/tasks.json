@@ -1,0 +1,56 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build-debug-x64",
+            "type": "shell",
+            "command": "./build.ps1",
+            "args": [
+                "NONE",
+                "Debug-x64",
+                "x64",
+                "windows",
+                "Genesis-Core-Test"
+            ],
+            "group": "build",
+            "presentation": {
+                "reveal": "silent"
+            },
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "build-release-x64",
+            "type": "shell",
+            "command": "./build.ps1",
+            "args": [
+                "NONE",
+                "Release-x64",
+                "x64",
+                "windows",
+                "Genesis-Core-Test"
+            ],
+            "group": "build",
+            "presentation": {
+                "reveal": "silent"
+            },
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "build-dist-x64",
+            "type": "shell",
+            "command": "./build.ps1",
+            "args": [
+                "NONE",
+                "Dist-x64",
+                "x64",
+                "windows",
+                "Genesis-Core-Test"
+            ],
+            "group": "build",
+            "presentation": {
+                "reveal": "silent"
+            },
+            "problemMatcher": "$msCompile"
+        }
+    ]
+}

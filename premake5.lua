@@ -26,7 +26,7 @@ workspace "GenesisEngine"
 		end
 
 	-- Engine
-	include "GenesisEngine/Genesis.lua"
+	include "Genesis/Genesis.lua"
 	-- include "GenesisEngine/Core.lua"
 	-- include "GenesisEngine/ClientCore.lua"
 	-- include "GenesisEngine/Server.lua"

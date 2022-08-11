@@ -1,5 +1,19 @@
 {
-	"files.associations": {
-		"algorithm": "cpp"
-	}
+    "files.associations": {
+        "algorithm": "cpp"
+    },
+    "C_Cpp.default.includePath": [
+        "${workspaceFolder}/Genesis/src/",
+        "${workspaceFolder}/Genesis/src/",
+        "${workspaceFolder}/Sandbox/src/",
+        "${workspaceFolder}/ThirdParty/boost/preprocessor/include/",
+        "${workspaceFolder}/ThirdParty/glad/include/",
+        "${workspaceFolder}/ThirdParty/glfw/include/",
+        "${workspaceFolder}/ThirdParty/glm/",
+        "${workspaceFolder}/ThirdParty/gtest/googletest/include/",
+        "${workspaceFolder}/ThirdParty/imgui/",
+        "${workspaceFolder}/ThirdParty/nlohmann/include/",
+        "${workspaceFolder}/ThirdParty/spdlog/include/",
+        "${workspaceFolder}/toml++/include/"
+    ]
 }

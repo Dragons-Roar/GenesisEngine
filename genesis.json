@@ -1,0 +1,34 @@
+{
+	"launchConfigs": {
+		"projects": {
+			"Sandbox-Client": {
+				"alias": "Client",
+				"args": []
+			},
+			"Sandbox-ServerLauncher": {
+				"alias": "Server",
+				"args": []
+			},
+			"Genesis-Editor": {
+				"alias": "Editor",
+				"args": []
+			}
+		},
+		"configs": [
+			"Debug-x64", "Release-x64", "Dist-x64"
+		]
+	},
+	"includeDirs": [
+		"${workspaceFolder}/Genesis/src/",
+		"${workspaceFolder}/Sandbox/src/",
+		"${workspaceFolder}/ThirdParty/boost/preprocessor/include/",
+		"${workspaceFolder}/ThirdParty/glad/include/",
+		"${workspaceFolder}/ThirdParty/glfw/include/",
+		"${workspaceFolder}/ThirdParty/glm/",
+		"${workspaceFolder}/ThirdParty/gtest/googletest/include/",
+		"${workspaceFolder}/ThirdParty/imgui/",
+		"${workspaceFolder}/ThirdParty/nlohmann/include/",
+		"${workspaceFolder}/ThirdParty/spdlog/include/",
+		"${workspaceFolder}/toml++/include/"
+	]
+}

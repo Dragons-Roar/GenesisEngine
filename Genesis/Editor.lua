@@ -4,7 +4,7 @@ project "Genesis-Editor"
 	systemversion "latest"
 	language "C++"
 	cppdialect(cfg_cxxStandard)
-	location "%{wks.location}/GenesisEngine/src/GenesisEditor/"
+	location "%{wks.location}/Genesis/src/GenesisEditor/"
 
 	debugdir("%{wks.location}/bin/"..outdir)
 	targetdir("%{wks.location}/bin/"..outdir)

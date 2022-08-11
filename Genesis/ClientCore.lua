@@ -1,10 +1,10 @@
 group "Genesis"
-project "Genesis-Server"
+project "Genesis-ClientCore"
 	kind "StaticLib"
 	systemversion "latest"
 	language "C++"
 	cppdialect(cfg_cxxStandard)
-	location "%{wks.location}/GenesisEngine/src/GenesisServer/"
+	location "%{wks.location}/Genesis/src/GenesisClientCore/"
 
 	debugdir("%{wks.location}/bin/"..outdir)
 	targetdir("%{wks.location}/bin/"..outdir)
@@ -18,7 +18,7 @@ project "Genesis-Server"
 	}
 
 	includedirs {
-		includeDirs["Genesis-Server"]
+		includeDirs["Genesis-ClientCore"]
 	}
 
 	defines { globalDefines }

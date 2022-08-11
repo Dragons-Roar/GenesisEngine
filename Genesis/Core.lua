@@ -4,7 +4,7 @@ project "Genesis-Core"
 	systemversion "latest"
 	language "C++"
 	cppdialect(cfg_cxxStandard)
-	location "%{wks.location}/GenesisEngine/src/GenesisCore/"
+	location "%{wks.location}/Genesis/src/GenesisCore/"
 
 	debugdir("%{wks.location}/bin/"..outdir)
 	targetdir("%{wks.location}/bin/"..outdir)
@@ -49,7 +49,7 @@ project("Genesis-Core-Test")
 	systemversion "latest"
 	language "C++"
 	cppdialect(cfg_cxxStandard)
-	location "%{wks.location}/GenesisEngine/test/GenesisCore/"
+	location "%{wks.location}/Genesis/test/GenesisCore/"
 	
 	debugdir("%{wks.location}/bin/"..outdir)
 	targetdir("%{wks.location}/bin/"..outdir)

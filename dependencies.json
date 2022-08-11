@@ -15,28 +15,28 @@
     "projects": [
         {
             "name": "Genesis-Client",
-            "location": "GenesisEngine/src/GenesisClient/",
-            "includes": "GenesisEngine/src/"
+            "location": "Genesis/src/GenesisClient/",
+            "includes": "Genesis/src/"
         },
         {
             "name": "Genesis-Server",
-            "location": "GenesisEngine/src/GenesisServer/",
-            "includes": "GenesisEngine/src/"
+            "location": "Genesis/src/GenesisServer/",
+            "includes": "Genesis/src/"
         },
         {
             "name": "Genesis-Core",
-            "location": "GenesisEngine/src/GenesisCore/",
-            "includes": "GenesisEngine/src/"
+            "location": "Genesis/src/GenesisCore/",
+            "includes": "Genesis/src/"
         },
         {
             "name": "Genesis-ClientCore",
-            "location": "GenesisEngine/src/GenesisClientCore/",
-            "includes": "GenesisEngine/src/"
+            "location": "Genesis/src/GenesisClientCore/",
+            "includes": "Genesis/src/"
         },
         {
             "name": "Sandbox-Server",
-            "location": "Sandbox/Server/src/main/",
-            "includes": "Sandbox/Server/src/main/include/"
+            "location": "Sandbox/src/Server/",
+            "includes": "Sandbox/src/"
         }
     ],
     "dependencies": [

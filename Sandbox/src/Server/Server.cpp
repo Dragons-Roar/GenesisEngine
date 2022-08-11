@@ -1,5 +1,5 @@
 #include <iostream>
-#include <SandboxServer/Server.hpp>
+#include "Server.hpp"
 
 namespace sb {
 	namespace server {

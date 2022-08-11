@@ -27,6 +27,9 @@ newaction {
 		print("Removing makefiles...")
 		os.remove('./**Makefile')
 
+		print("Removing bazel...")
+		os.remove('./**.bazel')
+
 		print("Delete MSBuild logs...")
 		os.remove('./GenesisEngine/**.log')
 		os.remove('./Sandbox/**.log')

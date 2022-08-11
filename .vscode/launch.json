@@ -1,0 +1,104 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Client-Debug-x64",
+            "type": "cppvsdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/bin/windows/Debug-x64/Sandbox-Client/Sandbox-Client.exe",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}/bin/windows/Debug-x64/Sandbox-Client",
+            "externalConsole": true,
+            "preLaunchTask": "build-debug-x64"
+        },
+        {
+            "name": "Client-Release-x64",
+            "type": "cppvsdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/bin/windows/Release-x64/Sandbox-Client/Sandbox-Client.exe",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}/bin/windows/Release-x64/Sandbox-Client",
+            "externalConsole": true,
+            "preLaunchTask": "build-release-x64"
+        },
+        {
+            "name": "Client-Dist-x64",
+            "type": "cppvsdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/bin/windows/Dist-x64/Sandbox-Client/Sandbox-Client.exe",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}/bin/windows/Dist-x64/Sandbox-Client",
+            "externalConsole": true,
+            "preLaunchTask": "build-dist-x64"
+        },
+        {
+            "name": "Server-Debug-x64",
+            "type": "cppvsdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/bin/windows/Debug-x64/Sandbox-ServerLauncher/Sandbox-ServerLauncher.exe",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}/bin/windows/Debug-x64/Sandbox-ServerLauncher",
+            "externalConsole": true,
+            "preLaunchTask": "build-debug-x64"
+        },
+        {
+            "name": "Server-Release-x64",
+            "type": "cppvsdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/bin/windows/Release-x64/Sandbox-ServerLauncher/Sandbox-ServerLauncher.exe",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}/bin/windows/Release-x64/Sandbox-ServerLauncher",
+            "externalConsole": true,
+            "preLaunchTask": "build-release-x64"
+        },
+        {
+            "name": "Server-Dist-x64",
+            "type": "cppvsdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/bin/windows/Dist-x64/Sandbox-ServerLauncher/Sandbox-ServerLauncher.exe",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}/bin/windows/Dist-x64/Sandbox-ServerLauncher",
+            "externalConsole": true,
+            "preLaunchTask": "build-dist-x64"
+        },
+        {
+            "name": "Editor-Debug-x64",
+            "type": "cppvsdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/bin/windows/Debug-x64/Genesis-Editor/Genesis-Editor.exe",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}/bin/windows/Debug-x64/Genesis-Editor",
+            "externalConsole": true,
+            "preLaunchTask": "build-debug-x64"
+        },
+        {
+            "name": "Editor-Release-x64",
+            "type": "cppvsdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/bin/windows/Release-x64/Genesis-Editor/Genesis-Editor.exe",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}/bin/windows/Release-x64/Genesis-Editor",
+            "externalConsole": true,
+            "preLaunchTask": "build-release-x64"
+        },
+        {
+            "name": "Editor-Dist-x64",
+            "type": "cppvsdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/bin/windows/Dist-x64/Genesis-Editor/Genesis-Editor.exe",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}/bin/windows/Dist-x64/Genesis-Editor",
+            "externalConsole": true,
+            "preLaunchTask": "build-dist-x64"
+        }
+    ]
+}
