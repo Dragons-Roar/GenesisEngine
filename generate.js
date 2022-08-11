@@ -49,9 +49,11 @@ config.launchConfigs.configs.forEach(cfg => {
 	tasks.tasks.push({
 		label,
 		type: 'shell',
-		command: './build.ps1',
+		command: 'msbuild',
 		args: [
-			'NONE', cfg, cfg.substring(cfg.indexOf('-') + 1), 'windows', 'Genesis-Core-Test'
+			`/p:Configuration=${cfg}`,
+			`/p:Platform=${cfg.substring(cfg.indexOf('-') + 1)}`,
+			'-verbosity:minimal'
 		],
 		group: 'build',
 		presentation: {

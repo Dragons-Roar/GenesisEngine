@@ -4,13 +4,11 @@
         {
             "label": "build-debug-x64",
             "type": "shell",
-            "command": "./build.ps1",
+            "command": "msbuild",
             "args": [
-                "NONE",
-                "Debug-x64",
-                "x64",
-                "windows",
-                "Genesis-Core-Test"
+                "/p:Configuration=Debug-x64",
+                "/p:Platform=x64",
+                "-verbosity:minimal"
             ],
             "group": "build",
             "presentation": {
@@ -21,13 +19,11 @@
         {
             "label": "build-release-x64",
             "type": "shell",
-            "command": "./build.ps1",
+            "command": "msbuild",
             "args": [
-                "NONE",
-                "Release-x64",
-                "x64",
-                "windows",
-                "Genesis-Core-Test"
+                "/p:Configuration=Release-x64",
+                "/p:Platform=x64",
+                "-verbosity:minimal"
             ],
             "group": "build",
             "presentation": {
@@ -38,13 +34,11 @@
         {
             "label": "build-dist-x64",
             "type": "shell",
-            "command": "./build.ps1",
+            "command": "msbuild",
             "args": [
-                "NONE",
-                "Dist-x64",
-                "x64",
-                "windows",
-                "Genesis-Core-Test"
+                "/p:Configuration=Dist-x64",
+                "/p:Platform=x64",
+                "-verbosity:minimal"
             ],
             "group": "build",
             "presentation": {
