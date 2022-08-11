@@ -2,6 +2,15 @@
     "version": "2.0.0",
     "tasks": [
         {
+            "label": "premake-vs2022",
+            "type": "shell",
+            "command": "premake5.exe",
+            "args": [
+                "vs2022"
+            ],
+            "group": "build"
+        },
+        {
             "label": "build-debug-x64",
             "type": "shell",
             "command": "msbuild",
@@ -14,7 +23,8 @@
             "presentation": {
                 "reveal": "silent"
             },
-            "problemMatcher": "$msCompile"
+            "problemMatcher": "$msCompile",
+            "dependsOn": "premake-vs2022"
         },
         {
             "label": "build-release-x64",
@@ -29,7 +39,8 @@
             "presentation": {
                 "reveal": "silent"
             },
-            "problemMatcher": "$msCompile"
+            "problemMatcher": "$msCompile",
+            "dependsOn": "premake-vs2022"
         },
         {
             "label": "build-dist-x64",
@@ -44,7 +55,8 @@
             "presentation": {
                 "reveal": "silent"
             },
-            "problemMatcher": "$msCompile"
+            "problemMatcher": "$msCompile",
+            "dependsOn": "premake-vs2022"
         }
     ]
 }

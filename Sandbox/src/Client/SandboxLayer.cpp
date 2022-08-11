@@ -11,15 +11,16 @@ namespace sb {
 		vertexArray = ge::clientcore::IVertexArray::create();
 		vertexArray->unbind();
 
-		float32 vertices[3 * 7] = {
-			-0.5f, -0.5f, 0.f, 1.f, 0.f, 0.f, 1.f,
-			 0.5f, -0.5f, 0.f, 0.f, 1.f, 0.f, 1.f,
-			 0.f,   0.5f, 0.f, 0.f, 0.f, 1.f, 1.f
+		float32 vertices[4 * 5] = {
+			-0.5f, -0.5f, 0.f, 0.f, 0.f,
+			 0.5f, -0.5f, 0.f, 1.f, 0.f,
+			 0.5f,  0.5f, 0.f, 1.f, 1.f,
+			-0.5f,  0.5f, 0.f, 0.f, 1.f
 		};
 
 		ge::clientcore::BufferLayout layout = {
 			{ ge::clientcore::ShaderDataType::FLOAT3, "a_pos" },
-			{ ge::clientcore::ShaderDataType::FLOAT4, "a_color" }
+			{ ge::clientcore::ShaderDataType::FLOAT2, "a_uv" }
 		};
 
 		uint32 index = 0;
@@ -27,8 +28,11 @@ namespace sb {
 		vertexBuffer->setLayout(layout);
 		vertexArray->addVertexBuffer(vertexBuffer);
 
-		uint32 indices[3] = { 0, 1, 2 };
-		indexBuffer = ge::clientcore::IIndexBuffer::create(indices, 3);
+		uint32 indices[6] = {
+			0, 1, 2, 
+			2, 3, 0
+		};
+		indexBuffer = ge::clientcore::IIndexBuffer::create(indices, 6);
 		vertexArray->setIndexBuffer(indexBuffer);
 
 		shader = ge::clientcore::IShader::create("assets/shader/basic.vert", "assets/shader/basic.frag");

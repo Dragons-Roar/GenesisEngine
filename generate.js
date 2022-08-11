@@ -13,6 +13,15 @@ var launch = {
 var tasks = {
 	version: '2.0.0',
 	tasks: [
+		{
+			label: 'premake-vs2022',
+            type: 'shell',
+            command: 'premake5.exe',
+            args: [
+                'vs2022'
+            ],
+            group: 'build'
+		}
 	]
 }
 var settings = {
@@ -59,7 +68,8 @@ config.launchConfigs.configs.forEach(cfg => {
 		presentation: {
 			reveal: 'silent'
 		},
-		problemMatcher: '$msCompile'
+		problemMatcher: '$msCompile',
+		dependsOn: 'premake-vs2022'
 	})
 })
 

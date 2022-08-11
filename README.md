@@ -24,6 +24,14 @@ Currently there are no features as this project is still in development
 9. Now you can run your desired project!
 10. Every Files you code for your game has to be in the Sandbox Projects
 
+## Common Issues
+The asset files of projects are either stored in `Sandbox/assets/` or `Genesis/assets/`, but the program needs them in
+`bin/YOUR_PLATFOR/CONFIG/PROJECT/assets/`  
+One solution is to
+* copy the assets files from the assets directory into the bin directory every time you change one
+* add a post build command that automatically copies your assets after compiling
+* or to create a symlink
+
 ## Project Structure
 | Path | Description |
 | --- | --- |

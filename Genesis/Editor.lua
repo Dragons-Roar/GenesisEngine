@@ -49,9 +49,3 @@ project "Genesis-Editor"
 
 	filter { "system:windows", "configurations:dist" }
 		linkoptions '/SUBSYSTEM:WINDOWS'
-
-	filter "system:windows"
-		postbuildcommands {
-			--"robocopy %{wks.location}/GenesisEngine/assets/GenesisEditor/ bin/%{wks.system}/bin\windows\Debug-x64\GenesisEngine-Editor\assets\ /PURGE"
-			"echo %{wks.location}/GenesisEngine/assets/GenesisEditor/"..outdir.."/assets/ /PURGE"
-		}
