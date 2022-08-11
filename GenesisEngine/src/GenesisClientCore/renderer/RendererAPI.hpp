@@ -17,7 +17,7 @@ namespace ge {
 			virtual void clear() = 0;
 			virtual void setClearColor(const glm::vec4& color) = 0;
 
-			virtual void drawIndexed(const IVertexArray* array) = 0;
+			virtual void drawIndexed(const ge::core::Ref<IVertexArray>& array) = 0;
 
 			static inline API getAPI() { return api; }
 

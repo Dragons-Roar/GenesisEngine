@@ -105,7 +105,7 @@ namespace ge {
 			virtual void setLayout(const BufferLayout& layout) = 0;
 			virtual const BufferLayout& getLayout() const = 0;
 
-			static IVertexBuffer* create(float32* vertices, size_t size);
+			static ge::core::Ref<IVertexBuffer> create(float32* vertices, size_t size);
 		};
 		
 		class IIndexBuffer {
@@ -117,7 +117,7 @@ namespace ge {
 
 			virtual uint32 getCount() const = 0;
 
-			static IIndexBuffer* create(uint32* indices, uint32 count);
+			static ge::core::Ref<IIndexBuffer> create(uint32* indices, uint32 count);
 		};
 	}
 }

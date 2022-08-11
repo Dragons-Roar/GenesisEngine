@@ -9,7 +9,7 @@ namespace ge {
 			void setClearColor(const glm::vec4& color) override;
 			void clear() override;
 
-			void drawIndexed(const IVertexArray* arr) override;
+			void drawIndexed(const ge::core::Ref<IVertexArray>& arr) override;
 		};
 	}
 }

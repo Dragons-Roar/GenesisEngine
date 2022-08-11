@@ -6,7 +6,7 @@ namespace ge {
 	namespace clientcore {
 		class IShader {
 		public:
-			static IShader* create(const String& vertexFile, const String& fragmentFile);
+			static ge::core::Ref<IShader> create(const String& vertexFile, const String& fragmentFile);
 
 		public:
 			virtual ~IShader() {}

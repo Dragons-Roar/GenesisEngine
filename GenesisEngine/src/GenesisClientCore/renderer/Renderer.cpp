@@ -11,7 +11,7 @@ namespace ge {
 		void Renderer::endScene() {
 		}
 
-		void Renderer::submit(const IShader* shader, const IVertexArray* arr, const glm::mat4& transform) {
+		void Renderer::submit(const ge::core::Ref<IShader>& shader, const ge::core::Ref<IVertexArray>& arr, const glm::mat4& transform) {
 			shader->bind();
 			shader->setUniformMatrix4fv("u_viewProjectionMatrix", sceneData->viewProjectionMatrix);
 			shader->setUniformMatrix4fv("u_transformMatrix", transform);

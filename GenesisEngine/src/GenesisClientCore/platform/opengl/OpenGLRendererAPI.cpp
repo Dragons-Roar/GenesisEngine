@@ -10,7 +10,7 @@ namespace ge {
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		}
 
-		void OpenGLRendererAPI::drawIndexed(const IVertexArray* arr) {
+		void OpenGLRendererAPI::drawIndexed(const ge::core::Ref<IVertexArray>& arr) {
 			arr->bind();
 			glDrawElements(GL_TRIANGLES, arr->getIndexBuffer()->getCount(), GL_UNSIGNED_INT, nullptr);
 		}

@@ -12,14 +12,14 @@ namespace ge {
 			void bind() const override;
 			void unbind() const override;
 
-			void addVertexBuffer(IVertexBuffer* buffer) override;
-			void setIndexBuffer(IIndexBuffer* buffer) override;
-			IIndexBuffer* getIndexBuffer() const override;
+			void addVertexBuffer(ge::core::Ref<IVertexBuffer>& buffer) override;
+			void setIndexBuffer(ge::core::Ref<IIndexBuffer>& buffer) override;
+			ge::core::Ref<IIndexBuffer> getIndexBuffer() const override;
 
 		private:
 			uint32 handle;
-			ge::core::List<IVertexBuffer*> vertexBuffers;
-			IIndexBuffer* indexBuffer;
+			ge::core::List<ge::core::Ref<IVertexBuffer>> vertexBuffers;
+			ge::core::Ref<IIndexBuffer> indexBuffer;
 		};
 	}
 }

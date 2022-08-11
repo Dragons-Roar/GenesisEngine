@@ -18,9 +18,9 @@ namespace sb {
 	private:
 		ge::clientcore::OrthographicCamera camera;
 
-		ge::clientcore::IShader* shader;
-		ge::clientcore::IVertexBuffer* vertexBuffer;
-		ge::clientcore::IIndexBuffer* indexBuffer;
-		ge::clientcore::IVertexArray* vertexArray;
+		ge::core::Ref<ge::clientcore::IShader> shader;
+		ge::core::Ref<ge::clientcore::IVertexBuffer> vertexBuffer;
+		ge::core::Ref<ge::clientcore::IIndexBuffer> indexBuffer;
+		ge::core::Ref<ge::clientcore::IVertexArray> vertexArray;
 	};
 }

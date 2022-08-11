@@ -35,7 +35,7 @@ namespace ge {
 			glBindVertexArray(0);
 		}
 
-		void OpenGLVertexArray::addVertexBuffer(IVertexBuffer* buffer) {
+		void OpenGLVertexArray::addVertexBuffer(ge::core::Ref<IVertexBuffer>& buffer) {
 			GE_Assert(buffer->getLayout().getElements().size(), "Vertex Buffer has no layout!");
 			glBindVertexArray(handle);
 			buffer->bind();
@@ -54,13 +54,13 @@ namespace ge {
 
 			vertexBuffers.add(buffer);
 		}
-		void OpenGLVertexArray::setIndexBuffer(IIndexBuffer* buffer) {
+		void OpenGLVertexArray::setIndexBuffer(ge::core::Ref<IIndexBuffer>& buffer) {
 			glBindVertexArray(handle);
 			buffer->bind();
 
 			indexBuffer = buffer;
 		}
-		IIndexBuffer* OpenGLVertexArray::getIndexBuffer() const {
+		ge::core::Ref<IIndexBuffer> OpenGLVertexArray::getIndexBuffer() const {
 			return indexBuffer;
 		}
 	}

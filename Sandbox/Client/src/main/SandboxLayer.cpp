@@ -35,10 +35,6 @@ namespace sb {
 	}
 	void SandboxLayer::onDetach() {
 		GE_Info("Sandbox Layer has been detached!");
-		delete indexBuffer;
-		delete vertexBuffer;
-		delete vertexArray;
-		delete shader;
 	}
 	void SandboxLayer::onUpdate(ge::core::Timestep ts) {
 		if(ge::clientcore::Input::isKeyDown(ge::Key::W)) {

@@ -11,11 +11,11 @@ namespace ge {
 			virtual void bind() const = 0;
 			virtual void unbind() const = 0;
 
-			virtual void addVertexBuffer(IVertexBuffer* buffer) = 0;
-			virtual void setIndexBuffer(IIndexBuffer* buffer) = 0;
-			virtual IIndexBuffer* getIndexBuffer() const = 0;
+			virtual void addVertexBuffer(ge::core::Ref<IVertexBuffer>& buffer) = 0;
+			virtual void setIndexBuffer(ge::core::Ref<IIndexBuffer>& buffer) = 0;
+			virtual ge::core::Ref<IIndexBuffer> getIndexBuffer() const = 0;
 
-			static IVertexArray* create();
+			static ge::core::Ref<IVertexArray> create();
 		};
 	}
 }
