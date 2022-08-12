@@ -35,7 +35,12 @@ namespace sb {
 		indexBuffer = ge::clientcore::IIndexBuffer::create(indices, 6);
 		vertexArray->setIndexBuffer(indexBuffer);
 
-		shader = ge::clientcore::IShader::create("assets/shader/basic.vert", "assets/shader/basic.frag");
+		shader = ge::clientcore::IShader::create("assets/shader/basic.glsl");
+		shader->bind();
+		shader->setUniform1i("u_texture", 0);
+
+		texture = ge::clientcore::Texture2D::create("assets/textures/checkerboard.png");
+		glow = ge::clientcore::Texture2D::create("assets/textures/glow.png");
 	}
 	void SandboxLayer::onDetach() {
 		GE_Info("Sandbox Layer has been detached!");
@@ -62,12 +67,17 @@ namespace sb {
 		ge::clientcore::RenderCommand::clear();
 
 		ge::clientcore::Renderer::beginScene(camera);
+		
+		texture->bind();
 		ge::clientcore::Renderer::submit(shader, vertexArray);
+		glow->bind();
+		ge::clientcore::Renderer::submit(shader, vertexArray);
+
 		ge::clientcore::Renderer::endScene();
 	}
 	void SandboxLayer::onImGUIRender() {
 		bool open = true;
-		ImGui::Begin("Camera Info", &open);
+		ImGui::Begin("Camera Info");
 		ImGui::Text("Position:");
 		ImGui::Text(String("X: " + std::to_string(camera.getPosition().x) + " Y: " + std::to_string(camera.getPosition().y) + " Z: " + std::to_string(camera.getPosition().z)).c_str());
 		ImGui::Text("Rotation:");

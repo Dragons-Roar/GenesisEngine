@@ -29,6 +29,7 @@
 		"${workspaceFolder}/ThirdParty/imgui/",
 		"${workspaceFolder}/ThirdParty/nlohmann/include/",
 		"${workspaceFolder}/ThirdParty/spdlog/include/",
-		"${workspaceFolder}/ThirdParty/toml++/include/"
+		"${workspaceFolder}/ThirdParty/toml++/include/",
+		"${workspaceFolder}/ThirdParty/stb/include/"
 	]
 }

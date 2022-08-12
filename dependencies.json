@@ -148,6 +148,20 @@
                 "script": "imgui.lua",
                 "includeDir": ""
             }
+        },
+        {
+            "name": "stb_image",
+            "group": "stb",
+            "packet": {
+                "type": "file",
+                "name": "image.h",
+                "path": "include/stb/",
+                "url": "https://raw.githubusercontent.com/nothings/stb/master/stb_image.h"
+            },
+            "library": {
+                "type": "header",
+                "includeDir": "include/"
+            }
         }
     ],
     "links": {
@@ -174,7 +188,8 @@
             "glad",
             "imgui",
             "glm",
-            "opengl32.lib"
+            "opengl32.lib",
+            "stb_image"
         ],
         "Sandbox-Client-Test": [
             "Genesis-Core",
@@ -189,7 +204,8 @@
             "glad",
             "imgui",
             "glm",
-            "opengl32.lib"
+            "opengl32.lib",
+            "stb_image"
         ],
         "Sandbox-Server-Test": [
             "Genesis-Core",
@@ -222,7 +238,8 @@
             "imgui",
             "glm",
             "boost/preprocessor",
-            "opengl32.lib"
+            "opengl32.lib",
+            "stb_image"
         ],
         "Genesis-Client": [
             "Genesis-Core",
@@ -234,7 +251,8 @@
             "glfw",
             "imgui",
             "glm",
-            "boost/preprocessor"
+            "boost/preprocessor",
+            "stb_image"
         ],
         "Genesis-Server": [
             "Genesis-Core",
@@ -272,7 +290,8 @@
             "glad",
             "imgui",
             "glm",
-            "boost/preprocessor"
+            "boost/preprocessor",
+            "stb_image"
         ]
     },
     "includes": {

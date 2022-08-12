@@ -1,1 +1,0 @@
-IF EXIST O:\OneDrive\Apps\GenesisEngine\Sandbox\assets\Client\ (xcopy /Q /E /Y /I O:\OneDrive\Apps\GenesisEngine\Sandbox\assets\Client O:\OneDrive\Apps\GenesisEngine\bin\windows\Debug-x64\Sandbox-Client\assets \mir  ELSE (xcopy /Q /Y /I O:\OneDrive\Apps\GenesisEngine\Sandbox\assets\Client O:\OneDrive\Apps\GenesisEngine\bin\windows\Debug-x64\Sandbox-Client\assets \mir 

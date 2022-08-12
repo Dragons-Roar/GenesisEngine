@@ -16,6 +16,7 @@
 #include "renderer/Renderer.hpp"
 #include "renderer/Shader.hpp"
 #include "renderer/VertexArray.hpp"
+#include "renderer/Texture.hpp"
 
 // --- Platform Specifc -----------------------------------
 #ifdef GE_WINDOWS

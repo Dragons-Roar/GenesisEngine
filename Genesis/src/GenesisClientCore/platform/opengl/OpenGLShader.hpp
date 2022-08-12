@@ -2,11 +2,15 @@
 #include "../../Defines.hpp"
 #include "../../renderer/Shader.hpp"
 
+// TODO: Remove
+typedef unsigned int GLenum;
+
 namespace ge {
 	namespace clientcore {
 		class OpenGLShader: public IShader {
 		public:
-			OpenGLShader(const String& vertexFile, const String& fragmentFile);
+			OpenGLShader(const String& vertexSrc, const String& fragmentSrc);
+			OpenGLShader(const String& file);
 			~OpenGLShader();
 
 			virtual void bind() const override;
@@ -24,16 +28,11 @@ namespace ge {
 			virtual bool setUniformMatrix4fv(const String& uniform, const glm::mat4& data) const override;
 
 		private:
-			uint32 compile(const String& shaderSrc, uint32 type);
-			std::string parse(const String& file);
-			uint32 createShader(const String& vertexShaderFile, const String& fragmentShaderFile);
+			String readFile(const String& file);
+			std::unordered_map<GLenum, String> preProcess(const String& src);
+			void compile(const std::unordered_map<GLenum, String>& shaders);
 
-			uint32 shaderID;
-
-			#ifdef GE_DEBUG
-			String d_vertexFile;
-			String d_fragmentFile;
-			#endif
+			uint32 handle;
 		};
 	}
 }

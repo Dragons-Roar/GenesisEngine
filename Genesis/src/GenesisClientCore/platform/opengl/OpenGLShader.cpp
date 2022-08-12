@@ -5,115 +5,144 @@
 
 namespace ge {
 	namespace clientcore {
-		OpenGLShader::OpenGLShader(const String& vertexFile, const String& fragmentFile) {
-			shaderID = createShader(vertexFile, fragmentFile);
+		namespace Utils {
+			static GLenum shaderTypeFromString(const String& str) {
+				if(str == "vertex") return GL_VERTEX_SHADER;
+				if(str == "fragment") return GL_FRAGMENT_SHADER;
 
-			#ifdef GE_DEBUG
-			this->d_vertexFile = vertexFile;
-			this->d_fragmentFile = fragmentFile;
-			#endif
+				GE_Assert(false, "Unknown shader type");
+				return 0;
+			}
 		}
+
+		OpenGLShader::OpenGLShader(const String& file) {
+			String src = readFile(file);
+			auto shaders = preProcess(src);
+			compile(shaders);
+		}
+		OpenGLShader::OpenGLShader(const String& vertexSrc, const String& fragmentSrc) {
+			std::unordered_map<GLenum, std::string> shaders;
+			shaders[GL_VERTEX_SHADER] = vertexSrc;
+			shaders[GL_FRAGMENT_SHADER] = fragmentSrc;
+			compile(shaders);
+		}
+
 		OpenGLShader::~OpenGLShader() {
-			glDeleteProgram(shaderID);
+			glDeleteProgram(handle);
+		}
+
+		String OpenGLShader::readFile(const String& file) {
+			std::ifstream in(file, std::ios::in, std::ios::binary);
+			String res;
+			if(in) {
+				in.seekg(0, std::ios::end);
+				res.resize(in.tellg());
+
+				in.seekg(0, std::ios::beg);
+				in.read(&res[0], res.size());
+			} else {
+				GE_Error("Could not read from file '{0}'", file);
+			}
+			return res;
+		}
+		std::unordered_map<GLenum, String> OpenGLShader::preProcess(const String& src) {
+			std::unordered_map<GLenum, String> shaders;
+			const char* typeToken = "#type";
+			size_t typeToken_legnth = strlen(typeToken);
+
+			size_t pos = src.find(typeToken, 0);
+			while(pos != String::npos) {
+				size_t eol = src.find_first_of("\r\n", pos);
+				GE_Assert(eol != String::npos, "Syntax Error");
+				size_t begin = pos + typeToken_legnth + 1;
+				String type = src.substr(begin, eol - begin);
+				GE_Assert(Utils::shaderTypeFromString(type), "Invalid Shader Type specified");
+
+				size_t nextLinePos = src.find_first_not_of("\r\n", eol);
+				GE_Assert(nextLinePos != String::npos, "Syntax Error");
+				pos = src.find(typeToken, nextLinePos);
+
+				shaders[Utils::shaderTypeFromString(type)] =
+					src.substr(nextLinePos,
+						pos - (nextLinePos == String::npos ? src.size() - 1 : nextLinePos));
+			}
+
+			return shaders;
+		}
+		void OpenGLShader::compile(const std::unordered_map<GLenum, String>& shaders) {
+			GLuint program = glCreateProgram();
+			std::vector<GLenum> shaderIDs(shaders.size());
+			for(auto& kv: shaders) {
+				GLenum type = kv.first;
+				const String& src = kv.second;
+
+				GLuint shader = glCreateShader(type);
+				const GLchar* source = src.c_str();
+
+				glShaderSource(shader, 1, &source, 0);
+				glCompileShader(shader);
+
+				GLint isCompiled = 0;
+				glGetShaderiv(shader, GL_COMPILE_STATUS, &isCompiled);
+				if(isCompiled == GL_FALSE) {
+					GLint maxLength = 0;
+					glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &maxLength);
+
+					std::vector<GLchar> infoLog(maxLength);
+					glGetShaderInfoLog(shader, maxLength, &maxLength, &infoLog[0]);
+
+					glDeleteShader(shader);
+
+					GE_Error("{0}", infoLog.data());
+					GE_Assert(false, "Shader compilation failure!");
+					break;
+				}
+				glAttachShader(program, shader);
+				shaderIDs.push_back(shader);
+			}
+			handle = program;
+
+			glLinkProgram(handle);
+
+			GLint isLinked;
+			glGetProgramiv(handle, GL_LINK_STATUS, (int*) &isLinked);
+			if(isLinked == GL_FALSE) {
+				GLint maxLength = 0;
+				glGetProgramiv(program, GL_INFO_LOG_LENGTH, &maxLength);
+
+				std::vector<GLchar> infoLog(maxLength);
+				glGetProgramInfoLog(program, maxLength, &maxLength, &infoLog[0]);
+				glDeleteProgram(program);
+
+				GE_Error("{0}", infoLog.data());
+				GE_Assert(false, "Shader link failure!");
+
+				for(auto id: shaderIDs) {
+					glDeleteShader(id);
+				}
+			}
+
+			for(auto id: shaderIDs) {
+				glDetachShader(handle, id);
+			}
 		}
 
 		void OpenGLShader::bind() const {
-			glUseProgram(shaderID);
+			glUseProgram(handle);
 		}
 		void OpenGLShader::unbind() const {
 			glUseProgram(0);
 		}
 
-		GLuint OpenGLShader::compile(const std::string& shaderSrc, GLenum type) {
-			GLuint shaderID = glCreateShader(type);
-			const char* src = shaderSrc.c_str();
-			glShaderSource(shaderID, 1, &src, 0);
-			glCompileShader(shaderID);
-
-			int32 result;
-			glGetShaderiv(shaderID, GL_COMPILE_STATUS, &result);
-			if(result != GL_TRUE) {
-				int32 length = 0;
-				glGetShaderiv(shaderID, GL_INFO_LOG_LENGTH, &length);
-				char* msg = new char[length];
-				glGetShaderInfoLog(shaderID, length, &length, msg);
-				GE_Error("OpenGLShader compilation error: {0}", msg);
-				delete[] msg;
-				return 0;
-			}
-			return shaderID;
-		}
-		std::string OpenGLShader::parse(const String& fileName) {
-			FILE* file;
-			file = fopen(fileName.c_str(), "rb");
-			if(file == nullptr) {
-				GE_Info("File {0} not found!", fileName);
-				return "";
-			}
-
-			std::string contents;
-			fseek(file, 0, SEEK_END);
-			size_t fileSize = ftell(file);
-			rewind(file);
-			contents.resize(fileSize);
-
-			fread(&contents[0], 1, fileSize, file);
-			fclose(file);
-
-			return contents;
-		}
-		GLuint OpenGLShader::createShader(const String& vertexFile, const String& fragmentFile) {
-			std::string vertexOpenGLShaderSRC = parse(vertexFile);
-			std::string fragmentOpenGLShaderSRC = parse(fragmentFile);
-
-			GLuint programID = glCreateProgram();
-			GE_Info("Compiling {0}...", vertexFile);
-			GLuint vertexShaderID = compile(vertexOpenGLShaderSRC, GL_VERTEX_SHADER);
-			GE_Info("Compiling {0}...", fragmentFile);
-			GLuint fragmentShaderID = compile(fragmentOpenGLShaderSRC, GL_FRAGMENT_SHADER);
-
-			glAttachShader(programID, vertexShaderID);
-			glAttachShader(programID, fragmentShaderID);
-			glLinkProgram(programID);
-
-			uint32 isLinked = 0;
-			glGetProgramiv(programID, GL_LINK_STATUS, (int*) &isLinked);
-			if(isLinked == GL_FALSE) {
-				int32 maxLength = 0;
-				glGetProgramiv(programID, GL_INFO_LOG_LENGTH, &maxLength);
-
-				std::vector<char> infoLog(maxLength);
-				glGetProgramInfoLog(programID, maxLength, &maxLength, &infoLog[0]);
-
-				glDeleteProgram(programID);
-				glDeleteShader(vertexShaderID);
-				glDeleteShader(fragmentShaderID);
-
-				GE_Error("OpenGLShader link error: {0}", infoLog.data());
-
-				return 0;
-			}
-
-			#ifndef GE_DEBUG
-			glDetachShader(programID, vertexShaderID);
-			glDetachShader(programID, fragmentShaderID);
-
-			glDeleteShader(vertexShaderID);
-			glDeleteShader(fragmentShaderID);
-			#endif
-
-			return programID;
-		}
-
 		bool OpenGLShader::setUniform1f(const String& uniform, float32 x) const {
-			int32 location = glGetUniformLocation(shaderID, uniform.c_str());
+			int32 location = glGetUniformLocation(handle, uniform.c_str());
 
 			#ifdef GE_DEBUG
 			if(location != -1) {
 				glUniform1f(location, x);
 				return true;
 			} else {
-				GE_Warn("{0} not found! Vertex: {1} Fragment: {2}", uniform, d_vertexFile, d_fragmentFile);
+				GE_Warn("Uniform '{0}' not found!", uniform);
 				return false;
 			}
 			#else
@@ -122,14 +151,14 @@ namespace ge {
 			#endif
 		}
 		bool OpenGLShader::setUniform2f(const String& uniform, float32 x, float32 y) const {
-			int32 location = glGetUniformLocation(shaderID, uniform.c_str());
+			int32 location = glGetUniformLocation(handle, uniform.c_str());
 
 			#ifdef GE_DEBUG
 			if(location != -1) {
 				glUniform2f(location, x, y);
 				return true;
 			} else {
-				GE_Warn("{0} not found! Vertex: {1} Fragment: {2}", uniform, d_vertexFile, d_fragmentFile);
+				GE_Warn("Uniform '{0}' not found!", uniform);
 				return false;
 			}
 			#else
@@ -138,14 +167,14 @@ namespace ge {
 			#endif
 		}
 		bool OpenGLShader::setUniform3f(const String& uniform, float32 x, float32 y, float32 z) const {
-			int32 location = glGetUniformLocation(shaderID, uniform.c_str());
+			int32 location = glGetUniformLocation(handle, uniform.c_str());
 
 			#ifdef GE_DEBUG
 			if(location != -1) {
 				glUniform3f(location, x, y, z);
 				return true;
 			} else {
-				GE_Warn("{0} not found! Vertex: {1} Fragment: {2}", uniform, d_vertexFile, d_fragmentFile);
+				GE_Warn("Uniform '{0}' not found!", uniform);
 				return false;
 			}
 			#else
@@ -154,14 +183,14 @@ namespace ge {
 			#endif
 		}
 		bool OpenGLShader::setUniform4f(const String& uniform, float32 x, float32 y, float32 z, float32 a) const {
-			int32 location = glGetUniformLocation(shaderID, uniform.c_str());
+			int32 location = glGetUniformLocation(handle, uniform.c_str());
 
 			#ifdef GE_DEBUG
 			if(location != -1) {
 				glUniform4f(location, x, y, z, a);
 				return true;
 			} else {
-				GE_Warn("{0} not found! Vertex: {1} Fragment: {2}", uniform, d_vertexFile, d_fragmentFile);
+				GE_Warn("Uniform '{0}' not found!", uniform);
 				return false;
 			}
 			#else
@@ -170,14 +199,14 @@ namespace ge {
 			#endif
 		}
 		bool OpenGLShader::setUniform1i(const String& uniform, int32 x) const {
-			int32 location = glGetUniformLocation(shaderID, uniform.c_str());
+			int32 location = glGetUniformLocation(handle, uniform.c_str());
 
 			#ifdef GE_DEBUG
 			if(location != -1) {
 				glUniform1i(location, x);
 				return true;
 			} else {
-				GE_Warn("{0} not found! Vertex: {1} Fragment: {2}", uniform, d_vertexFile, d_fragmentFile);
+				GE_Warn("Uniform '{0}' not found!", uniform);
 				return false;
 			}
 			#else
@@ -186,14 +215,14 @@ namespace ge {
 			#endif
 		}
 		bool OpenGLShader::setUniform2i(const String& uniform, int32 x, int32 y) const {
-			int32 location = glGetUniformLocation(shaderID, uniform.c_str());
+			int32 location = glGetUniformLocation(handle, uniform.c_str());
 
 			#ifdef GE_DEBUG
 			if(location != -1) {
 				glUniform2i(location, x, y);
 				return true;
 			} else {
-				GE_Warn("{0} not found! Vertex: {1} Fragment: {2}", uniform, d_vertexFile, d_fragmentFile);
+				GE_Warn("Uniform '{0}' not found!", uniform);
 				return false;
 			}
 			#else
@@ -202,14 +231,14 @@ namespace ge {
 			#endif
 		}
 		bool OpenGLShader::setUniform3i(const String& uniform, int32 x, int32 y, int32 z) const {
-			int32 location = glGetUniformLocation(shaderID, uniform.c_str());
+			int32 location = glGetUniformLocation(handle, uniform.c_str());
 
 			#ifdef GE_DEBUG
 			if(location != -1) {
 				glUniform3i(location, x, y, z);
 				return true;
 			} else {
-				GE_Warn("{0} not found! Vertex: {1} Fragment: {2}", uniform, d_vertexFile, d_fragmentFile);
+				GE_Warn("Uniform '{0}' not found!", uniform);
 				return false;
 			}
 			#else
@@ -218,14 +247,14 @@ namespace ge {
 			#endif
 		}
 		bool OpenGLShader::setUniform4i(const String& uniform, int32 x, int32 y, int32 z, int32 a) const {
-			int32 location = glGetUniformLocation(shaderID, uniform.c_str());
+			int32 location = glGetUniformLocation(handle, uniform.c_str());
 
 			#ifdef GE_DEBUG
 			if(location != -1) {
 				glUniform4i(location, x, y, z, a);
 				return true;
 			} else {
-				GE_Warn("{0} not found! Vertex: {1} Fragment: {2}", uniform, d_vertexFile, d_fragmentFile);
+				GE_Warn("Uniform '{0}' not found!", uniform);
 				return false;
 			}
 			#else
@@ -234,7 +263,7 @@ namespace ge {
 			#endif
 		}
 		bool OpenGLShader::setUniform1b(const String& uniform, bool x) const {
-			int32 location = glGetUniformLocation(shaderID, uniform.c_str());
+			int32 location = glGetUniformLocation(handle, uniform.c_str());
 
 			#ifdef GE_DEBUG
 			if(location != -1) {
@@ -246,7 +275,7 @@ namespace ge {
 
 				return true;
 			} else {
-				GE_Warn("{0} not found! Vertex: {1} Fragment: {2}", uniform, d_vertexFile, d_fragmentFile);
+				GE_Warn("Uniform '{0}' not found!", uniform);
 				return false;
 			}
 			#else
@@ -260,14 +289,14 @@ namespace ge {
 		}
 
 		bool OpenGLShader::setUniformMatrix4fv(const String& uniform, const glm::mat4& data) const {
-			int32 location = glGetUniformLocation(shaderID, uniform.c_str());
+			int32 location = glGetUniformLocation(handle, uniform.c_str());
 
 			#ifdef GE_DEBUG
 			if(location != -1) {
 				glUniformMatrix4fv(location, 1, GL_FALSE, &data[0][0]);
 				return true;
 			} else {
-				GE_Warn("{0} not found! Vertex: {1} Fragment: {2}", uniform, d_vertexFile, d_fragmentFile);
+				GE_Warn("Uniform '{0}' not found!", uniform);
 				return false;
 			}
 			#else

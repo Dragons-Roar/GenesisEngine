@@ -9,6 +9,8 @@ namespace ge {
 	namespace clientcore {
 		class Renderer {
 		public:
+			static void init();
+
 			/// <summary>
 			/// Begins a new scene
 			/// </summary>

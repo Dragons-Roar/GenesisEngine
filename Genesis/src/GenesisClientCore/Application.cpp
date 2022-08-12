@@ -24,6 +24,8 @@ namespace ge {
 			window->setEventCallback(GE_BindEventFunction(Application::onEvent));
 			window->setVSync(true);
 			
+			Renderer::init();
+
 			imGuiLayer = new ImGUILayer();
 			layerStack.pushOverlay(imGuiLayer);
 		}
