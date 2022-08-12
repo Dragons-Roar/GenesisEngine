@@ -1,5 +1,5 @@
 #pragma once
-#include "./Layer.hpp"
+#include "GenesisCore/Layer.hpp"
 
 namespace ge {
 	namespace core {

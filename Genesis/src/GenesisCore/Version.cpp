@@ -1,7 +1,7 @@
-#include <GenesisCore/Version.hpp>
-#include <GenesisCore/Datatypes.hpp>
-#include <GenesisCore/List.hpp>
-#include <GenesisCore/Utils.hpp>
+#include "GenesisCore/Version.hpp"
+#include "GenesisCore/Datatypes.hpp"
+#include "GenesisCore/List.hpp"
+#include "GenesisCore/Utils.hpp"
 
 namespace ge {
 	namespace core {

@@ -1,5 +1,5 @@
 #include "RenderCommand.hpp"
-#include "../platform/opengl/OpenGLRendererAPI.hpp"
+#include "GenesisClientCore/platform/opengl/OpenGLRendererAPI.hpp"
 
 namespace ge {
 	namespace clientcore {

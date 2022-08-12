@@ -1,6 +1,6 @@
 #pragma once
-#include "./Defines.hpp"
-#include "./GenesisBase.hpp"
+#include "GenesisCore/Defines.hpp"
+#include "GenesisCore/GenesisBase.hpp"
 #include <toml++/toml.h>
 
 namespace ge {

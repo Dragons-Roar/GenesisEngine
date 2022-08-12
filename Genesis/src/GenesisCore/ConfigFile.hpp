@@ -1,9 +1,9 @@
 #pragma once
 #include <toml++/toml.h>
-#include <GenesisCore/Logger.hpp>
-#include "./GenesisBase.hpp"
-#include "./List.hpp"
-#include "./Defines.hpp"
+#include "GenesisCore/Logger.hpp"
+#include "GenesisCore/GenesisBase.hpp"
+#include "GenesisCore/List.hpp"
+#include "GenesisCore/Defines.hpp"
 
 namespace ge {
 	namespace core {

@@ -2,11 +2,11 @@
 
 #include <GenesisCore/Logger.hpp>
 
-#include "imgui/ImGUILayer.hpp"
-#include "Input.hpp"
-#include "Platform.hpp"
+#include "GenesisClientCore/imgui/ImGUILayer.hpp"
+#include "GenesisClientCore/Input.hpp"
+#include "GenesisClientCore/Platform.hpp"
 
-#include "renderer/Renderer.hpp"
+#include "GenesisClientCore/renderer/Renderer.hpp"
 
 #include <GLFW/glfw3.h>
 
@@ -58,10 +58,12 @@ namespace ge {
 				ge::core::Timestep timestep = time - lastTime;
 				lastTime = time;
 
-				{
-					for(ge::core::Layer* layer : layerStack)
+				if(!minimized) {
+					for(ge::core::Layer* layer : layerStack) {
 						layer->onUpdate(timestep);
+					}
 				}
+
 				{
 					imGuiLayer->begin();
 					for(ge::core::Layer* layer : layerStack) {
@@ -84,6 +86,7 @@ namespace ge {
 				return false;
 			}
 			minimized = false;
+			Renderer::onWindowResize(e.getWidth(), e.getHeight());
 			
 			return false;
 		}

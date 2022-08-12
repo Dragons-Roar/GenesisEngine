@@ -1,6 +1,6 @@
 #pragma once
-#include "../../Defines.hpp"
-#include "../../renderer/Shader.hpp"
+#include "GenesisClientCore/Defines.hpp"
+#include "GenesisClientCore/renderer/Shader.hpp"
 
 // TODO: Remove
 typedef unsigned int GLenum;

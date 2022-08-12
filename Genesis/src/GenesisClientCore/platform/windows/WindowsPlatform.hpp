@@ -1,5 +1,5 @@
 #pragma once
-#include "../../Platform.hpp"
+#include "GenesisClientCore/Platform.hpp"
 
 namespace ge {
 	namespace clientcore {

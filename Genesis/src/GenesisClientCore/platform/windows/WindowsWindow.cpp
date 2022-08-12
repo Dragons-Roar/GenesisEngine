@@ -1,11 +1,11 @@
 #include <GenesisClientCore/platform/windows/WindowsWindow.hpp>
 #include <glad/glad.h>
-#include <GenesisClientCore/GraphicsContext.hpp>
 #include <GenesisCore/event/Event.hpp>
 #include <GenesisCore/event/KeyEvent.hpp>
 #include <GenesisCore/event/MouseEvent.hpp>
 #include <GenesisCore/event/WindowEvent.hpp>
 #include <GenesisCore/Logger.hpp>
+#include "GenesisClientCore/GraphicsContext.hpp"
 
 #define GE_GetWindowData() WindowData& data = *(WindowData*) glfwGetWindowUserPointer(window)
 

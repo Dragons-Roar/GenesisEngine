@@ -1,5 +1,5 @@
 #include "Renderer.hpp"
-#include "RenderCommand.hpp"
+#include "GenesisClientCore/renderer/RenderCommand.hpp"
 
 namespace ge {
 	namespace clientcore {
@@ -21,6 +21,10 @@ namespace ge {
 			shader->setUniformMatrix4fv("u_transformMatrix", transform);
 
 			RenderCommand::drawIndexed(arr);
+		}
+
+		void Renderer::onWindowResize(uint32 width, uint32 height) {
+			RenderCommand::setViewport(0, 0, width, height);
 		}
 	}
 }

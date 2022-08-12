@@ -3,7 +3,7 @@
 #include <glad/glad.h>
 #include <GenesisCore/Logger.hpp>
 
-#include "OpenGLError.hpp"
+#include "GenesisClientCore/platform/opengl/OpenGLError.hpp"
 
 namespace ge {
 	namespace clientcore {

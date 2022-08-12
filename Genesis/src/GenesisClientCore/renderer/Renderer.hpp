@@ -1,8 +1,8 @@
 #pragma once
-#include "RendererAPI.hpp"
-#include "RenderCommand.hpp"
-#include "Camera.hpp"
-#include "Shader.hpp"
+#include "GenesisClientCore/renderer/RendererAPI.hpp"
+#include "GenesisClientCore/renderer/RenderCommand.hpp"
+#include "GenesisClientCore/renderer/Camera.hpp"
+#include "GenesisClientCore/renderer/Shader.hpp"
 
 #define GE_GetRenderAPI() ge::clientcore::RendererAPI::getAPI()
 namespace ge {
@@ -25,6 +25,8 @@ namespace ge {
 			/// </summary>
 			/// <param name="arr">The vertex array to submit</param>
 			static void submit(const ge::core::Ref<IShader>& shader, const ge::core::Ref<IVertexArray>& arr, const glm::mat4& transform = glm::mat4(1));
+
+			static void onWindowResize(uint32 width, uint32 height);
 
 			inline static RendererAPI::API getAPI() { return RendererAPI::getAPI(); }
 		private:

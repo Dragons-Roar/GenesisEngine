@@ -1,7 +1,7 @@
 #include "Platform.hpp"
 
 #ifdef GE_WINDOWS
-#	include "platform/windows/WindowsPlatform.hpp"
+#	include "GenesisClientCore/platform/windows/WindowsPlatform.hpp"
 #endif
 
 namespace ge {

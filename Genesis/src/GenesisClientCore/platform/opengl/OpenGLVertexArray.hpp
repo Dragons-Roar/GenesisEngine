@@ -1,6 +1,6 @@
 #pragma once
-#include "../../Defines.hpp"
-#include "../../renderer/VertexArray.hpp"
+#include "GenesisClientCore/Defines.hpp"
+#include "GenesisClientCore/renderer/VertexArray.hpp"
 
 namespace ge {
 	namespace clientcore {

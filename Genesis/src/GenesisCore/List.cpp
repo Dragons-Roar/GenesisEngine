@@ -1,4 +1,4 @@
-#include <GenesisCore/List.hpp>
+#include "GenesisCore/List.hpp"
 
 namespace ge {
 	namespace core {

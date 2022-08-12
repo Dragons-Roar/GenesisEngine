@@ -1,4 +1,4 @@
-#include <GenesisCore/GenesisCore.hpp>
+#include "GenesisCore/GenesisCore.hpp"
 #include <iostream>
 
 namespace ge {

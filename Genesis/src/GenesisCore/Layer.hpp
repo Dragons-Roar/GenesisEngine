@@ -1,7 +1,7 @@
 #pragma once
-#include "Defines.hpp"
-#include "event/Event.hpp"
-#include "Timestep.hpp"
+#include "GenesisCore/Defines.hpp"
+#include "GenesisCore/event/Event.hpp"
+#include "GenesisCore/Timestep.hpp"
 
 namespace ge {
 	namespace core {

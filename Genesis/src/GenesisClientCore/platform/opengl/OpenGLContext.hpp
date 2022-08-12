@@ -1,6 +1,6 @@
 #pragma once
-#include "../../Defines.hpp"
-#include "../../GraphicsContext.hpp"
+#include "GenesisClientCore/Defines.hpp"
+#include "GenesisClientCore/GraphicsContext.hpp"
 
 struct GLFWwindow;
 

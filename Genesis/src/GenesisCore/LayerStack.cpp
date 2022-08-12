@@ -1,4 +1,4 @@
-#include <GenesisCore/LayerStack.hpp>
+#include "GenesisCore/LayerStack.hpp"
 
 namespace ge {
 	namespace core {

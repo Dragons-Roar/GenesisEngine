@@ -1,19 +1,18 @@
 #pragma once
-#include "./Defines.hpp"
-#include "./Window.hpp"
 #include <GenesisCore/event/Event.hpp>
 #include <GenesisCore/event/KeyEvent.hpp>
 #include <GenesisCore/event/MouseEvent.hpp>
 #include <GenesisCore/event/WindowEvent.hpp>
 #include <GenesisCore/LayerStack.hpp>
 #include <GenesisCore/Timestep.hpp>
-
 #include <GenesisClientCore/imgui/ImGUILayer.hpp>
 
-#include "renderer/Shader.hpp"
-#include "renderer/Buffer.hpp"
-#include "renderer/VertexArray.hpp"
-#include "renderer/Camera.hpp"
+#include "GenesisClientCore/Defines.hpp"
+#include "GenesisClientCore/Window.hpp"
+#include "GenesisClientCore/renderer/Shader.hpp"
+#include "GenesisClientCore/renderer/Buffer.hpp"
+#include "GenesisClientCore/renderer/VertexArray.hpp"
+#include "GenesisClientCore/renderer/Camera.hpp"
 
 #ifdef GE_WINDOWS
 #	include <Windows.h>

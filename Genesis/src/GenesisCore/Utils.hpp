@@ -1,6 +1,6 @@
 #pragma once
-#include "./Defines.hpp"
-#include "./List.hpp"
+#include "GenesisCore/Defines.hpp"
+#include "GenesisCore/List.hpp"
 
 namespace ge {
 	namespace core {

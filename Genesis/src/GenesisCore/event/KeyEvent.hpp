@@ -1,6 +1,6 @@
 #pragma once
-#include "../KeyCode.hpp"
-#include "./Event.hpp"
+#include "GenesisCore/KeyCode.hpp"
+#include "GenesisCore/event/Event.hpp"
 
 namespace ge {
 	namespace core {

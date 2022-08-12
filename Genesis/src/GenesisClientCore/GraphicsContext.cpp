@@ -1,4 +1,4 @@
-#include <GenesisClientCore/GraphicsContext.hpp>
+#include "GraphicsContext.hpp"
 
 #ifdef GE_OPENGL
 #	include <GenesisClientCore/platform/opengl/OpenGLContext.hpp>

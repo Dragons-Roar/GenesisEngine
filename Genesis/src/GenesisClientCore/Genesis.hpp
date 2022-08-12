@@ -3,23 +3,23 @@
 
 #include <GenesisCore/Genesis.hpp>
 
-#include "Window.hpp"
-#include "Application.hpp"
-#include "Application.hpp"
-#include "Input.hpp"
-#include "Window.hpp"
-#include "CameraController.hpp"
+#include "GenesisClientCore/Window.hpp"
+#include "GenesisClientCore/Application.hpp"
+#include "GenesisClientCore/Application.hpp"
+#include "GenesisClientCore/Input.hpp"
+#include "GenesisClientCore/Window.hpp"
+#include "GenesisClientCore/CameraController.hpp"
 
 // --- Renderer -------------------------------------------
-#include "renderer/Buffer.hpp"
-#include "renderer/Camera.hpp"
-#include "renderer/RenderCommand.hpp"
-#include "renderer/Renderer.hpp"
-#include "renderer/Shader.hpp"
-#include "renderer/VertexArray.hpp"
-#include "renderer/Texture.hpp"
+#include "GenesisClientCore/renderer/Buffer.hpp"
+#include "GenesisClientCore/renderer/Camera.hpp"
+#include "GenesisClientCore/renderer/RenderCommand.hpp"
+#include "GenesisClientCore/renderer/Renderer.hpp"
+#include "GenesisClientCore/renderer/Shader.hpp"
+#include "GenesisClientCore/renderer/VertexArray.hpp"
+#include "GenesisClientCore/renderer/Texture.hpp"
 
 // --- Platform Specifc -----------------------------------
 #ifdef GE_WINDOWS
-#	include "./platform/windows/WindowsWindow.hpp"
+#	include "GenesisClientCore/platform/windows/WindowsWindow.hpp"
 #endif

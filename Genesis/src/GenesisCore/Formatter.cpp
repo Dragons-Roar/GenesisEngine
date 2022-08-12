@@ -1,4 +1,4 @@
-#include <GenesisCore/Formatter.hpp>
+#include "GenesisCore/Formatter.hpp"
 
 namespace ge {
 	namespace core {

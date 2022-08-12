@@ -2,7 +2,7 @@
 #include "Renderer.hpp"
 #include <GenesisCore/Logger.hpp>
 
-#include "../platform/opengl/OpenGLBuffer.hpp"
+#include "GenesisClientCore/platform/opengl/OpenGLBuffer.hpp"
 
 namespace ge {
 	namespace clientcore {

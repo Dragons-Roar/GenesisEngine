@@ -1,5 +1,5 @@
 #pragma once
-#include "../../renderer/Buffer.hpp"
+#include "GenesisClientCore/renderer/Buffer.hpp"
 
 namespace ge {
 	namespace clientcore {

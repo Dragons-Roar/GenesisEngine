@@ -1,9 +1,9 @@
 #pragma once
-#include "../../Defines.hpp"
+#include "GenesisClientCore/Defines.hpp"
 #define GLFW_INCLUDE_NONE
 #include <GLFW/glfw3.h>
-#include "../../Window.hpp"
-#include "../opengl/OpenGLContext.hpp"
+#include "GenesisClientCore/Window.hpp"
+#include "GenesisClientCore/platform/opengl/OpenGLContext.hpp"
 
 namespace ge {
 	namespace clientcore {

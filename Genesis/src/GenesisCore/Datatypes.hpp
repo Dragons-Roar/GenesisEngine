@@ -1,5 +1,5 @@
 #pragma once
-#include "./Defines.hpp"
+#include "GenesisCore/Defines.hpp"
 
 namespace ge {
 	namespace core {

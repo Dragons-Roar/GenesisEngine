@@ -1,6 +1,6 @@
 #pragma once
-#include "../Defines.hpp"
-#include "./Buffer.hpp"
+#include "GenesisClientCore/Defines.hpp"
+#include "GenesisClientCore/renderer/Buffer.hpp"
 
 namespace ge {
 	namespace clientcore {

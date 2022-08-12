@@ -1,6 +1,6 @@
-#include <GenesisClientCore/Defines.hpp>
-#include <GenesisClientCore/platform/windows/WindowsInput.hpp>
-#include <GenesisClientCore/Application.hpp>
+#include "GenesisClientCore/Defines.hpp"
+#include "GenesisClientCore/platform/windows/WindowsInput.hpp"
+#include "GenesisClientCore/Application.hpp"
 #include <GLFW/glfw3.h>
 
 namespace ge {

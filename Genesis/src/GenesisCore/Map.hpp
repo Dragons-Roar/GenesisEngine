@@ -1,7 +1,7 @@
 #pragma once
-#include "./Defines.hpp"
-#include "./Map.hpp"
-#include "./GenesisBase.hpp"
+#include "GenesisCore/Defines.hpp"
+#include "GenesisCore/Map.hpp"
+#include "GenesisCore/GenesisBase.hpp"
 
 namespace ge {
 	namespace core {

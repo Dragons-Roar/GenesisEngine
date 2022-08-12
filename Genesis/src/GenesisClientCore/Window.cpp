@@ -1,7 +1,7 @@
-#include <GenesisClientCore/Window.hpp>
+#include "Window.hpp"
 
 #ifdef GE_WINDOWS
-#	include <GenesisClientCore/platform/windows/WindowsWindow.hpp>
+#	include "GenesisClientCore/platform/windows/WindowsWindow.hpp"
 #else
 #	error Undefined Plattform! Currently only Windows is supported!
 #endif

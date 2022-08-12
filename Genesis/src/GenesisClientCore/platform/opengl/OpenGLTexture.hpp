@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../renderer/Texture.hpp"
+#include "GenesisClientCore/renderer/Texture.hpp"
 
 namespace ge {
 	namespace clientcore {

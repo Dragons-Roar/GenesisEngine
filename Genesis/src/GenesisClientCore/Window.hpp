@@ -1,5 +1,5 @@
 #pragma once
-#include "./Defines.hpp"
+#include "GenesisClientCore/Defines.hpp"
 #include <GenesisCore/event/Event.hpp>
 #include <GenesisCore/GenesisBase.hpp>
 

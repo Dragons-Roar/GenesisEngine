@@ -1,6 +1,6 @@
 #include "Texture.hpp"
 #include "RendererAPI.hpp"
-#include "../platform/opengl/OpenGLTexture.hpp"
+#include "GenesisClientCore/platform/opengl/OpenGLTexture.hpp"
 
 namespace ge {
 	namespace clientcore {

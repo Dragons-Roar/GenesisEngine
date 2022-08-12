@@ -1,6 +1,6 @@
 #pragma once
-#include "../../Defines.hpp"
-#include "../../renderer/RendererAPI.hpp"
+#include "GenesisClientCore/Defines.hpp"
+#include "GenesisClientCore/renderer/RendererAPI.hpp"
 
 namespace ge {
 	namespace clientcore {
@@ -10,6 +10,8 @@ namespace ge {
 
 			void setClearColor(const glm::vec4& color) override;
 			void clear() override;
+
+			void setViewport(uint32 x, uint32 y, uint32 width, uint32 height) override;
 
 			void drawIndexed(const ge::core::Ref<IVertexArray>& arr) override;
 		};

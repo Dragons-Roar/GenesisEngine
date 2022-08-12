@@ -1,5 +1,5 @@
 #pragma once
-#include "./Application.hpp"
+#include "GenesisClientCore/Application.hpp"
 #include <GenesisCore/Logger.hpp>
 
 #ifdef GE_WINDOWS

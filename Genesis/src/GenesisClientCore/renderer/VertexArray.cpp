@@ -1,7 +1,7 @@
 #include "VertexArray.hpp"
 #include "Renderer.hpp"
 
-#include "../platform/opengl/OpenGLVertexArray.hpp"
+#include "GenesisClientCore/platform/opengl/OpenGLVertexArray.hpp"
 
 namespace ge {
 	namespace clientcore {

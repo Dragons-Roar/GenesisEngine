@@ -1,5 +1,5 @@
 #pragma once
-#include "../Defines.hpp"
+#include "GenesisClientCore/Defines.hpp"
 #include <glm/glm.hpp>
 
 namespace ge {

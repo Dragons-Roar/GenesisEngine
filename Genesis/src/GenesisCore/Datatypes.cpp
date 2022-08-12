@@ -1,4 +1,4 @@
-#include <GenesisCore/Datatypes.hpp>
+#include "GenesisCore/Datatypes.hpp"
 
 namespace ge {
 	namespace core {

@@ -19,5 +19,9 @@ namespace ge {
 			arr->bind();
 			glDrawElements(GL_TRIANGLES, arr->getIndexBuffer()->getCount(), GL_UNSIGNED_INT, nullptr);
 		}
+		
+		void OpenGLRendererAPI::setViewport(uint32 x, uint32 y, uint32 width, uint32 height) {
+			glViewport(x, y, width, height);
+		}
 	}
 }

@@ -1,7 +1,7 @@
 #pragma once
-#include "../Defines.hpp"
+#include "GenesisCore/Defines.hpp"
 
-#include "../GenesisBase.hpp"
+#include "GenesisCore/GenesisBase.hpp"
 namespace ge {
 	namespace core {
 		enum class EventType {

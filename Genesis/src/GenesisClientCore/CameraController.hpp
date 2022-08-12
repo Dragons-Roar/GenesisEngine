@@ -1,5 +1,5 @@
 #pragma once
-#include "renderer/Camera.hpp"
+#include "GenesisClientCore/renderer/Camera.hpp"
 #include <GenesisCore/Timestep.hpp>
 #include <GenesisCore/event/WindowEvent.hpp>
 #include <GenesisCore/event/MouseEvent.hpp>

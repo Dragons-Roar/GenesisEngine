@@ -1,4 +1,4 @@
-#include <GenesisCore/Random.hpp>
+#include "GenesisCore/Random.hpp"
 
 namespace ge {
 	namespace core {

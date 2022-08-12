@@ -1,5 +1,5 @@
 #pragma once
-#include "./Event.hpp"
+#include "GenesisCore/event/Event.hpp"
 
 namespace ge {
 	namespace core {

@@ -1,6 +1,6 @@
 #include "OpenGLBuffer.hpp"
 #include <glad/glad.h>
-#include "OpenGLError.hpp"
+#include "GenesisClientCore/platform/opengl/OpenGLError.hpp"
 
 namespace ge {
 	namespace clientcore {

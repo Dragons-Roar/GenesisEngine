@@ -1,6 +1,6 @@
 #pragma once
-#include "./Defines.hpp"
-#include "./GenesisBase.hpp"
+#include "GenesisCore/Defines.hpp"
+#include "GenesisCore/GenesisBase.hpp"
 #include <spdlog/spdlog.h>
 
 namespace ge {

@@ -1,7 +1,7 @@
 #include "Shader.hpp"
-#include "Renderer.hpp"
 
-#include "../platform/opengl/OpenGLShader.hpp"
+#include "GenesisClientCore/renderer/Renderer.hpp"
+#include "GenesisClientCore/platform/opengl/OpenGLShader.hpp"
 
 namespace ge {
 	namespace clientcore {
