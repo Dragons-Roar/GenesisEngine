@@ -7,6 +7,7 @@ namespace ge {
 		class OrthographicCamera {
 		public:
 			OrthographicCamera(float32 left, float32 right, float32 bottom, float32 top);
+			void setProjection(float32 left, float32 right, float32 bottom, float32 top);
 
 			void setPosition(const glm::vec3& position) { this->position = position; recalculateViewMatrix(); }
 			void setRotation(const float32 rotation) { this->rotation = rotation; recalculateViewMatrix(); }

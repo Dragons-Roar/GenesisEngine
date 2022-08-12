@@ -8,6 +8,7 @@
 #include "Application.hpp"
 #include "Input.hpp"
 #include "Window.hpp"
+#include "CameraController.hpp"
 
 // --- Renderer -------------------------------------------
 #include "renderer/Buffer.hpp"

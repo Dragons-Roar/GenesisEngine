@@ -7,16 +7,17 @@ namespace sb {
 	public:
 		SandboxLayer(): 
 			ge::core::Layer("Sandbox Layer"),
-			camera(-1.6f, 1.6f, -0.9f, 0.9f)
+			camera(1280.f / 720.f)
 		{ }
 
 		void onAttach() override;
 		void onDetach() override;
 		void onUpdate(ge::core::Timestep ts) override;
+		void onEvent(ge::core::Event& e) override;
 		void onImGUIRender() override;
 
 	private:
-		ge::clientcore::OrthographicCamera camera;
+		ge::clientcore::OrthographicCameraController camera;
 
 		ge::core::Ref<ge::clientcore::IVertexBuffer> vertexBuffer;
 		ge::core::Ref<ge::clientcore::IIndexBuffer> indexBuffer;

@@ -99,3 +99,13 @@ namespace ge {
         }
     }
 }
+
+// Returns the smaller values of the two
+// WARNING: Macro based, can produced errors
+#define GE_Min(left, right) left > right ? right : left
+// Returns the greater values of the two
+// WARNING: Macro based, can produced errors
+#define GE_Max(left, right) left < right ? right : left
+// Returns max if the value is bigger than max, min if the value is less than min, value if the value is between min and max
+// WARNING: Macro based, can produced errors
+#define GE_Clamp(value, min, max) = (value > max) ? max : (value < min) ? min : value

@@ -46,27 +46,11 @@ namespace sb {
 		GE_Info("Sandbox Layer has been detached!");
 	}
 	void SandboxLayer::onUpdate(ge::core::Timestep ts) {
-		if(ge::clientcore::Input::isKeyDown(ge::Key::W)) {
-			camera.setPosition(camera.getPosition() + glm::vec3(0.f, 3.f * ts, 0.f));
-		} else if(ge::clientcore::Input::isKeyDown(ge::Key::S)) {
-			camera.setPosition(camera.getPosition() + glm::vec3(0.f, -3.f * ts, 0.f));
-		}
-
-		if(ge::clientcore::Input::isKeyDown(ge::Key::A)) {
-			camera.setPosition(camera.getPosition() + glm::vec3(-3.f * ts, 0.f, 0.f));
-		} else if(ge::clientcore::Input::isKeyDown(ge::Key::D)) {
-			camera.setPosition(camera.getPosition() + glm::vec3(3.f * ts, 0.f, 0.f));
-		}
-
-		if(ge::clientcore::Input::isKeyDown(ge::Key::Q)) {
-			camera.setRotation(camera.getRotation() + 80.f * ts);
-		} else if(ge::clientcore::Input::isKeyDown(ge::Key::E)) {
-			camera.setRotation(camera.getRotation() - 80.f * ts);
-		}
+		camera.onUpdate(ts);
 
 		ge::clientcore::RenderCommand::clear();
 
-		ge::clientcore::Renderer::beginScene(camera);
+		ge::clientcore::Renderer::beginScene(camera.getCamera());
 		
 		auto shader = shaderLibrary.get("basic");
 
@@ -78,12 +62,9 @@ namespace sb {
 		ge::clientcore::Renderer::endScene();
 	}
 	void SandboxLayer::onImGUIRender() {
-		bool open = true;
-		ImGui::Begin("Camera Info");
-		ImGui::Text("Position:");
-		ImGui::Text(String("X: " + std::to_string(camera.getPosition().x) + " Y: " + std::to_string(camera.getPosition().y) + " Z: " + std::to_string(camera.getPosition().z)).c_str());
-		ImGui::Text("Rotation:");
-		ImGui::Text(String("Z: " + std::to_string(camera.getRotation())).c_str());
-		ImGui::End();
+	}
+
+	void SandboxLayer::onEvent(ge::core::Event& e) {
+		camera.onEvent(e);
 	}
 }
