@@ -32,7 +32,7 @@ namespace ge {
 		}
 
 		String OpenGLShader::readFile(const String& file) {
-			std::ifstream in(file, std::ios::in, std::ios::binary);
+			std::ifstream in(file, std::ios::in | std::ios::binary);
 			String res;
 			if(in) {
 				in.seekg(0, std::ios::end);
@@ -70,8 +70,10 @@ namespace ge {
 			return shaders;
 		}
 		void OpenGLShader::compile(const std::unordered_map<GLenum, String>& shaders) {
+			GE_Assert(shaders.size() <= 5, "Only a maxmimum of 5 shaders is supported");
 			GLuint program = glCreateProgram();
-			std::vector<GLenum> shaderIDs(shaders.size());
+			std::array<GLenum, 5> shaderIDs;
+			int32 index = 0;
 			for(auto& kv: shaders) {
 				GLenum type = kv.first;
 				const String& src = kv.second;
@@ -98,7 +100,7 @@ namespace ge {
 					break;
 				}
 				glAttachShader(program, shader);
-				shaderIDs.push_back(shader);
+				shaderIDs[index++] = shader;
 			}
 			handle = program;
 
