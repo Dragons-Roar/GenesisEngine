@@ -35,7 +35,7 @@ namespace sb {
 		indexBuffer = ge::clientcore::IIndexBuffer::create(indices, 6);
 		vertexArray->setIndexBuffer(indexBuffer);
 
-		shader = ge::clientcore::IShader::create("assets/shader/basic.glsl");
+		auto shader = shaderLibrary.load("assets/shader/basic.glsl");
 		shader->bind();
 		shader->setUniform1i("u_texture", 0);
 
@@ -68,6 +68,8 @@ namespace sb {
 
 		ge::clientcore::Renderer::beginScene(camera);
 		
+		auto shader = shaderLibrary.get("basic");
+
 		texture->bind();
 		ge::clientcore::Renderer::submit(shader, vertexArray);
 		glow->bind();

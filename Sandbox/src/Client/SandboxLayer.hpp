@@ -18,11 +18,12 @@ namespace sb {
 	private:
 		ge::clientcore::OrthographicCamera camera;
 
-		ge::core::Ref<ge::clientcore::IShader> shader;
 		ge::core::Ref<ge::clientcore::IVertexBuffer> vertexBuffer;
 		ge::core::Ref<ge::clientcore::IIndexBuffer> indexBuffer;
 		ge::core::Ref<ge::clientcore::IVertexArray> vertexArray;
 		ge::core::Ref<ge::clientcore::Texture2D> texture;
 		ge::core::Ref<ge::clientcore::Texture2D> glow;
+
+		ge::clientcore::ShaderLibrary shaderLibrary;
 	};
 }

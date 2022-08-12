@@ -30,7 +30,12 @@ The asset files of projects are either stored in `Sandbox/assets/` or `Genesis/a
 One solution is to
 * copy the assets files from the assets directory into the bin directory every time you change one
 * add a post build command that automatically copies your assets after compiling
-* or to create a symlink
+* or to create a symlink  
+
+A nother issues are assets  
+Currently Sandbox assets are stored in Sandbox/assets/Client/ but ge packed into Sandbox-Client/assets/  
+For example:
+> Your asset is in `assets/SandboxClient/texture/example.png`, you have to use `assets/texture/example.png`
 
 ## Project Structure
 | Path | Description |

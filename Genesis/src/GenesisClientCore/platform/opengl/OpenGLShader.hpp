@@ -9,12 +9,14 @@ namespace ge {
 	namespace clientcore {
 		class OpenGLShader: public IShader {
 		public:
-			OpenGLShader(const String& vertexSrc, const String& fragmentSrc);
 			OpenGLShader(const String& file);
+			OpenGLShader(const String& name, const String& vertexSrc, const String& fragmentSrc);
 			~OpenGLShader();
 
 			virtual void bind() const override;
 			virtual void unbind() const override;
+
+			const String& getName() const override { return name; }
 
 			virtual bool setUniform1f(const String& uniform, float32 x) const override;
 			virtual bool setUniform2f(const String& uniform, float32 x, float32 y) const override;
@@ -31,6 +33,8 @@ namespace ge {
 			String readFile(const String& file);
 			std::unordered_map<GLenum, String> preProcess(const String& src);
 			void compile(const std::unordered_map<GLenum, String>& shaders);
+
+			String name;
 
 			uint32 handle;
 		};

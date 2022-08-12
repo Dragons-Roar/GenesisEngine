@@ -6,8 +6,10 @@ namespace ge {
 	namespace clientcore {
 		class IShader {
 		public:
-			static ge::core::Ref<IShader> create(const String& vertexSrc, const String& fragmentSrc);
+			virtual const String& getName() const = 0;
+
 			static ge::core::Ref<IShader> create(const String& file);
+			static ge::core::Ref<IShader> create(const String& name, const String& vertexSrc, const String& fragmentSrc);
 
 		public:
 			virtual ~IShader() {}
@@ -25,7 +27,21 @@ namespace ge {
 			virtual bool setUniform4i(const String& uniform, int32 x, int32 y, int32 z, int32 a) const = 0;
 			virtual bool setUniform1b(const String& uniform, bool x) const = 0;
 			virtual bool setUniformMatrix4fv(const String& uniform, const glm::mat4& data) const = 0;
+		};
+
+		class ShaderLibrary {
+		public:
+			void add(const ge::core::Ref<IShader>& shader);
+			void add(const String& name, const ge::core::Ref<IShader>& shader);
+			ge::core::Ref<IShader> load(const String& file);
+			ge::core::Ref<IShader> load(const String& name, const String& file);
+
+			ge::core::Ref<IShader> get(const String& name);
+
+			inline const bool exists(const String& name) const { return shaders.find(name) != shaders.end(); }
+
 		private:
+			std::unordered_map<String, ge::core::Ref<IShader>> shaders;
 		};
 	}
 }

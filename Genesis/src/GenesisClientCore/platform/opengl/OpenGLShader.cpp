@@ -19,8 +19,16 @@ namespace ge {
 			String src = readFile(file);
 			auto shaders = preProcess(src);
 			compile(shaders);
+			
+			// Extract name from filepath
+			auto lastSlash = file.find_last_of("/\\");
+			lastSlash = lastSlash == String::npos ? 0 : lastSlash + 1;
+			auto lastDot = file.rfind(".");
+			auto count = lastDot == String::npos ? file.size() - lastSlash : lastDot - lastSlash;
+
+			name = file.substr(lastSlash, count);
 		}
-		OpenGLShader::OpenGLShader(const String& vertexSrc, const String& fragmentSrc) {
+		OpenGLShader::OpenGLShader(const String& name, const String& vertexSrc, const String& fragmentSrc): name(name) {
 			std::unordered_map<GLenum, std::string> shaders;
 			shaders[GL_VERTEX_SHADER] = vertexSrc;
 			shaders[GL_FRAGMENT_SHADER] = fragmentSrc;
