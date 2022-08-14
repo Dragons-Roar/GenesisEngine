@@ -14,8 +14,8 @@ namespace ge {
 			width = w;
 			height = h;
 
-			GLenum internalFormat = 0;
-			GLenum dataFormat = 0;
+			internalFormat = 0;
+			dataFormat = 0;
 
 			switch(channels) {
 				case 4:
@@ -31,12 +31,30 @@ namespace ge {
 
 			glCreateTextures(GL_TEXTURE_2D, 1, &handle);
 			glTextureStorage2D(handle, 1, internalFormat, width, height);
+
 			glTextureParameteri(handle, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 			glTextureParameteri(handle, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+			glTextureParameteri(handle, GL_TEXTURE_WRAP_S, GL_REPEAT);
+			glTextureParameteri(handle, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
 			glTextureSubImage2D(handle, 0, 0, 0, width, height, dataFormat, GL_UNSIGNED_BYTE, data);
 
 			stbi_image_free(data);
 		}
+		OpenGLTexture2D::OpenGLTexture2D(uint32 width, uint32 height): width(width), height(height) {
+			internalFormat = GL_RGBA8;
+			dataFormat = GL_RGBA;
+
+			glCreateTextures(GL_TEXTURE_2D, 1, &handle);
+			glTextureStorage2D(handle, 1, internalFormat, width, height);
+			glTextureParameteri(handle, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+			glTextureParameteri(handle, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		}
+		void OpenGLTexture2D::setData(void* data, uint32 size) {
+			GE_Assert(size == width * height * (dataFormat == GL_RGBA ? 4 : 3), "Data must be entire texture!");
+			glTextureSubImage2D(handle, 0, 0, 0, width, height, dataFormat, GL_UNSIGNED_BYTE, data);
+		}
+
 		OpenGLTexture2D::~OpenGLTexture2D() {
 			glDeleteTextures(1, &handle);
 		}

@@ -1,6 +1,6 @@
 #pragma once
-#include <glm/glm.hpp>
 #include "GenesisClientCore/renderer/VertexArray.hpp"
+#include <glm/glm.hpp>
 
 #define GE_RendererAPI_None ge::clientcore::RendererAPI::API::NONE
 #define GE_RendererAPI_OpenGL ge::clientcore::RendererAPI::API::OPENGL
@@ -10,7 +10,8 @@ namespace ge {
 		class RendererAPI {
 		public:
 			enum class API {
-				NONE = 0, OPENGL = 1
+				NONE = 0,
+				OPENGL = 1
 			};
 
 		public:
@@ -18,7 +19,7 @@ namespace ge {
 
 			virtual void clear() = 0;
 			virtual void setClearColor(const glm::vec4& color) = 0;
-			virtual void drawIndexed(const ge::core::Ref<IVertexArray>& array) = 0;
+			virtual void drawIndexed(const ge::core::Ref<IVertexArray>& array, uint32 indexCount = 0) = 0;
 
 			virtual void setViewport(uint32 x, uint32 y, uint32 width, uint32 height) = 0;
 

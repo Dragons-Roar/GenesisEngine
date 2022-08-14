@@ -4,7 +4,7 @@
 
 namespace ge {
 	namespace clientcore {
-		class OpenGLRendererAPI: public RendererAPI {
+		class OpenGLRendererAPI : public RendererAPI {
 		public:
 			void init() override;
 
@@ -13,7 +13,7 @@ namespace ge {
 
 			void setViewport(uint32 x, uint32 y, uint32 width, uint32 height) override;
 
-			void drawIndexed(const ge::core::Ref<IVertexArray>& arr) override;
+			void drawIndexed(const ge::core::Ref<IVertexArray>& arr, uint32 indexCount) override;
 		};
 	}
 }

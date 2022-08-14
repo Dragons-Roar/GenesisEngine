@@ -10,6 +10,8 @@ namespace ge {
 		}
 
 		void OrthographicCameraController::onUpdate(ge::core::Timestep ts) {
+			GE_ProfileFunction();
+
 			if(Input::isKeyDown(Key::A)) {
 				position.x -= translationSpeed * ts;
 			} else if(Input::isKeyDown(Key::D)) {
@@ -36,6 +38,8 @@ namespace ge {
 		}
 
 		void OrthographicCameraController::onEvent(ge::core::Event& e) {
+			GE_ProfileFunction();
+
 			ge::core::EventDispatcher dispatcher(e);
 			dispatcher.dispatch<ge::core::MouseScrolledEvent>(GE_BindEventFunction(OrthographicCameraController::onMouseScrolled));
 			dispatcher.dispatch<ge::core::WindowResizeEvent>(GE_BindEventFunction(OrthographicCameraController::onWindowResized));

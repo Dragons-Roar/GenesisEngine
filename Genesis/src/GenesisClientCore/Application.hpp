@@ -30,6 +30,8 @@ namespace ge {
 		struct ApplicationConfiguration {
 		public:
 			String name = "Genesis Application";
+			uint32 width = 1920;
+			uint32 height = 1080;
 		};
 
 		class Application {

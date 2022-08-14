@@ -3,13 +3,15 @@
 
 namespace ge {
 	namespace clientcore {
-		class OpenGLVertexBuffer: public IVertexBuffer {
+		class OpenGLVertexBuffer : public IVertexBuffer {
 		public:
+			OpenGLVertexBuffer(size_t size);
 			OpenGLVertexBuffer(float32* vertices, size_t size);
 			virtual ~OpenGLVertexBuffer();
 
 			void bind() const override;
 			void unbind() const override;
+			void setData(const void* data, size_t size) override;
 
 			void setLayout(const BufferLayout& layout) { this->layout = layout; }
 			const BufferLayout& getLayout() const override { return layout; }
@@ -19,7 +21,7 @@ namespace ge {
 			BufferLayout layout;
 		};
 
-		class OpenGLIndexBuffer: public IIndexBuffer {
+		class OpenGLIndexBuffer : public IIndexBuffer {
 		public:
 			OpenGLIndexBuffer(uint32* indices, uint32 count);
 			virtual ~OpenGLIndexBuffer();

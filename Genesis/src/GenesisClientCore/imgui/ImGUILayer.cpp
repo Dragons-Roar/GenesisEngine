@@ -13,6 +13,8 @@
 namespace ge {
 	namespace clientcore {
 		void ImGUILayer::onAttach() {
+			GE_ProfileFunction();
+
 			IMGUI_CHECKVERSION();
 			ImGui::CreateContext();
 
@@ -46,11 +48,15 @@ namespace ge {
 		}
 
 		void ImGUILayer::begin() {
+			GE_ProfileFunction();
+			
 			ImGui_ImplOpenGL3_NewFrame();
 			ImGui_ImplGlfw_NewFrame();
 			ImGui::NewFrame();
 		}
 		void ImGUILayer::end() {
+			GE_ProfileFunction();
+			
 			GE_GetImGuiIO();
 			Application& app = Application::getInstance();
 			io.DisplaySize = ImVec2(static_cast<float32>(app.getWindow().getWidth()), static_cast<float32>(app.getWindow().getHeight()));

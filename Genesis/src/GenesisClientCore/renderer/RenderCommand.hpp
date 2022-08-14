@@ -7,7 +7,7 @@ namespace ge {
 		public:
 			inline static void init() { api->init(); }
 
-			inline static void drawIndexed(const ge::core::Ref<IVertexArray>& arr) { api->drawIndexed(arr); }
+			inline static void drawIndexed(const ge::core::Ref<IVertexArray>& arr, uint32 indexCount = 0) { api->drawIndexed(arr, indexCount); }
 			inline static void setClearColor(const glm::vec4& color) { api->setClearColor(color); }
 			inline static void clear() { api->clear(); }
 

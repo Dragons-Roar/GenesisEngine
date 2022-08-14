@@ -1,16 +1,16 @@
 {
     "files.associations": {
         "algorithm": "cpp",
+        "chrono": "cpp",
+        "*.rh": "cpp",
         "any": "cpp",
         "array": "cpp",
         "atomic": "cpp",
         "bit": "cpp",
         "cctype": "cpp",
         "charconv": "cpp",
-        "chrono": "cpp",
         "clocale": "cpp",
         "cmath": "cpp",
-        "codecvt": "cpp",
         "compare": "cpp",
         "concepts": "cpp",
         "condition_variable": "cpp",

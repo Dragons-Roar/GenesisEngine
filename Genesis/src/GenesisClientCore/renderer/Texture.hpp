@@ -10,11 +10,14 @@ namespace ge {
 			virtual uint32 getWidth() const = 0;
 			virtual uint32 getHeight() const = 0;
 			virtual void bind(uint32 slot = 0) const = 0;
+
+			virtual void setData(void* data, uint32 size) = 0;
 		};
 
 		class Texture2D: public Texture {
 		public:
 			static ge::core::Ref<Texture2D> create(const String& path);
+			static ge::core::Ref<Texture2D> create(uint32 width, uint32 height);
 		};
 	}
 }

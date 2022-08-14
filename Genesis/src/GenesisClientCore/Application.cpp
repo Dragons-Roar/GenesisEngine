@@ -17,10 +17,12 @@ namespace ge {
 		Application::Application(const ApplicationConfiguration& config):
 			appConfig(config)
 		{
+			GE_ProfileFunction();
+
 			if(instance) std::cerr << "Application already exists!" << std::endl;
 			instance = this;
 
-			window = IWindow::create(WindowProps(config.name));
+			window = IWindow::create(WindowProps(config.name, config.width, config.height));
 			window->setEventCallback(GE_BindEventFunction(Application::onEvent));
 			window->setVSync(true);
 			
@@ -37,6 +39,8 @@ namespace ge {
 		}
 		
 		void Application::onEvent(ge::core::Event& e) {
+			GE_ProfileFunction();
+			
 			ge::core::EventDispatcher dispatcher(e);
 			// Dispatch event directly to internal functions
 			dispatcher.dispatch<ge::core::WindowCloseEvent>(GE_BindEventFunction(Application::onWindowClose));
@@ -54,6 +58,8 @@ namespace ge {
 			RenderCommand::setClearColor({ 0.f, 0.f, 0.f, 1.f });
 
 			while(running) {
+				GE_ProfileScope("Application Loop");
+
 				float32 time = Platform::getTime();
 				ge::core::Timestep timestep = time - lastTime;
 				lastTime = time;

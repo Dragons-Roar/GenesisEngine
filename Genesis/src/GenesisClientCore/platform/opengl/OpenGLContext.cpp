@@ -12,6 +12,8 @@ namespace ge {
 		}
 
 		void OpenGLContext::init() {
+			GE_ProfileFunction();
+
 			// Set context and initialize glad
 			glfwMakeContextCurrent(window);
 			if(!gladLoadGLLoader((GLADloadproc) glfwGetProcAddress)) {

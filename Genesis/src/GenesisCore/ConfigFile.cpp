@@ -12,6 +12,8 @@ namespace ge {
 		void ConfigFile::load() { _load(); }
 		void ConfigFile::load(String file) { this->file = file; _load(); }
 		void ConfigFile::_load() {
+			GE_ProfileFunction();
+
 			handle = toml::parse_file(file);
 			this->ConfigSection::handle = &handle;
 		}
@@ -19,6 +21,8 @@ namespace ge {
 		void ConfigFile::save() { _save(file); }
 		void ConfigFile::save(String file) { _save(file); }
 		void ConfigFile::_save(const String& file) {
+			GE_ProfileFunction();
+			
 			std::fstream fout(file, std::ios::out);
 			fout << handle << std::endl;
 			fout.close();

@@ -17,6 +17,12 @@ namespace ge {
 			virtual void bind() const = 0;
 			virtual void unbind() const = 0;
 
+			// Functions using vecotrs
+			inline bool setUniform2f(const String& uniform, const glm::vec2& vec) const { return setUniform2f(uniform, vec.x, vec.y); }
+			inline bool setUniform3f(const String& uniform, const glm::vec3& vec) const { return setUniform3f(uniform, vec.x, vec.y, vec.z); }
+			inline bool setUniform4f(const String& uniform, const glm::vec4& vec) const { return setUniform4f(uniform, vec.x, vec.y, vec.z, vec.w); }
+
+			// Raw value Functions
 			virtual bool setUniform1f(const String& uniform, float32 x) const = 0;
 			virtual bool setUniform2f(const String& uniform, float32 x, float32 y) const = 0;
 			virtual bool setUniform3f(const String& uniform, float32 x, float32 y, float32 z) const = 0;

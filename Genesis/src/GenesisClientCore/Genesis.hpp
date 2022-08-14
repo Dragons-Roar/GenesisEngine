@@ -1,7 +1,6 @@
 #pragma once
 // For use in Genesis Applications
-
-#include <GenesisCore/Genesis.hpp>
+#include "GenesisClientCore/Defines.hpp"
 
 #include "GenesisClientCore/Window.hpp"
 #include "GenesisClientCore/Application.hpp"
