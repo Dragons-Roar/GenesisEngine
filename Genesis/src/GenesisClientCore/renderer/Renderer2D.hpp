@@ -20,8 +20,8 @@ namespace ge {
 			static void endScene();
 
 			// Primitives
-			static inline void drawQuad(const glm::vec2& pos, const glm::vec2& size, const glm::vec4& color, const glm::vec2& tiling = {1.f, 1.f}) { drawQuad({pos.x, pos.y, 0.f}, size, color, tiling); }
-			static void drawQuad(const glm::vec3& pos, const glm::vec2& size, const glm::vec4& color, const glm::vec2& tiling = {1.f, 1.f});
+			static inline void drawQuad(const glm::vec2& pos, const glm::vec2& size, const glm::vec4& color) { drawQuad({pos.x, pos.y, 0.f}, size, color); }
+			static void drawQuad(const glm::vec3& pos, const glm::vec2& size, const glm::vec4& color);
 
 			static inline void drawQuad(const glm::vec2& pos, const glm::vec2& size, const ge::core::Ref<Texture2D>& texture, const glm::vec4& color = {1.f, 1.f, 1.f, 1.f}, const glm::vec2& tiling = {1.f, 1.f}) { drawQuad({pos.x, pos.y, 0.f}, size, texture, color, tiling); }
 			static void drawQuad(const glm::vec3& pos, const glm::vec2& size, const ge::core::Ref<Texture2D>& texture, const glm::vec4& color = {1.f, 1.f, 1.f, 1.f}, const glm::vec2& tiling = {1.f, 1.f});

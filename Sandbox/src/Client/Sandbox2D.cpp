@@ -23,8 +23,8 @@ namespace sb {
 		ge::clientcore::RenderCommand::clear();
 		ge::clientcore::Renderer2D::beginScene(camera.getCamera());
 		ge::clientcore::Renderer2D::drawQuad({0.f, 0.f}, {1.2f, 0.7f}, color);
-		ge::clientcore::Renderer2D::drawQuad({-0.5f, 0.2f}, {0.1f, 0.3f}, color);
-		ge::clientcore::Renderer2D::drawQuad({1.f, 0.f}, {3.f, 3.f}, checkerboardTexture, color, {10.f, 10.f});
+		ge::clientcore::Renderer2D::drawQuad({0.f, 0.f}, {0.1f, 0.3f}, color);
+		ge::clientcore::Renderer2D::drawQuadRotated({10.f, 10.f}, {3.f, 3.f}, checkerboardTexture, glm::radians(color.w * 100.f), color, {10.f, 10.f});
 		ge::clientcore::Renderer2D::endScene();
 	}
 	void Sandbox2D::onImGUIRender() {
