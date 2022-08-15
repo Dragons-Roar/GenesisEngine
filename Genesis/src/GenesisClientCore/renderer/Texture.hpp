@@ -14,6 +14,7 @@ namespace ge {
 			virtual void setData(void* data, uint32 size) = 0;
 
 			virtual bool operator==(const Texture& other) const = 0;
+			virtual bool operator!=(const Texture& other) const = 0;
 		};
 
 		class Texture2D: public Texture {
