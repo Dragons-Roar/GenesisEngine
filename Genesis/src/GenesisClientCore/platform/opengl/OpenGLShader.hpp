@@ -29,6 +29,8 @@ namespace ge {
 			virtual bool setUniform1b(const String& uniform, bool x) const override;
 			virtual bool setUniformMatrix4fv(const String& uniform, const glm::mat4& data) const override;
 
+			virtual bool setUniformIArray(const String& uniform, int32* values, uint32 count) const override;
+
 		private:
 			String readFile(const String& file);
 			std::unordered_map<GLenum, String> preProcess(const String& src);

@@ -17,6 +17,10 @@ namespace ge {
 			void bind(uint32 slot) const override;
 			void setData(void* data, uint32 size) override;
 
+			bool operator==(const Texture& other) const override {
+				return handle == ((OpenGLTexture2D&) other).handle;
+			}
+
 		private:
 			String path;
 			uint32 width, height;

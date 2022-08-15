@@ -21,6 +21,8 @@ namespace ge {
 			inline bool setUniform2f(const String& uniform, const glm::vec2& vec) const { return setUniform2f(uniform, vec.x, vec.y); }
 			inline bool setUniform3f(const String& uniform, const glm::vec3& vec) const { return setUniform3f(uniform, vec.x, vec.y, vec.z); }
 			inline bool setUniform4f(const String& uniform, const glm::vec4& vec) const { return setUniform4f(uniform, vec.x, vec.y, vec.z, vec.w); }
+			// Functions using matrices
+			virtual bool setUniformMatrix4fv(const String& uniform, const glm::mat4& data) const = 0;
 
 			// Raw value Functions
 			virtual bool setUniform1f(const String& uniform, float32 x) const = 0;
@@ -32,7 +34,9 @@ namespace ge {
 			virtual bool setUniform3i(const String& uniform, int32 x, int32 y, int32 z) const = 0;
 			virtual bool setUniform4i(const String& uniform, int32 x, int32 y, int32 z, int32 a) const = 0;
 			virtual bool setUniform1b(const String& uniform, bool x) const = 0;
-			virtual bool setUniformMatrix4fv(const String& uniform, const glm::mat4& data) const = 0;
+
+			// Array Functions
+			virtual bool setUniformIArray(const String& uniform, int32* values, uint32 count) const = 0;
 		};
 
 		class ShaderLibrary {

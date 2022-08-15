@@ -19,7 +19,7 @@ namespace ge {
 			String src = readFile(file);
 			auto shaders = preProcess(src);
 			compile(shaders);
-			
+
 			// Extract name from filepath
 			auto lastSlash = file.find_last_of("/\\");
 			lastSlash = lastSlash == String::npos ? 0 : lastSlash + 1;
@@ -71,8 +71,8 @@ namespace ge {
 				pos = src.find(typeToken, nextLinePos);
 
 				shaders[Utils::shaderTypeFromString(type)] =
-					src.substr(nextLinePos,
-						pos - (nextLinePos == String::npos ? src.size() - 1 : nextLinePos));
+				    src.substr(nextLinePos,
+				               pos - (nextLinePos == String::npos ? src.size() - 1 : nextLinePos));
 			}
 
 			return shaders;
@@ -147,7 +147,7 @@ namespace ge {
 		bool OpenGLShader::setUniform1f(const String& uniform, float32 x) const {
 			int32 location = glGetUniformLocation(handle, uniform.c_str());
 
-			#ifdef GE_DEBUG
+#ifdef GE_DEBUG
 			if(location != -1) {
 				glUniform1f(location, x);
 				return true;
@@ -155,15 +155,15 @@ namespace ge {
 				GE_Warn("Uniform '{0}' not found!", uniform);
 				return false;
 			}
-			#else
+#else
 			glUniform1f(location, x);
 			return true;
-			#endif
+#endif
 		}
 		bool OpenGLShader::setUniform2f(const String& uniform, float32 x, float32 y) const {
 			int32 location = glGetUniformLocation(handle, uniform.c_str());
 
-			#ifdef GE_DEBUG
+#ifdef GE_DEBUG
 			if(location != -1) {
 				glUniform2f(location, x, y);
 				return true;
@@ -171,15 +171,15 @@ namespace ge {
 				GE_Warn("Uniform '{0}' not found!", uniform);
 				return false;
 			}
-			#else
+#else
 			glUniform2f(location, x, y);
 			return true;
-			#endif
+#endif
 		}
 		bool OpenGLShader::setUniform3f(const String& uniform, float32 x, float32 y, float32 z) const {
 			int32 location = glGetUniformLocation(handle, uniform.c_str());
 
-			#ifdef GE_DEBUG
+#ifdef GE_DEBUG
 			if(location != -1) {
 				glUniform3f(location, x, y, z);
 				return true;
@@ -187,15 +187,15 @@ namespace ge {
 				GE_Warn("Uniform '{0}' not found!", uniform);
 				return false;
 			}
-			#else
+#else
 			glUniform3f(location, x, y, z);
 			return true;
-			#endif
+#endif
 		}
 		bool OpenGLShader::setUniform4f(const String& uniform, float32 x, float32 y, float32 z, float32 a) const {
 			int32 location = glGetUniformLocation(handle, uniform.c_str());
 
-			#ifdef GE_DEBUG
+#ifdef GE_DEBUG
 			if(location != -1) {
 				glUniform4f(location, x, y, z, a);
 				return true;
@@ -203,15 +203,15 @@ namespace ge {
 				GE_Warn("Uniform '{0}' not found!", uniform);
 				return false;
 			}
-			#else
+#else
 			glUniform4f(location, x, y, z, a);
 			return true;
-			#endif
+#endif
 		}
 		bool OpenGLShader::setUniform1i(const String& uniform, int32 x) const {
 			int32 location = glGetUniformLocation(handle, uniform.c_str());
 
-			#ifdef GE_DEBUG
+#ifdef GE_DEBUG
 			if(location != -1) {
 				glUniform1i(location, x);
 				return true;
@@ -219,15 +219,15 @@ namespace ge {
 				GE_Warn("Uniform '{0}' not found!", uniform);
 				return false;
 			}
-			#else
+#else
 			glUniform1i(location, x);
 			return true;
-			#endif
+#endif
 		}
 		bool OpenGLShader::setUniform2i(const String& uniform, int32 x, int32 y) const {
 			int32 location = glGetUniformLocation(handle, uniform.c_str());
 
-			#ifdef GE_DEBUG
+#ifdef GE_DEBUG
 			if(location != -1) {
 				glUniform2i(location, x, y);
 				return true;
@@ -235,15 +235,15 @@ namespace ge {
 				GE_Warn("Uniform '{0}' not found!", uniform);
 				return false;
 			}
-			#else
+#else
 			glUniform2i(location, x, y);
 			return true;
-			#endif
+#endif
 		}
 		bool OpenGLShader::setUniform3i(const String& uniform, int32 x, int32 y, int32 z) const {
 			int32 location = glGetUniformLocation(handle, uniform.c_str());
 
-			#ifdef GE_DEBUG
+#ifdef GE_DEBUG
 			if(location != -1) {
 				glUniform3i(location, x, y, z);
 				return true;
@@ -251,15 +251,15 @@ namespace ge {
 				GE_Warn("Uniform '{0}' not found!", uniform);
 				return false;
 			}
-			#else
+#else
 			glUniform3i(location, x, y, z);
 			return true;
-			#endif
+#endif
 		}
 		bool OpenGLShader::setUniform4i(const String& uniform, int32 x, int32 y, int32 z, int32 a) const {
 			int32 location = glGetUniformLocation(handle, uniform.c_str());
 
-			#ifdef GE_DEBUG
+#ifdef GE_DEBUG
 			if(location != -1) {
 				glUniform4i(location, x, y, z, a);
 				return true;
@@ -267,15 +267,15 @@ namespace ge {
 				GE_Warn("Uniform '{0}' not found!", uniform);
 				return false;
 			}
-			#else
+#else
 			glUniform4i(location, x, y, z, a);
 			return true;
-			#endif
+#endif
 		}
 		bool OpenGLShader::setUniform1b(const String& uniform, bool x) const {
 			int32 location = glGetUniformLocation(handle, uniform.c_str());
 
-			#ifdef GE_DEBUG
+#ifdef GE_DEBUG
 			if(location != -1) {
 				if(x) {
 					glUniform1i(location, 1);
@@ -288,20 +288,20 @@ namespace ge {
 				GE_Warn("Uniform '{0}' not found!", uniform);
 				return false;
 			}
-			#else
+#else
 			if(x) {
 				glUniform1i(location, 1);
 			} else {
 				glUniform1i(location, 0);
 			}
 			return true;
-			#endif
+#endif
 		}
 
 		bool OpenGLShader::setUniformMatrix4fv(const String& uniform, const glm::mat4& data) const {
 			int32 location = glGetUniformLocation(handle, uniform.c_str());
 
-			#ifdef GE_DEBUG
+#ifdef GE_DEBUG
 			if(location != -1) {
 				glUniformMatrix4fv(location, 1, GL_FALSE, &data[0][0]);
 				return true;
@@ -309,10 +309,27 @@ namespace ge {
 				GE_Warn("Uniform '{0}' not found!", uniform);
 				return false;
 			}
-			#else
+#else
 			glUniformMatrix4fv(location, 1, GL_FALSE, &data[0][0]);
 			return true;
-			#endif
+#endif
+		}
+
+		bool OpenGLShader::setUniformIArray(const String& uniform, int32* values, uint32 count) const {
+			int32 location = glGetUniformLocation(handle, uniform.c_str());
+
+#ifdef GE_DEBUG
+			if(location != -1) {
+				glUniform1iv(location, count, values);
+				return true;
+			} else {
+				GE_Warn("Uniform '{0}' not found!", uniform);
+				return false;
+			}
+#else
+			glUniform1iv(location, count, values);
+			return true;
+#endif
 		}
 	}
 }

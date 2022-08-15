@@ -11,12 +11,14 @@ namespace ge {
 			glm::vec3 pos;
 			glm::vec2 uv;
 			glm::vec4 color;
+			float32 textureIndex;
 		};
 
 		struct Renderer2DData {
 			const uint32 maxQuads = 10000;
 			const uint32 maxVertices = maxQuads * 4;
 			const uint32 maxIndices = maxQuads * 6;
+			static const uint32 maxTextureSlots = 32;
 
 			ge::core::Ref<IVertexArray> quadVertexArray;
 			ge::core::Ref<IVertexBuffer> quadVertexBuffer;
@@ -26,6 +28,9 @@ namespace ge {
 			uint32 quadIndexCount = 0;
 			QuadVertex* quadVertexBufferBase = nullptr;
 			QuadVertex* quadVertexBufferPtr = nullptr;
+
+			std::array<ge::core::Ref<Texture2D>, maxTextureSlots> textureSlots;
+			uint32 textureSlotIndex = 1; // 0 = white texture
 		};
 
 		static Renderer2DData* data;
@@ -38,9 +43,10 @@ namespace ge {
 			data->quadVertexArray = IVertexArray::create();
 			data->quadVertexBuffer = IVertexBuffer::create(data->maxVertices * sizeof(QuadVertex));
 			data->quadVertexBuffer->setLayout({
-			    {ShaderDataType::FLOAT3, "a_pos"  },
-			    {ShaderDataType::FLOAT2, "a_uv"   },
-			    {ShaderDataType::FLOAT4, "a_color"}
+			    {ShaderDataType::FLOAT3, "a_pos"         },
+			    {ShaderDataType::FLOAT2, "a_uv"          },
+			    {ShaderDataType::FLOAT4, "a_color"       },
+			    {ShaderDataType::FLOAT,  "a_textureIndex"}
             });
 			data->quadVertexArray->addVertexBuffer(data->quadVertexBuffer);
 
@@ -70,8 +76,14 @@ namespace ge {
 
 			data->texturedShader = IShader::create("assets/shader/textured.glsl");
 			data->texturedShader->bind();
-			data->texturedShader->setUniform1i("u_texture", 0);
-			data->texturedShader->setUniform2f("u_tiling", glm::vec2(1.f));
+
+			int32 samplers[data->maxTextureSlots];
+			for(uint32 i = 0; i < data->maxTextureSlots; ++i) {
+				samplers[i] = i;
+			}
+			data->texturedShader->setUniformIArray("u_textures", samplers, data->maxTextureSlots);
+
+			data->textureSlots[0] = data->whiteTexture;
 		}
 		void Renderer2D::shutdown() {
 			delete data;
@@ -85,6 +97,8 @@ namespace ge {
 
 			data->quadIndexCount = 0;
 			data->quadVertexBufferPtr = data->quadVertexBufferBase;
+
+			data->textureSlotIndex = 1;
 		}
 		void Renderer2D::endScene() {
 			GE_ProfileFunction();
@@ -97,7 +111,10 @@ namespace ge {
 		void Renderer2D::flush() {
 			GE_ProfileFunction();
 
-			data->whiteTexture->bind();
+			for(uint32 i = 0; i < data->textureSlotIndex; ++i) {
+				data->textureSlots[i]->bind(i);
+			}
+
 			RenderCommand::drawIndexed(data->quadVertexArray, data->quadIndexCount);
 		}
 
@@ -107,21 +124,25 @@ namespace ge {
 			data->quadVertexBufferPtr->pos = pos;
 			data->quadVertexBufferPtr->color = color;
 			data->quadVertexBufferPtr->uv = {0.f, 0.f};
+			data->quadVertexBufferPtr->textureIndex = 0.f;
 			data->quadVertexBufferPtr++;
 
 			data->quadVertexBufferPtr->pos = {pos.x + size.x, pos.y, pos.z};
 			data->quadVertexBufferPtr->color = color;
 			data->quadVertexBufferPtr->uv = {1.f, 0.f};
+			data->quadVertexBufferPtr->textureIndex = 0.f;
 			data->quadVertexBufferPtr++;
 
 			data->quadVertexBufferPtr->pos = {pos.x + size.x, pos.y + size.y, pos.z};
 			data->quadVertexBufferPtr->color = color;
 			data->quadVertexBufferPtr->uv = {1.f, 1.f};
+			data->quadVertexBufferPtr->textureIndex = 0.f;
 			data->quadVertexBufferPtr++;
 
 			data->quadVertexBufferPtr->pos = {pos.x, pos.y + size.y, pos.z};
 			data->quadVertexBufferPtr->color = color;
 			data->quadVertexBufferPtr->uv = {0.f, 1.f};
+			data->quadVertexBufferPtr->textureIndex = 0.f;
 			data->quadVertexBufferPtr++;
 			data->quadIndexCount += 6;
 
@@ -137,15 +158,44 @@ namespace ge {
 		void Renderer2D::drawQuad(const glm::vec3& pos, const glm::vec2& size, const ge::core::Ref<Texture2D>& texture, const glm::vec4& color, const glm::vec2& tiling) {
 			GE_ProfileFunction();
 
-			data->texturedShader->setUniform4f("u_color", color);
-			data->texturedShader->setUniform2f("u_tiling", tiling);
-			texture->bind();
+			float32 textureIndex = 0.f;
 
-			glm::mat4 transform = glm::translate(glm::mat4(1.f), pos) * glm::scale(glm::mat4(1.f), {size.x, size.y, 1.f});
-			data->texturedShader->setUniformMatrix4fv("u_transformMatrix", transform);
+			for(uint32 i = 1; i < data->textureSlotIndex; ++i) {
+				if(*data->textureSlots[i].get() == *texture.get()) {
+					textureIndex = (float32) i;
+					break;
+				}
+			}
+			if(textureIndex == 0.f) {
+				textureIndex = (float32) data->textureSlotIndex;
+				data->textureSlots[data->textureSlotIndex] = texture;
+				data->textureSlotIndex++;
+			}
 
-			data->quadVertexArray->bind();
-			RenderCommand::drawIndexed(data->quadVertexArray);
+			data->quadVertexBufferPtr->pos = pos;
+			data->quadVertexBufferPtr->color = color;
+			data->quadVertexBufferPtr->uv = {0.f, 0.f};
+			data->quadVertexBufferPtr->textureIndex = textureIndex;
+			data->quadVertexBufferPtr++;
+
+			data->quadVertexBufferPtr->pos = {pos.x + size.x, pos.y, pos.z};
+			data->quadVertexBufferPtr->color = color;
+			data->quadVertexBufferPtr->uv = {1.f, 0.f};
+			data->quadVertexBufferPtr->textureIndex = textureIndex;
+			data->quadVertexBufferPtr++;
+
+			data->quadVertexBufferPtr->pos = {pos.x + size.x, pos.y + size.y, pos.z};
+			data->quadVertexBufferPtr->color = color;
+			data->quadVertexBufferPtr->uv = {1.f, 1.f};
+			data->quadVertexBufferPtr->textureIndex = textureIndex;
+			data->quadVertexBufferPtr++;
+
+			data->quadVertexBufferPtr->pos = {pos.x, pos.y + size.y, pos.z};
+			data->quadVertexBufferPtr->color = color;
+			data->quadVertexBufferPtr->uv = {0.f, 1.f};
+			data->quadVertexBufferPtr->textureIndex = textureIndex;
+			data->quadVertexBufferPtr++;
+			data->quadIndexCount += 6;
 		}
 
 		void Renderer2D::drawQuadRotated(const glm::vec3& pos, const glm::vec2& size, const glm::vec4& color, float32 rotation, const glm::vec2& tiling) {

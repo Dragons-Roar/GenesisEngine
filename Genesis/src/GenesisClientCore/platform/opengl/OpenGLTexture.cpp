@@ -1,7 +1,7 @@
 #include "OpenGLTexture.hpp"
+#include <GenesisCore/Logger.hpp>
 #include <glad/glad.h>
 #include <stb/image.h>
-#include <GenesisCore/Logger.hpp>
 
 namespace ge {
 	namespace clientcore {
@@ -18,14 +18,14 @@ namespace ge {
 			dataFormat = 0;
 
 			switch(channels) {
-				case 4:
-					internalFormat = GL_RGBA8;
-					dataFormat = GL_RGBA;
-					break;
-				case 3:
-					internalFormat = GL_RGB8;
-					dataFormat = GL_RGB;
-					break;
+			case 4:
+				internalFormat = GL_RGBA8;
+				dataFormat = GL_RGBA;
+				break;
+			case 3:
+				internalFormat = GL_RGB8;
+				dataFormat = GL_RGB;
+				break;
 			}
 			GE_Assert(internalFormat & dataFormat, "Format not supported!");
 
@@ -60,7 +60,7 @@ namespace ge {
 		}
 
 		void OpenGLTexture2D::bind(uint32 slot) const {
-			glBindTextureUnit(0, handle);
+			glBindTextureUnit(slot, handle);
 		}
 	}
 }

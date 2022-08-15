@@ -5,7 +5,6 @@ project "Genesis-Core"
 	language "C++"
 	cppdialect(cfg_cxxStandard)
 	location "%{wks.location}/Genesis/src/GenesisCore/"
-
 	debugdir("%{wks.location}/bin/"..outdir)
 	targetdir("%{wks.location}/bin/"..outdir)
 	objdir("%{wks.location}/bin-int/"..outdir)
