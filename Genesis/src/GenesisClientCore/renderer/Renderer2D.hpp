@@ -31,6 +31,19 @@ namespace ge {
 
 			static inline void drawQuadRotated(const glm::vec2& pos, const glm::vec2& size, const ge::core::Ref<Texture2D>& texture, float32 rotation, const glm::vec4& color = {1.f, 1.f, 1.f, 1.f}, const glm::vec2& tiling = {1.f, 1.f}) { drawQuadRotated({pos.x, pos.y, 0.f}, size, texture, rotation, color, tiling); }
 			static void drawQuadRotated(const glm::vec3& pos, const glm::vec2& size, const ge::core::Ref<Texture2D>& texture, float32 rotation, const glm::vec4& color = {1.f, 1.f, 1.f, 1.f}, const glm::vec2& tiling = {1.f, 1.f});
+
+			struct Stats {
+				uint32 drawCalls = 0;
+				uint32 quadCount = 0;
+
+				uint32 getVertexCount() { return quadCount * 4; }
+				uint32 getIndexCount() { return quadCount * 6; }
+			};
+			static void resetStats();
+			static Stats getStats();
+
+		private:
+			static void startNewBatch();
 		};
 	}
 }

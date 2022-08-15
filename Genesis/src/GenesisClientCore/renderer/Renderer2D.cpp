@@ -16,6 +16,8 @@ namespace ge {
 		};
 
 		struct Renderer2DData {
+			Renderer2D::Stats stats;
+
 			const uint32 maxQuads = 10000;
 			const uint32 maxVertices = maxQuads * 4;
 			const uint32 maxIndices = maxQuads * 6;
@@ -117,6 +119,7 @@ namespace ge {
 
 			flush();
 		}
+
 		void Renderer2D::flush() {
 			GE_ProfileFunction();
 
@@ -125,11 +128,22 @@ namespace ge {
 			}
 
 			RenderCommand::drawIndexed(data->quadVertexArray, data->quadIndexCount);
+			data->stats.drawCalls++;
+		}
+		void Renderer2D::startNewBatch() {
+			endScene();
+
+			data->quadIndexCount = 0;
+			data->quadVertexBufferPtr = data->quadVertexBufferBase;
 		}
 
 		void Renderer2D::drawQuad(const glm::vec3& pos, const glm::vec2& size, const glm::vec4& color) {
 			GE_ProfileFunction();
 
+			if(data->quadIndexCount >= data->maxIndices) {
+				startNewBatch();
+			}
+
 			data->quadVertexBufferPtr->pos = pos;
 			data->quadVertexBufferPtr->color = color;
 			data->quadVertexBufferPtr->uv = {0.f, 0.f};
@@ -158,9 +172,15 @@ namespace ge {
 			data->quadVertexBufferPtr->tiling = glm::vec2(1.f);
 			data->quadVertexBufferPtr++;
 			data->quadIndexCount += 6;
+
+			data->stats.quadCount++;
 		}
 		void Renderer2D::drawQuad(const glm::vec3& pos, const glm::vec2& size, const ge::core::Ref<Texture2D>& texture, const glm::vec4& color, const glm::vec2& tiling) {
 			GE_ProfileFunction();
+
+			if(data->quadIndexCount >= data->maxIndices) {
+				startNewBatch();
+			}
 
 			float32 textureIndex = 0.f;
 
@@ -204,11 +224,17 @@ namespace ge {
 			data->quadVertexBufferPtr->tiling = tiling;
 			data->quadVertexBufferPtr++;
 			data->quadIndexCount += 6;
+
+			data->stats.quadCount++;
 		}
 
 		void Renderer2D::drawQuadRotated(const glm::vec3& pos, const glm::vec2& size, const glm::vec4& color, float32 rotation, const glm::vec2& tiling) {
 			GE_ProfileFunction();
 
+			if(data->quadIndexCount >= data->maxIndices) {
+				startNewBatch();
+			}
+
 			glm::mat4 transform = glm::translate(glm::mat4(1.f), pos) * glm::rotate(glm::mat4(1.f), rotation, {0.f, 0.f, 1.f}) * glm::scale(glm::mat4(1.f), {size.x, size.y, 1.f});
 
 			data->quadVertexBufferPtr->pos = transform * data->quadVertexPositions[0];
@@ -239,9 +265,15 @@ namespace ge {
 			data->quadVertexBufferPtr->tiling = glm::vec2(1.f);
 			data->quadVertexBufferPtr++;
 			data->quadIndexCount += 6;
+
+			data->stats.quadCount++;
 		}
 		void Renderer2D::drawQuadRotated(const glm::vec3& pos, const glm::vec2& size, const ge::core::Ref<Texture2D>& texture, float32 rotation, const glm::vec4& color, const glm::vec2& tiling) {
 			GE_ProfileFunction();
+
+			if(data->quadIndexCount >= data->maxIndices) {
+				startNewBatch();
+			}
 
 			float32 textureIndex = 0.f;
 
@@ -287,6 +319,15 @@ namespace ge {
 			data->quadVertexBufferPtr->tiling = tiling;
 			data->quadVertexBufferPtr++;
 			data->quadIndexCount += 6;
+
+			data->stats.quadCount++;
+		}
+
+		void Renderer2D::resetStats() {
+			memset(&data->stats, 0, sizeof(Renderer2D::Stats));
+		}
+		Renderer2D::Stats Renderer2D::getStats() {
+			return data->stats;
 		}
 	}
 }
