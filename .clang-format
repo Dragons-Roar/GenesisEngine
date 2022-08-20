@@ -42,4 +42,6 @@ SpaceInEmptyParentheses: false
 SpacesInLineCommentPrefix:
   Minimum: 1
   Maximum: -1
+AllowShortCaseLabelsOnASingleLine: true
+IndentCaseLabels: true
 ---

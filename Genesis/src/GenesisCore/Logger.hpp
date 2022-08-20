@@ -37,11 +37,21 @@ namespace ge {
 #endif
 
 #ifndef GE_DIST
-#	define GE_Assert(x, ...) { if(!(x)) { GE_Fatal("Assertion Triggered: {0}", __VA_ARGS__); __debugbreak(); } }
+#	define GE_Assert(x, ...)                                      \
+		{                                                          \
+			if(!(x)) {                                             \
+				GE_Fatal("Assertion Triggered: {0}", __VA_ARGS__); \
+				__debugbreak();                                    \
+			}                                                      \
+		}
 #else
 #	define GE_Assert(x, ...)
 #endif
 
 /// Throw a exception of type ge::core::GenesisRuntimeException and print to console
-#define GE_ThrowException(e) GE_Fatal("Exception occured! {0}", e.toString()); throw e
+#define GE_ThrowException(e)                              \
+	{                                                     \
+		GE_Fatal("Exception occured! {0}", e.toString()); \
+		throw e;                                          \
+	}
 #pragma once

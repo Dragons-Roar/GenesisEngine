@@ -1,0 +1,11 @@
+{
+	"Test": 27,
+	"Test2": 23,
+	"array": ["Test", "Lol", "TEs", "frewf", "fasf"],
+	"player": {
+		"name": "Player"
+	},
+	"server": {
+		"port": 20176
+	}
+}

@@ -1,6 +1,7 @@
 #include "Sandbox2D.hpp"
 #include <GenesisClientCore/renderer/Renderer.hpp>
 #include <GenesisClientCore/renderer/Renderer2D.hpp>
+#include <GenesisCore/Genesis.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
 #include <imgui.h>
@@ -8,6 +9,17 @@
 namespace sb {
 	void Sandbox2D::onAttach() {
 		GE_ProfileFunction();
+
+		ge::core::ConfigFile file("assets/test.json");
+		file.load();
+
+		GE_Info("Test: {0}", file.get<uint32>("Test"));
+		GE_Info("Test2: {0}", file.get<int32>("Test2"));
+
+		GE_Info("Port: {0}", file.getSection("server").getDefault<uint32>("port", 20176));
+		GE_Info("Player: {0}", file.getSection("player").getDefault<String>("name", "Player"));
+
+		file.save(true);
 
 		checkerboardTexture = ge::clientcore::Texture2D::create("assets/textures/checkerboard.png");
 		glowTexture = ge::clientcore::Texture2D::create("assets/textures/glow.png");

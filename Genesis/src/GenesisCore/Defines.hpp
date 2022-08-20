@@ -63,9 +63,9 @@ typedef uint16 KeyCode;
 #define GE_BIT(x) (1 << x)
 
 // Combines certain values to hashes together
-inline void hash_combine(std::size_t &seed) {}
+inline void hash_combine(std::size_t& seed) {}
 template <typename T, typename... Rest>
-inline void hash_combine(std::size_t &seed, const T &v, Rest... rest) {
+inline void hash_combine(std::size_t& seed, const T& v, Rest... rest) {
 	std::hash<T> hasher;
 	seed ^= hasher(v) + 0x9e3779b9 + (seed << 6) + (seed >> 2);
 	hash_combine(seed, rest...);
@@ -76,7 +76,7 @@ inline void hash_combine(std::size_t &seed, const T &v, Rest... rest) {
 	namespace std {                                       \
 		template <>                                       \
 		struct hash<type> {                               \
-			std::size_t operator()(const type &t) const { \
+			std::size_t operator()(const type& t) const { \
 				std::size_t ret = 0;                      \
 				hash_combine(ret, __VA_ARGS__);           \
 				return ret;                               \
@@ -85,7 +85,7 @@ inline void hash_combine(std::size_t &seed, const T &v, Rest... rest) {
 	}
 
 // Bind a event function
-#define GE_BindEventFunction(fn) [this](auto &&...args) -> decltype(auto) { return this->fn(std::forward<decltype(args)>(args)...); }
+#define GE_BindEventFunction(fn) [this](auto&&... args) -> decltype(auto) { return this->fn(std::forward<decltype(args)>(args)...); }
 
 // Memory
 namespace ge {
@@ -93,14 +93,14 @@ namespace ge {
 		template <typename T>
 		using Scope = std::unique_ptr<T>;
 		template <typename T, typename... Args>
-		constexpr Scope<T> CreateScope(Args &&...args) {
+		constexpr Scope<T> CreateScope(Args&&... args) {
 			return std::make_unique<T>(std::forward<Args>(args)...);
 		}
 
 		template <typename T>
 		using Ref = std::shared_ptr<T>;
 		template <typename T, typename... Args>
-		constexpr Ref<T> CreateRef(Args &&...args) {
+		constexpr Ref<T> CreateRef(Args&&... args) {
 			return std::make_shared<T>(std::forward<Args>(args)...);
 		}
 	}
@@ -130,3 +130,6 @@ namespace ge {
 #	define GE_ProfileScope(name)
 #	define GE_ProfileFunction()
 #endif
+
+#define GE_String_ToLower(data) std::transform(data.begin(), data.end(), data.begin(), ::tolower)
+#define GE_String_ToUpper(data) std::transform(data.begin(), data.end(), data.begin(), ::toupper)
