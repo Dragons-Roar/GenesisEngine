@@ -3,11 +3,23 @@
 namespace ge {
 	namespace core {
 		void Utils::splitString(List<String, size_t>& list, const String& str, char delim) {
-			if(str.find(delim) == String::npos) { list.add(str); }
+			if(str.find(delim) == String::npos) {
+				list.add(str);
+			}
 			std::stringstream ss(str);
 			String item;
 			while(std::getline(ss, item, delim)) {
 				list.add(item);
+			}
+		}
+		void Utils::splitString(std::vector<String>& list, const String& str, char delim) {
+			if(str.find(delim) == String::npos) {
+				list.push_back(str);
+			}
+			std::stringstream ss(str);
+			String item;
+			while(std::getline(ss, item, delim)) {
+				list.push_back(item);
 			}
 		}
 

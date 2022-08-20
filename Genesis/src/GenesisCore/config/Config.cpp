@@ -35,6 +35,42 @@ namespace ge {
 			out.close();
 		}
 
+		void ConfigSection::keys(bool deep, KeyFunction func) {
+			if(deep) {
+				std::vector<String> v;
+				_keys(v, func);
+				return;
+			}
+
+			auto items = handle.items();
+			for(auto it = items.begin(); it != items.end(); ++it) {
+				func(it.key());
+			}
+		}
+		void ConfigSection::_keys(std::vector<String>& prefix, KeyFunction func) {
+			if(key != "") prefix.push_back(key);
+			auto items = handle.items();
+			String s = "";
+			for(uint32 i = 0; i < prefix.size(); ++i) {
+				s += prefix[i] + ".";
+			}
+			for(auto it = items.begin(); it != items.end(); ++it) {
+				if(handle[it.key()].is_object()) continue;
+				if(handle[it.key()].is_array()) {
+					auto array = handle[it.key()];
+					for(uint32 i = 0; i < array.size(); ++i) {
+						func(s + it.key() + "." + std::to_string(i));
+					}
+					continue;
+				}
+				func(s + it.key());
+			}
+			for(auto it = sections.begin(); it != sections.end(); ++it) {
+				it->second->_keys(prefix, func);
+			}
+			if(key != "") prefix.erase(prefix.end() - 1);
+		}
+
 		bool ConfigSection::isDefined(const String& key) const {
 			return handle.contains(key);
 		}

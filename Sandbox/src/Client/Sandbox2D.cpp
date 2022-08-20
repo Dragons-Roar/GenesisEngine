@@ -18,6 +18,11 @@ namespace sb {
 
 		GE_Info("Port: {0}", file.getSection("server").getDefault<uint32>("port", 20176));
 		GE_Info("Player: {0}", file.getSection("player").getDefault<String>("name", "Player"));
+		GE_Info("Player: {0}", file.getD<String>("player.name"));
+
+		file.keys(true, [](const String& key) {
+			GE_Info("Key: {0}", key);
+		});
 
 		file.save(true);
 

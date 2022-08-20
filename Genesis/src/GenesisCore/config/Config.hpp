@@ -2,12 +2,15 @@
 #include "GenesisCore/Defines.hpp"
 #include "GenesisCore/GenesisBase.hpp"
 #include "GenesisCore/Logger.hpp"
+#include "GenesisCore/Utils.hpp"
 #include <nlohmann/json.hpp>
 
 namespace ge {
 	namespace core {
 		class ConfigSection {
 		public:
+			using KeyFunction = std::function<void(const String&)>;
+
 			ConfigSection(const String& key, const nlohmann::json& obj): key(key), handle(obj) {}
 
 			~ConfigSection();
@@ -29,6 +32,9 @@ namespace ge {
 				return *sec;
 			}
 
+			inline void keys(KeyFunction func) { keys(false, func); }
+			void keys(bool deep, KeyFunction func);
+
 			/**
 			 * @brief Gets a value at a key
 			 * @tparam T the value type
@@ -41,6 +47,28 @@ namespace ge {
 				}
 
 				return handle[key].get<T>();
+			}
+			/**
+			 * @brief Like the get function, but allows for a deep key
+			 * @tparam T the value type
+			 * @param key the key
+			 * @return T
+			 */
+			template <typename T>
+			T getD(const String& key, char delim = '.') const {
+				std::vector<String> keys;
+				Utils::splitString(keys, key, delim);
+
+				nlohmann::json h = handle;
+				uint32 i = 0;
+				while(true) {
+					if(i == keys.size() - 1) {
+						return h[keys[i]].get<T>();
+						break;
+					}
+					h = handle[keys[i]].get<nlohmann::json>();
+					++i;
+				}
 			}
 			/**
 			 * @brief Checks if the object exists, if not it will be created and returned
@@ -149,6 +177,9 @@ namespace ge {
 			inline bool isArray(const String& key) const;
 
 			void getAsJSONObjects(nlohmann::json& json);
+
+		private:
+			void _keys(std::vector<String>& prefix, KeyFunction func);
 
 		protected:
 			String key;
