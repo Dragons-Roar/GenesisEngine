@@ -8,6 +8,11 @@ namespace ge {
 			GE_ProfileFunction();
 
 			std::fstream in(file, std::ios::in | std::ios::binary);
+			if(!in.is_open()) {
+				GE_Warn("File '{0}' has not been found!", file);
+				return;
+			}
+
 			handle = nlohmann::json::parse(in);
 			in.close();
 		}
@@ -104,9 +109,15 @@ namespace ge {
 		bool ConfigSection::isArray(const String& key) const {
 			return handle[key].is_array();
 		}
-
-		/* ------ Config File- ------ */
 		ConfigSection::~ConfigSection() {
+		}
+
+		/* ------ Config File ------- */
+		ConfigFile ConfigFile::fromSection(const String& file, ConfigSection& sec) {
+			ConfigFile cf(file);
+			cf.handle = sec.getHandle();
+			cf.key = "";
+			return cf;
 		}
 	}
 }

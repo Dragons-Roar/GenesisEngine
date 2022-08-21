@@ -11,7 +11,8 @@ namespace ge {
 		public:
 			using KeyFunction = std::function<void(const String&)>;
 
-			ConfigSection(const String& key, const nlohmann::json& obj): key(key), handle(obj) {}
+			ConfigSection(): handle(nlohmann::json()), key("") {}
+			ConfigSection(const nlohmann::json& obj, const String& key = ""): key(key), handle(obj) {}
 
 			~ConfigSection();
 
@@ -20,16 +21,16 @@ namespace ge {
 			 * @param key The key where to get/create the section
 			 * @return const ConfigSection&
 			 */
-			ConfigSection& getSection(const String& key) {
+			ConfigSection* getSection(const String& key) {
 				if(handle.contains(key)) {
-					ConfigSection* sec = new ConfigSection(key, handle[key].get<nlohmann::json>());
+					ConfigSection* sec = new ConfigSection(handle[key].get<nlohmann::json>(), key);
 					sections.insert(std::make_pair(key, sec));
-					return *sec;
+					return sec;
 				}
 
-				ConfigSection* sec = new ConfigSection(key, nlohmann::json());
+				ConfigSection* sec = new ConfigSection(nlohmann::json(), key);
 				sections.insert(std::make_pair(key, sec));
-				return *sec;
+				return sec;
 			}
 
 			inline void keys(KeyFunction func) { keys(false, func); }
@@ -59,17 +60,23 @@ namespace ge {
 				std::vector<String> keys;
 				Utils::splitString(keys, key, delim);
 
-				nlohmann::json h = handle;
+				nlohmann::json sec = handle;
 				uint32 i = 0;
 				while(true) {
 					if(i == keys.size() - 1) {
-						return h[keys[i]].get<T>();
+						return sec[keys[i]].get<T>();
 						break;
 					}
-					h = handle[keys[i]].get<nlohmann::json>();
+					sec = handle[keys[i]].get<nlohmann::json>();
 					++i;
 				}
 			}
+
+			template <typename T>
+			void set(const String& key, const T value) {
+				handle[key] = value;
+			}
+
 			/**
 			 * @brief Checks if the object exists, if not it will be created and returned
 			 * @tparam T the value type
@@ -178,6 +185,8 @@ namespace ge {
 
 			void getAsJSONObjects(nlohmann::json& json);
 
+			inline const nlohmann::json& getHandle() const { return handle; }
+
 		private:
 			void _keys(std::vector<String>& prefix, KeyFunction func);
 
@@ -189,7 +198,9 @@ namespace ge {
 
 		class ConfigFile: public ConfigSection {
 		public:
-			ConfigFile(const String& file): file(file), ConfigSection("", nlohmann::json()) {}
+			ConfigFile(const String& file): file(file), ConfigSection(nlohmann::json(), "") {}
+
+			static ConfigFile fromSection(const String& file, ConfigSection& sec);
 
 			void load() { load(file); }
 			void load(const String& file);

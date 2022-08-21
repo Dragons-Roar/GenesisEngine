@@ -16,13 +16,19 @@ namespace sb {
 		GE_Info("Test: {0}", file.get<uint32>("Test"));
 		GE_Info("Test2: {0}", file.get<int32>("Test2"));
 
-		GE_Info("Port: {0}", file.getSection("server").getDefault<uint32>("port", 20176));
-		GE_Info("Player: {0}", file.getSection("player").getDefault<String>("name", "Player"));
-		GE_Info("Player: {0}", file.getD<String>("player.name"));
+		GE_Info("Port: {0}", file.getSection("server")->getDefault<uint32>("port", 20176));
+		GE_Info("Player: {0}", file.getSection("player")->getDefault<String>("name", "Player"));
 
 		file.keys(true, [](const String& key) {
 			GE_Info("Key: {0}", key);
 		});
+
+		ge::core::ConfigSection* playerSection = file.getSection("player2");
+
+		TestPlayer player;
+		player.deserialize(*playerSection);
+		GE_Info("Name: {0}, X: {1}, Y: {2}, Z: {3}", player.name, player.x, player.y, player.z);
+		player.serialize(*playerSection);
 
 		file.save(true);
 
