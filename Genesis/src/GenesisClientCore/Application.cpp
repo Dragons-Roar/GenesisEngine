@@ -1,5 +1,6 @@
 #include "Application.hpp"
 
+#include <GenesisClientCore/command/impl/CommandHello.hpp>
 #include <GenesisCore/Logger.hpp>
 #include <GenesisCore/command/CommandManager.hpp>
 
@@ -12,11 +13,22 @@
 
 #include <GLFW/glfw3.h>
 
+void stdIn() {
+	String in;
+	while(ge::clientcore::Application::getInstance().isRunning()) {
+		std::getline(std::cin, in);
+
+		if(in.empty()) continue;
+		if(in.rfind('/', 0) != 0) continue;
+		ge::core::CommandManager::runCommand(in.substr(1));
+	}
+}
+
 namespace ge {
 	namespace clientcore {
 		Application* Application::instance = nullptr;
 
-		Application::Application(const ApplicationConfiguration& config): appConfig(config) {
+		Application::Application(const ApplicationConfiguration& config): appConfig(config), stdInThread(stdIn) {
 			GE_ProfileFunction();
 
 			GE_Assert(!instance, "Instance already exists!");
@@ -34,6 +46,7 @@ namespace ge {
 			ge::core::CommandManager::init();
 			GE_Info("Initializing Client Commands...");
 			ge::core::CommandManager::addCommand(ge::core::CreateRef<CommandWireframe>());
+			ge::core::CommandManager::addCommand(ge::core::CreateRef<CommandHello>());
 		}
 		Application::~Application() {
 		}
