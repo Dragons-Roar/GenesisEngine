@@ -14,12 +14,12 @@ namespace ge {
 		};
 
 		namespace exceptions {
-			/// <summary>
-			/// The default Genesis Runtime Exception
-			/// </summary>
+			/**
+			 * @brief The default Genesis Runtime Exception
+			 */
 			class GenesisRuntimeException: public std::runtime_error, public GClass {
 			public:
-				GenesisRuntimeException(String cause): std::runtime_error(cause.c_str()) { }
+				GenesisRuntimeException(String cause): std::runtime_error(cause.c_str()) {}
 
 				virtual const String name() const {
 					return "ge::core::GenesisRuntimeException";

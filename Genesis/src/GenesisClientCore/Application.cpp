@@ -1,11 +1,13 @@
 #include "Application.hpp"
 
 #include <GenesisCore/Logger.hpp>
+#include <GenesisCore/command/CommandManager.hpp>
 
-#include "GenesisClientCore/imgui/ImGUILayer.hpp"
+#include "GenesisClientCore/Defines.hpp"
 #include "GenesisClientCore/Input.hpp"
 #include "GenesisClientCore/Platform.hpp"
-
+#include "GenesisClientCore/command/impl/CommandWireframe.hpp"
+#include "GenesisClientCore/imgui/ImGUILayer.hpp"
 #include "GenesisClientCore/renderer/Renderer.hpp"
 
 #include <GLFW/glfw3.h>
@@ -14,22 +16,24 @@ namespace ge {
 	namespace clientcore {
 		Application* Application::instance = nullptr;
 
-		Application::Application(const ApplicationConfiguration& config):
-			appConfig(config)
-		{
+		Application::Application(const ApplicationConfiguration& config): appConfig(config) {
 			GE_ProfileFunction();
 
-			if(instance) std::cerr << "Application already exists!" << std::endl;
+			GE_Assert(!instance, "Instance already exists!");
 			instance = this;
 
 			window = IWindow::create(WindowProps(config.name, config.width, config.height));
 			window->setEventCallback(GE_BindEventFunction(Application::onEvent));
 			window->setVSync(true);
-			
+
 			Renderer::init();
 
 			imGuiLayer = new ImGUILayer();
 			layerStack.pushOverlay(imGuiLayer);
+
+			ge::core::CommandManager::init();
+			GE_Info("Initializing Client Commands...");
+			ge::core::CommandManager::addCommand(ge::core::CreateRef<CommandWireframe>());
 		}
 		Application::~Application() {
 		}
@@ -37,10 +41,10 @@ namespace ge {
 		void Application::close() {
 			running = false;
 		}
-		
+
 		void Application::onEvent(ge::core::Event& e) {
 			GE_ProfileFunction();
-			
+
 			ge::core::EventDispatcher dispatcher(e);
 			// Dispatch event directly to internal functions
 			dispatcher.dispatch<ge::core::WindowCloseEvent>(GE_BindEventFunction(Application::onWindowClose));
@@ -55,7 +59,7 @@ namespace ge {
 
 		void Application::run() {
 			GE_Info("Starting Application...");
-			RenderCommand::setClearColor({ 0.f, 0.f, 0.f, 1.f });
+			RenderCommand::setClearColor({0.f, 0.f, 0.f, 1.f});
 
 			while(running) {
 				GE_ProfileScope("Application Loop");
@@ -65,14 +69,14 @@ namespace ge {
 				lastTime = time;
 
 				if(!minimized) {
-					for(ge::core::Layer* layer : layerStack) {
+					for(ge::core::Layer* layer: layerStack) {
 						layer->onUpdate(timestep);
 					}
 				}
 
 				{
 					imGuiLayer->begin();
-					for(ge::core::Layer* layer : layerStack) {
+					for(ge::core::Layer* layer: layerStack) {
 						layer->onImGUIRender();
 					}
 					imGuiLayer->end();
@@ -80,6 +84,8 @@ namespace ge {
 
 				window->onUpdate();
 			}
+
+			ge::core::CommandManager::shutdown();
 		}
 
 		bool Application::onWindowClose(ge::core::WindowCloseEvent& e) {
@@ -93,7 +99,7 @@ namespace ge {
 			}
 			minimized = false;
 			Renderer::onWindowResize(e.getWidth(), e.getHeight());
-			
+
 			return false;
 		}
 	}

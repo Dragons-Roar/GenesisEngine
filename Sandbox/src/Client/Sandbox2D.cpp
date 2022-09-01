@@ -10,6 +10,8 @@ namespace sb {
 	void Sandbox2D::onAttach() {
 		GE_ProfileFunction();
 
+		ge::core::CommandManager::runCommand("wireframe enable");
+
 		ge::core::ConfigFile file("assets/test.json");
 		file.load();
 
@@ -22,6 +24,11 @@ namespace sb {
 		file.keys(true, [](const String& key) {
 			GE_Info("Key: {0}", key);
 		});
+
+		file.setColor("color", ge::core::Color(255, 0, 255, 255));
+		ge::core::Color color = file.getColor("color");
+		GE_Info("Color: {0}", color.format());
+		GE_Info("{0} {1} {2} {3}", color.getR(), color.getG(), color.getB(), color.getA());
 
 		ge::core::ConfigSection* playerSection = file.getSection("player2");
 

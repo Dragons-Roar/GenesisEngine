@@ -23,6 +23,8 @@ namespace ge {
 
 			virtual void setViewport(uint32 x, uint32 y, uint32 width, uint32 height) = 0;
 
+			virtual void setWireframeMode(bool enable = true) = 0;
+
 			static inline API getAPI() { return api; }
 
 		private:

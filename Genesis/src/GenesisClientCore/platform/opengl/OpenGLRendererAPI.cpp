@@ -25,5 +25,13 @@ namespace ge {
 		void OpenGLRendererAPI::setViewport(uint32 x, uint32 y, uint32 width, uint32 height) {
 			glViewport(x, y, width, height);
 		}
+
+		void OpenGLRendererAPI::setWireframeMode(bool enable) {
+			if(enable) {
+				glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+			} else {
+				glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+			}
+		}
 	}
 }

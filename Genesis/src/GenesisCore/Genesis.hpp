@@ -16,6 +16,10 @@
 // Configs
 #include "GenesisCore/config/Config.hpp"
 
+// Command
+#include "GenesisCore/command/Command.hpp"
+#include "GenesisCore/command/CommandManager.hpp"
+
 // Events
 #include "GenesisCore/event/Event.hpp"
 #include "GenesisCore/event/KeyEvent.hpp"

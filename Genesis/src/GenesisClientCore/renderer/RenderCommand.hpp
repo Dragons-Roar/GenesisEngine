@@ -13,6 +13,8 @@ namespace ge {
 
 			inline static void setViewport(uint32 x, uint32 y, uint32 width, uint32 height) { api->setViewport(x, y, width, height); }
 
+			inline static void setWireframeMode(bool enable = true) { api->setWireframeMode(enable); }
+
 		private:
 			static RendererAPI* api;
 		};
