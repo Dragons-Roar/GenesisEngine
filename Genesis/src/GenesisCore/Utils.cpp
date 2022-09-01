@@ -15,6 +15,7 @@ namespace ge {
 		void Utils::splitString(std::vector<String>& list, const String& str, char delim) {
 			if(str.find(delim) == String::npos) {
 				list.push_back(str);
+				return;
 			}
 			std::stringstream ss(str);
 			String item;

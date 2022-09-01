@@ -20,7 +20,11 @@ void stdIn() {
 
 		if(in.empty()) continue;
 		if(in.rfind('/', 0) != 0) continue;
-		ge::core::CommandManager::runCommand(in.substr(1));
+		try {
+			ge::core::CommandManager::runCommand(in.substr(1));
+		} catch(std::exception e) {
+			GE_Warn("Exception: {0}", e.what());
+		}
 	}
 }
 

@@ -7,10 +7,10 @@ namespace ge {
 	namespace core {
 		namespace exceptions {
 			struct CommandNotFound: public ge::core::exceptions::GenesisRuntimeException {
-				CommandNotFound(const String& name, const String& in): GenesisRuntimeException("Command '" + name + "' could not be found! '" + in + "'!") {}
+				CommandNotFound(const String& name, const String& in): GenesisRuntimeException("Command '" + name + "' could not be found!") {}
 			};
 			struct CommandError: public ge::core::exceptions::GenesisRuntimeException {
-				CommandError(const String& name, const String& in): GenesisRuntimeException("Command '" + name + "' did not run successfully! '" + in + "'!") {}
+				CommandError(const String& name, const String& in): GenesisRuntimeException("Command '" + name + "' did not run successfully!") {}
 			};
 		}
 

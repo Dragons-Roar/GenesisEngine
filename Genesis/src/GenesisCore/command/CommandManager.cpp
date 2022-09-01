@@ -20,11 +20,8 @@ namespace ge {
 		void CommandManager::runCommand(String command) {
 			std::transform(command.begin(), command.end(), command.begin(), ::tolower);
 
-			std::vector<String> commands;
-			Utils::splitString(commands, command, '|');
-			for(String cmd: commands) {
-				_runCommand(cmd);
-			}
+			// TODO: Add command seperator to run multiple commands
+			_runCommand(command);
 		}
 		bool CommandManager::exists(const String& name) {
 			return commands.find(name) != commands.end();
