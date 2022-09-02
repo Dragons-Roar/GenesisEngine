@@ -5,6 +5,8 @@ namespace ge {
 	namespace core {
 		class Command {
 		public:
+			virtual ~Command() {}
+
 			/**
 			 * @brief Will be called if the command should execute
 			 * @param args The arguments the user entered

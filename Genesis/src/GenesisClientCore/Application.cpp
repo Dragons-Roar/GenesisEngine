@@ -34,6 +34,7 @@ namespace ge {
 
 		Application::Application(const ApplicationConfiguration& config): appConfig(config), stdInThread(stdIn) {
 			GE_ProfileFunction();
+			stdInThread.detach();
 
 			GE_Assert(!instance, "Instance already exists!");
 			instance = this;
