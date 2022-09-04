@@ -4,6 +4,9 @@
 
 namespace ge {
 	namespace clientcore {
+		/****************
+		 * VERTEXBUFFER *
+		 ****************/
 		OpenGLVertexBuffer::OpenGLVertexBuffer(size_t size) {
 			GE_ProfileFunction();
 
@@ -34,6 +37,9 @@ namespace ge {
 			glBufferSubData(GL_ARRAY_BUFFER, 0, size, data);
 		}
 
+		/****************
+		 * INDEX BUFFER *
+		 ****************/
 		OpenGLIndexBuffer::OpenGLIndexBuffer(uint32* indices, uint32 count) : count(count) {
 			glCheck(glCreateBuffers(1, &handle));
 			glCheck(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, handle));

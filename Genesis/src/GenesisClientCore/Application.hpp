@@ -72,6 +72,11 @@ namespace ge {
 			/// <param name="layer">The overlay</param>
 			inline void popOverlay(ge::core::Layer* layer) { layerStack.popOverlay(layer); }
 
+			/**
+			 * @brief Stops the application
+			 */
+			inline void stop() { running = false; }
+
 		private:
 			void run();
 

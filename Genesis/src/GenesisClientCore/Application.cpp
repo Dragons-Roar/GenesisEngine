@@ -1,12 +1,12 @@
 #include "Application.hpp"
-
-#include <GenesisClientCore/command/impl/CommandHello.hpp>
 #include <GenesisCore/Logger.hpp>
 #include <GenesisCore/command/CommandManager.hpp>
 
 #include "GenesisClientCore/Defines.hpp"
 #include "GenesisClientCore/Input.hpp"
 #include "GenesisClientCore/Platform.hpp"
+#include "GenesisClientCore/command/impl/CommandHello.hpp"
+#include "GenesisClientCore/command/impl/CommandStop.hpp"
 #include "GenesisClientCore/command/impl/CommandWireframe.hpp"
 #include "GenesisClientCore/imgui/ImGUILayer.hpp"
 #include "GenesisClientCore/renderer/Renderer.hpp"
@@ -52,6 +52,7 @@ namespace ge {
 			GE_Info("Initializing Client Commands...");
 			ge::core::CommandManager::addCommand(ge::core::CreateRef<CommandWireframe>());
 			ge::core::CommandManager::addCommand(ge::core::CreateRef<CommandHello>());
+			ge::core::CommandManager::addCommand(ge::core::CreateRef<CommandStop>());
 		}
 		Application::~Application() {
 		}
