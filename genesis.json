@@ -14,14 +14,13 @@
 				"args": []
 			}
 		},
-		"configs": [
-			"Debug-x64", "Release-x64", "Dist-x64"
-		]
+		"configs": ["Debug-x64", "Release-x64", "Dist-x64"]
 	},
 	"includeDirs": [
 		"${workspaceFolder}/Genesis/src/",
 		"${workspaceFolder}/Sandbox/src/",
 		"${workspaceFolder}/ThirdParty/boost/preprocessor/include/",
+		"${workspaceFolder}/ThirdParty/boost/stacktrace/include/",
 		"${workspaceFolder}/ThirdParty/glad/include/",
 		"${workspaceFolder}/ThirdParty/glfw/include/",
 		"${workspaceFolder}/ThirdParty/glm/",

@@ -22,3 +22,6 @@
 [submodule "ThirdParty/imgui"]
 	path = ThirdParty/imgui
 	url = https://github.com/ocornut/imgui
+[submodule "ThirdParty/boost/stacktrace"]
+	path = ThirdParty/boost/stacktrace
+	url = https://github.com/boostorg/stacktrace
