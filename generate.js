@@ -41,7 +41,7 @@ Object.keys(config.launchConfigs.projects).forEach((prj) => {
 			args,
 			stopAtEntry: false,
 			cwd: `\${workspaceFolder}/bin/windows/${cfg}/${prj}`,
-			console: "windows",
+			console: "newExternalWindow",
 			preLaunchTask: `build-${cfg.toLowerCase()}`,
 		});
 	});

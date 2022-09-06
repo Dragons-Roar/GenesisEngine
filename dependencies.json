@@ -84,14 +84,112 @@
 			}
 		},
 		{
-			"name": "toml++",
+			"name": "boost/config",
 			"packet": {
 				"type": "git",
-				"repo": "https://github.com/gmasterhd/tomlplusplus"
+				"repo": "https://github.com/boostorg/config"
 			},
 			"library": {
-				"type": "premake",
-				"script": "provided",
+				"type": "header",
+				"includeDir": "include/"
+			}
+		},
+		{
+			"name": "boost/core",
+			"packet": {
+				"type": "git",
+				"repo": "https://github.com/boostorg/core"
+			},
+			"library": {
+				"type": "header",
+				"includeDir": "include/"
+			}
+		},
+		{
+			"name": "boost/winapi",
+			"packet": {
+				"type": "git",
+				"repo": "https://github.com/boostorg/winapi"
+			},
+			"library": {
+				"type": "header",
+				"includeDir": "include/"
+			}
+		},
+		{
+			"name": "boost/container_hash",
+			"packet": {
+				"type": "git",
+				"repo": "https://github.com/boostorg/container_hash"
+			},
+			"library": {
+				"type": "header",
+				"includeDir": "include/"
+			}
+		},
+		{
+			"name": "boost/predef",
+			"packet": {
+				"type": "git",
+				"repo": "https://github.com/boostorg/predef"
+			},
+			"library": {
+				"type": "header",
+				"includeDir": "include/"
+			}
+		},
+		{
+			"name": "boost/static_assert",
+			"packet": {
+				"type": "git",
+				"repo": "https://github.com/boostorg/static_assert"
+			},
+			"library": {
+				"type": "header",
+				"includeDir": "include/"
+			}
+		},
+		{
+			"name": "boost/type_traits",
+			"packet": {
+				"type": "git",
+				"repo": "https://github.com/boostorg/type_traits"
+			},
+			"library": {
+				"type": "git",
+				"includeDir": "include/"
+			}
+		},
+		{
+			"name": "boost/array",
+			"packet": {
+				"type": "git",
+				"repo": "https://github.com/boostorg/array"
+			},
+			"library": {
+				"type": "header",
+				"includeDir": "include/"
+			}
+		},
+		{
+			"name": "boost/assert",
+			"packet": {
+				"type": "git",
+				"repo": "https://github.com/boostorg/assert"
+			},
+			"library": {
+				"type": "header",
+				"includeDir": "include/"
+			}
+		},
+		{
+			"name": "boost/throw_exception",
+			"packet": {
+				"type": "git",
+				"repo": "https://github.com/boostorg/throw_exception"
+			},
+			"library": {
+				"type": "header",
 				"includeDir": "include/"
 			}
 		},
@@ -178,10 +276,20 @@
 			"Genesis-Server",
 			"Sandbox-Server",
 			"spdlog",
-			"toml++",
 			"json",
 			"glm",
-			"boost/preprocessor"
+			"boost/preprocessor",
+			"boost/stacktrace",
+			"boost/config",
+			"boost/winapi",
+			"boost/container_hash",
+			"boost/core",
+			"boost/predef",
+			"boost/static_assert",
+			"boost/type_traits",
+			"boost/array",
+			"boost/assert",
+			"boost/throw_exception"
 		],
 		"Sandbox-Client": [
 			"Genesis-Core",
@@ -190,14 +298,24 @@
 			"Genesis-Server",
 			"Sandbox-Server",
 			"spdlog",
-			"toml++",
 			"json",
 			"glfw",
 			"glad",
 			"imgui",
 			"glm",
 			"opengl32.lib",
-			"stb_image"
+			"stb_image",
+			"boost/stacktrace",
+			"boost/config",
+			"boost/winapi",
+			"boost/container_hash",
+			"boost/core",
+			"boost/predef",
+			"boost/static_assert",
+			"boost/type_traits",
+			"boost/array",
+			"boost/assert",
+			"boost/throw_exception"
 		],
 		"Sandbox-Client-Test": [
 			"Genesis-Core",
@@ -206,14 +324,24 @@
 			"Sandbox-Server",
 			"spdlog",
 			"gtest",
-			"toml++",
 			"json",
 			"glfw",
 			"glad",
 			"imgui",
 			"glm",
 			"opengl32.lib",
-			"stb_image"
+			"stb_image",
+			"boost/stacktrace",
+			"boost/config",
+			"boost/winapi",
+			"boost/container_hash",
+			"boost/core",
+			"boost/predef",
+			"boost/static_assert",
+			"boost/type_traits",
+			"boost/array",
+			"boost/assert",
+			"boost/throw_exception"
 		],
 		"Sandbox-Server-Test": [
 			"Genesis-Core",
@@ -221,16 +349,25 @@
 			"Sandbox-Server",
 			"spdlog",
 			"gtest",
-			"toml++",
 			"json",
-			"glm"
+			"glm",
+			"boost/stacktrace",
+			"boost/config",
+			"boost/winapi",
+			"boost/container_hash",
+			"boost/core",
+			"boost/predef",
+			"boost/static_assert",
+			"boost/type_traits",
+			"boost/array",
+			"boost/assert",
+			"boost/throw_exception"
 		],
 		"Sandbox-ServerLauncher": [
 			"Genesis-Core",
 			"Genesis-Server",
 			"Sandbox-Server",
 			"spdlog",
-			"toml++",
 			"json",
 			"glm"
 		],
@@ -239,7 +376,6 @@
 			"Genesis-Client",
 			"Genesis-Server",
 			"spdlog",
-			"toml++",
 			"json",
 			"glfw",
 			"glad",
@@ -247,60 +383,120 @@
 			"glm",
 			"boost/preprocessor",
 			"opengl32.lib",
-			"stb_image"
+			"stb_image",
+			"boost/stacktrace",
+			"boost/config",
+			"boost/winapi",
+			"boost/container_hash",
+			"boost/core",
+			"boost/predef",
+			"boost/static_assert",
+			"boost/type_traits",
+			"boost/array",
+			"boost/assert",
+			"boost/throw_exception"
 		],
 		"Genesis-Client": [
 			"Genesis-Core",
 			"Genesis-Server",
 			"Genesis-Client",
 			"spdlog",
-			"toml++",
 			"json",
 			"glfw",
 			"imgui",
 			"glm",
 			"boost/preprocessor",
-			"stb_image"
+			"stb_image",
+			"boost/stacktrace",
+			"boost/config",
+			"boost/winapi",
+			"boost/container_hash",
+			"boost/core",
+			"boost/predef",
+			"boost/static_assert",
+			"boost/type_traits",
+			"boost/array",
+			"boost/assert",
+			"boost/throw_exception"
 		],
 		"Genesis-Server": [
 			"Genesis-Core",
 			"Genesis-Server",
 			"spdlog",
-			"toml++",
 			"json",
 			"glm",
-			"boost/preprocessor"
+			"boost/preprocessor",
+			"boost/config",
+			"boost/winapi",
+			"boost/container_hash",
+			"boost/core",
+			"boost/predef",
+			"boost/static_assert",
+			"boost/type_traits",
+			"boost/array",
+			"boost/assert"
 		],
 		"Genesis-Core": [
 			"Genesis-Core",
 			"spdlog",
-			"toml++",
 			"json",
 			"glm",
-			"boost/preprocessor"
+			"boost/preprocessor",
+			"boost/stacktrace",
+			"boost/config",
+			"boost/winapi",
+			"boost/container_hash",
+			"boost/core",
+			"boost/predef",
+			"boost/static_assert",
+			"boost/type_traits",
+			"boost/array",
+			"boost/assert",
+			"boost/throw_exception"
 		],
 		"Genesis-Core-Test": [
 			"Genesis-Core",
 			"spdlog",
 			"gtest",
-			"toml++",
 			"json",
 			"glm",
-			"boost/preprocessor"
+			"boost/preprocessor",
+			"boost/config",
+			"boost/winapi",
+			"boost/container_hash",
+			"boost/core",
+			"boost/predef",
+			"boost/static_assert",
+			"boost/type_traits",
+			"boost/array",
+			"boost/assert",
+			"boost/throw_exception"
 		],
 		"Genesis-ClientCore": [
 			"Genesis-ClientCore",
 			"Genesis-Core",
 			"spdlog",
-			"toml++",
 			"json",
 			"glfw",
 			"glad",
 			"imgui",
 			"glm",
 			"boost/preprocessor",
-			"stb_image"
-		]
+			"stb_image",
+			"boost/stacktrace",
+			"boost/config",
+			"boost/winapi",
+			"boost/container_hash",
+			"boost/core",
+			"boost/predef",
+			"boost/static_assert",
+			"boost/type_traits",
+			"boost/array",
+			"boost/assert",
+			"boost/throw_exception"
+		],
+		"boost/preprocessor": ["boost/config"],
+		"boost/stacktrace": ["boost/config", "boost/stacktrace", "boost/core"]
 	},
 	"includes": {
 		"imgui": ["glfw"]

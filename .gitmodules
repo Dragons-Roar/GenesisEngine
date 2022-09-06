@@ -25,3 +25,33 @@
 [submodule "ThirdParty/boost/stacktrace"]
 	path = ThirdParty/boost/stacktrace
 	url = https://github.com/boostorg/stacktrace
+[submodule "ThirdParty/boost/config"]
+	path = ThirdParty/boost/config
+	url = https://github.com/boostorg/config
+[submodule "ThirdParty/boost/core"]
+	path = ThirdParty/boost/core
+	url = https://github.com/boostorg/core
+[submodule "ThirdParty/boost/winapi"]
+	path = ThirdParty/boost/winapi
+	url = https://github.com/boostorg/winapi
+[submodule "ThirdParty/boost/container_hash"]
+	path = ThirdParty/boost/container_hash
+	url = https://github.com/boostorg/container_hash
+[submodule "ThirdParty/boost/predef"]
+	path = ThirdParty/boost/predef
+	url = https://github.com/boostorg/predef
+[submodule "ThirdParty/boost/static_assert"]
+	path = ThirdParty/boost/static_assert
+	url = https://github.com/boostorg/static_assert
+[submodule "ThirdParty/boost/type_traits"]
+	path = ThirdParty/boost/type_traits
+	url = https://github.com/boostorg/type_traits
+[submodule "ThirdParty/boost/array"]
+	path = ThirdParty/boost/array
+	url = https://github.com/boostorg/array
+[submodule "ThirdParty/boost/assert"]
+	path = ThirdParty/boost/assert
+	url = https://github.com/boostorg/assert
+[submodule "ThirdParty/boost/throw_exception"]
+	path = ThirdParty/boost/throw_exception
+	url = https://github.com/boostorg/throw_exception

@@ -1,7 +1,6 @@
 #pragma once
 #include "GenesisCore/Defines.hpp"
 #include "GenesisCore/GenesisBase.hpp"
-#include <toml++/toml.h>
 
 namespace ge {
 	namespace core {
@@ -12,7 +11,7 @@ namespace ge {
 			typedef std::function<void(T&, Index)> LoopIndexFunction;
 			typedef std::function<bool(const T&, const T&)> SortFunction;
 
-			List() { }
+			List() {}
 			List(std::vector<T>& v) {
 				resize(v.size());
 				for(Index i = 0; i < v.size(); ++i) {

@@ -4,6 +4,8 @@
 #include <GenesisCore/Genesis.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+#include <boost/stacktrace.hpp>
+
 #include <imgui.h>
 
 namespace sb {
@@ -41,6 +43,14 @@ namespace sb {
 
 		checkerboardTexture = ge::clientcore::Texture2D::create("assets/textures/checkerboard.png");
 		glowTexture = ge::clientcore::Texture2D::create("assets/textures/glow.png");
+
+		ge::core::exceptions::GenesisRuntimeException e("Main", ge::core::CreateRef<ge::core::exceptions::GenesisRuntimeException>("Cause"));
+		GE_Info("{0}: {1}", e.what(), e.cause().what());
+
+		// std::cout << boost::stacktrace::stacktrace() << std::endl;
+
+		auto stack = boost::stacktrace::stacktrace(2, 9999);
+		std::cout << stack << std::endl;
 	}
 	void Sandbox2D::onDetach() {
 	}

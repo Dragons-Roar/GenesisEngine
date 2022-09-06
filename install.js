@@ -6,7 +6,7 @@ const https = require('https')
 const Path = require('path')
 
 const addSubmodule = async (link, path) => {
-	if(fs.existsSync(path)) { console.log(`Submodule ${link} already exists in ${path}!`); return; }
+	if (fs.existsSync(path)) { console.log(`Submodule ${link} already exists in ${path}!`); return; }
 
 	console.log(`Cloning from ${link} into ${path} and adding as submodule...`)
 	await Git.submoduleAdd(link, path)
@@ -16,13 +16,13 @@ const addFile = async (url, path, name) => {
 	console.log(`Cloning from ${url} into ${path} as ${name}...`)
 
 	// Check if dir exists, if not, create one
-	if(!fs.existsSync(path)) {
+	if (!fs.existsSync(path)) {
 		console.log(`Creating ${path}...`)
 		fs.mkdirSync(Path.join(__dirname, path), { recursive: true })
 	}
 
 	// Check if the file already exists, if it exists, delete it
-	if(fs.existsSync(path + name)) {
+	if (fs.existsSync(path + name)) {
 		console.log(`File ${path}${name} already exists! Deleting...`)
 		fs.rmSync(path + name)
 	}
@@ -47,9 +47,9 @@ data.dependencies.forEach(d => {
 
 	console.log(`Installing ${name}...`)
 
-	if(packet.type == 'git') {
+	if (packet.type == 'git') {
 		addSubmodule(packet.repo, `${data.libRoot}${d.name}`)
-	} else if(packet.type == 'file') {
+	} else if (packet.type == 'file') {
 		addFile(packet.url, data.libRoot + d.group + "/" + packet.path, packet.name)
 	}
 })

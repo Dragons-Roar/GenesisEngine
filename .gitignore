@@ -2,6 +2,7 @@ bin/
 bin-int/
 doc/
 .vs/
+out/
 
 /ThirdParty/glfw
 /ThirdParty/gtest
