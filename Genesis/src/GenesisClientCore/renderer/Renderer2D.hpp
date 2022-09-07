@@ -5,6 +5,10 @@
 
 namespace ge {
 	namespace clientcore {
+		class IVertexArray;
+		class IVertexBuffer;
+		class IShader;
+
 		/**
 		 * @brief Pure static renderer class for rendering 2D objects
 		 */
@@ -28,7 +32,7 @@ namespace ge {
 			struct Data {
 				Renderer2D::Stats stats;
 
-				const uint32 maxQuads = 10000;
+				const uint32 maxQuads = 50000;
 				const uint32 maxVertices = maxQuads * 4;
 				const uint32 maxIndices = maxQuads * 6;
 				static const uint32 maxTextureSlots = 32;

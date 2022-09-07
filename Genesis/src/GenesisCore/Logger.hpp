@@ -1,22 +1,15 @@
 #pragma once
 #include "GenesisCore/Defines.hpp"
-#include "GenesisCore/GenesisBase.hpp"
 #include <spdlog/spdlog.h>
 
 namespace ge {
 	namespace core {
-		class Logger: public GClass {
+		class Logger {
 		public:
 			static void init();
 			static void dispose();
 
 			inline static std::shared_ptr<spdlog::logger>& getLogger() { return logger; }
-
-			const String toString() const override {
-				std::stringstream ss;
-				ss << "ge::core::Logger";
-				return ss.str();
-			}
 
 		private:
 			static std::shared_ptr<spdlog::logger> logger;
@@ -49,9 +42,9 @@ namespace ge {
 #endif
 
 /// Throw a exception of type ge::core::GenesisRuntimeException and print to console
-#define GE_ThrowException(e)                              \
-	{                                                     \
-		GE_Fatal("Exception occured! {0}", e.toString()); \
-		throw e;                                          \
+#define GE_ThrowException(e)                                     \
+	{                                                            \
+		ge::core::exceptions::GenesisRuntimeException::print(e); \
+		throw e;                                                 \
 	}
 #pragma once

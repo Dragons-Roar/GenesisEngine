@@ -1,8 +1,8 @@
+#include "Renderer2D.hpp"
 #include "GenesisClientCore/renderer/Buffer.hpp"
 #include "GenesisClientCore/renderer/RenderCommand.hpp"
 #include "GenesisClientCore/renderer/Shader.hpp"
 #include "GenesisClientCore/renderer/VertexArray.hpp"
-#include "Renderer2D.hpp"
 #include <glm/gtc/matrix_transform.hpp>
 
 namespace ge {

@@ -1,5 +1,7 @@
 #pragma once
 #include "GenesisCore/Defines.hpp"
+#include "GenesisCore/Logger.hpp"
+#include <boost/stacktrace.hpp>
 
 namespace ge {
 	namespace core {
@@ -16,11 +18,8 @@ namespace ge {
 			 */
 			class GenesisRuntimeException: public std::runtime_error, public GClass {
 			public:
-				GenesisRuntimeException(String msg): std::runtime_error(msg.c_str()) {}
-				GenesisRuntimeException(String msg, Ref<GenesisRuntimeException> cause): std::runtime_error(msg.c_str()), e_cause(cause) {}
-
-				ge::core::exceptions::GenesisRuntimeException cause() const {
-					return *e_cause;
+				GenesisRuntimeException(String msg): std::runtime_error(msg.c_str()) {
+					stack = boost::stacktrace::stacktrace(2, 999999);
 				}
 
 				virtual const String name() const {
@@ -31,8 +30,13 @@ namespace ge {
 					return "ge::core::GenesisRuntimeException";
 				}
 
+				static void print(const ge::core::exceptions::GenesisRuntimeException& e) {
+					std::cerr << "Exception: " << e.name() << ": '" << e.what() << "'" << std::endl;
+					std::cerr << e.stack;
+				}
+
 			private:
-				Ref<ge::core::exceptions::GenesisRuntimeException> e_cause;
+				boost::stacktrace::stacktrace stack;
 			};
 		}
 	}
