@@ -11,6 +11,7 @@
 // C++ Standard
 #include <algorithm>
 #include <array>
+#include <atomic>
 #include <chrono>
 #include <cstdint>
 #include <format>
@@ -19,6 +20,7 @@
 #include <iosfwd>
 #include <iterator>
 #include <memory>
+#include <mutex>
 #include <random>
 #include <stdlib.h>
 #include <string>

@@ -8,6 +8,8 @@
 
 #include <imgui.h>
 
+#include "TestThread.hpp"
+
 namespace sb {
 	void Sandbox2D::onAttach() {
 		GE_ProfileFunction();
@@ -46,6 +48,9 @@ namespace sb {
 
 		ge::core::exceptions::GenesisRuntimeException e("Command error");
 		ge::core::exceptions::GenesisRuntimeException::print(e);
+
+		TestThread* t = new TestThread();
+		t->start();
 	}
 	void Sandbox2D::onDetach() {
 	}

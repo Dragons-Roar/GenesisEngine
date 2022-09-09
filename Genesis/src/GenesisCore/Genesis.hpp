@@ -25,3 +25,6 @@
 #include "GenesisCore/event/KeyEvent.hpp"
 #include "GenesisCore/event/MouseEvent.hpp"
 #include "GenesisCore/event/WindowEvent.hpp"
+
+// Threads
+#include "GenesisCore/threads/Thread.hpp"

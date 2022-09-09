@@ -1,6 +1,8 @@
 #include "Application.hpp"
 #include <GenesisCore/Logger.hpp>
 #include <GenesisCore/command/CommandManager.hpp>
+#include <GenesisCore/command/impl/CommadThreads.hpp>
+#include <GenesisCore/threads/Thread.hpp>
 
 #include "GenesisClientCore/Defines.hpp"
 #include "GenesisClientCore/Input.hpp"
@@ -53,6 +55,7 @@ namespace ge {
 			ge::core::CommandManager::addCommand(ge::core::CreateRef<CommandWireframe>());
 			ge::core::CommandManager::addCommand(ge::core::CreateRef<CommandHello>());
 			ge::core::CommandManager::addCommand(ge::core::CreateRef<CommandStop>());
+			ge::core::CommandManager::addCommand(ge::core::CreateRef<ge::core::CommandThread>());
 		}
 		Application::~Application() {
 		}
@@ -105,6 +108,7 @@ namespace ge {
 			}
 
 			ge::core::CommandManager::shutdown();
+			ge::core::ThreadPool::shutdown();
 		}
 
 		bool Application::onWindowClose(ge::core::WindowCloseEvent& e) {
