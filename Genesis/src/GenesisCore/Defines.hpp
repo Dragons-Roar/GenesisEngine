@@ -44,30 +44,46 @@
 #include <ostream>
 #include <sstream>
 
-/// A 8 Bit sized unsigned integer
+/// @brief A 8 Bit sized unsigned integer
 typedef uint8_t uint8;
-/// A 16 Bit sized unsigned integer
+/// @brief A 16 Bit sized unsigned integer
 typedef uint16_t uint16;
-/// A 32 Bit sized unsigned integer
+/// @brief A 32 Bit sized unsigned integer
 typedef uint32_t uint32;
-/// A 64 Bit sized unsigned integer
+/// @brief A 64 Bit sized unsigned integer
 typedef uint64_t uint64;
-/// A 8 Bit sized integer
+/// @brief A 8 Bit sized integer
 typedef int8_t int8;
-/// A 16 Bit sized integer
+/// @brief A 16 Bit sized integer
 typedef int16_t int16;
-/// A 32 Bit sized integer
+/// @brief A 32 Bit sized integer
 typedef int32_t int32;
-/// A 64 Bit sized integer
+/// @brief A 64 Bit sized integer
 typedef int64_t int64;
-/// A 32 Bit sized floating point number
+/// @brief A 32 Bit sized floating point number
 typedef float float32;
-/// A 64 Bit sized floating point number
+/// @brief A 64 Bit sized floating point number
 typedef double float64;
-/// A standard std::string
+/// @brief A standard std::string
 typedef std::string String;
-/// A Genesis KeyCode
+/// @brief A Genesis KeyCode
 typedef uint16 KeyCode;
+
+/// @brief Used for storing voxel/block ids
+typedef uint16 Voxel;
+/// @brief Used for storing meta data of voxels/blocks
+typedef uint16 Meta; 
+
+/// @brief The size of a chunk axis (x = y = z)
+constexpr uint32 GE_CHUNK_SIZE = 32;
+/// @brief The count of voxels contained in a chunk
+constexpr uint32 GE_CHUNK_VOLUME = GE_CHUNK_SIZE * GE_CHUNK_SIZE * GE_CHUNK_SIZE;
+/// @brief The height of the world / a chunk column, mesaured in chunks
+constexpr uint32 GE_WORLD_HEIGHT = 20;
+/// @brief The height of the world / a chunk column, measured in blocks
+constexpr uint32 GE_WORLD_HEIGHT_BLOCKS = GE_WORLD_HEIGHT * GE_CHUNK_SIZE;
+/// @brief The max width and depth of a world in chunks
+constexpr uint32 GE_MAX_WORLD_SIZE = 9999;
 
 /* ---> Utility Macros <--- */
 #define GE_BIT(x) (1 << x)
