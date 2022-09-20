@@ -11,6 +11,13 @@ namespace ge {
 		}
 		World::~World() {
 			GE_Info("Deleting world... (" + meta->name + ", " + meta->uuid.format() + ")");
+			for(auto it = chunks.begin(); it != chunks.end(); ++it) {
+				ChunkPos pos = it->first;
+				ChunkColumn* column = it->second;
+				GE_Info("Deleting Chunk Column {}/{}...", pos.x, pos.y);
+				delete column;
+			}
+			delete meta;
 		}
 
 		void World::setVoxel(Voxel voxel, Meta meta, const VoxelWorldPos& pos) {

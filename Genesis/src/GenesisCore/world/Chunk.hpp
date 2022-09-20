@@ -8,6 +8,7 @@ namespace ge {
 		class Chunk: public DirtyFlag {
 		public:
 			Chunk(uint8 pos, ChunkColumn* ChunkColumn): pos(pos), chunkColumn(chunkColumn) {}
+			~Chunk();
 
 			void setVoxel(Voxel voxel, uint8 x, uint8 y, uint8 z) { setVoxel(voxel, 0, VoxelChunkPos{x, y, z}); }
 			void setVoxel(Voxel voxel, Meta meta, uint8 x, uint8 y, uint8 z) { setVoxel(voxel, meta, VoxelChunkPos{x, y, z}); }
