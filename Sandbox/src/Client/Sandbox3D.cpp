@@ -1,6 +1,7 @@
 #include "Sandbox3D.hpp"
 #include <imgui.h>
 #include <GenesisCore/world/World.hpp>
+#include <GenesisCore/registry/Registry.hpp>
 
 namespace sb {
 	void Sandbox3D::onAttach() {
@@ -13,6 +14,13 @@ namespace sb {
 		ge::core::ChunkColumn* column2 = world.getColumn(ChunkPos(0, 1));
 		ge::core::ChunkColumn* column3 = world.getColumn(ChunkPos(1, 0));
 		ge::core::ChunkColumn* column4 = world.getColumn(ChunkPos(0, 0));
+
+		ge::core::Registry::init();
+		ge::core::Registry::registerBlock("stone", ge::core::BlockData());
+		ge::core::Registry::registerBlock("dirt", ge::core::BlockData());
+		ge::core::Registry::registerBlock("grass", ge::core::BlockData());
+
+		ge::core::Registry::printRegisteredBlocks();
 	}
 	void Sandbox3D::onDetach() {
 		GE_ProfileFunction();
