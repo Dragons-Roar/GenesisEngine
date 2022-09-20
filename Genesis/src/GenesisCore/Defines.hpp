@@ -9,7 +9,7 @@
  * For applications, include<GenesisCore / Genesis.hpp>
  */
 
-// C++ Standard
+/* ---> C++ Standard <--- */
 #include <algorithm>
 #include <array>
 #include <atomic>
@@ -34,15 +34,19 @@
 #include <utility>
 #include <vector>
 
-/* Required by Boost/Stacktrace */
-#include <boost/stacktrace/stacktrace_fwd.hpp>
-
 /* ---> Streams <--- */
 #include <fstream>
 #include <iostream>
 #include <istream>
 #include <ostream>
 #include <sstream>
+
+/* Required by Boost/Stacktrace */
+#include <boost/stacktrace/stacktrace_fwd.hpp>
+
+/* ---> GLM <--- */
+#include <glm/vec3.hpp>
+#include <glm/packing.hpp>
 
 /// @brief A 8 Bit sized unsigned integer
 typedef uint8_t uint8;
@@ -74,8 +78,30 @@ typedef uint16 Voxel;
 /// @brief Used for storing meta data of voxels/blocks
 typedef uint16 Meta; 
 
+/// @brief A position of a voxel relative to the origin of the current chunk
+typedef glm::vec<3, uint8> VoxelChunkPos;
+/// @brief A position of a voxel relative to the world origin
+typedef glm::vec<3, int32> VoxelWorldPos;
+/// @brief The position of a chunk in a world
+class ChunkPos {
+public:
+	int16 x, y;
+
+	ChunkPos(): x(0), y(0) { }
+	ChunkPos(int16 x, int16 y): x(x), y(y) { }
+
+	bool operator==(const ChunkPos& b) const {
+		return b.x == x && b.y == y;
+	}
+	bool operator!=(const ChunkPos& b) const {
+		return b.x != x || b.y != y;
+	}
+};
+
 /// @brief The size of a chunk axis (x = y = z)
 constexpr uint32 GE_CHUNK_SIZE = 32;
+/// @brief The size of a chunk axis (x = y = z) in a float
+constexpr float32 GE_CHUNK_SIZE_F = 32.f;
 /// @brief The count of voxels contained in a chunk
 constexpr uint32 GE_CHUNK_VOLUME = GE_CHUNK_SIZE * GE_CHUNK_SIZE * GE_CHUNK_SIZE;
 /// @brief The height of the world / a chunk column, mesaured in chunks
@@ -194,3 +220,5 @@ namespace boost {
 		}
 	}
 }
+
+GE_MakeHashable(ChunkPos, t.x, t.y);

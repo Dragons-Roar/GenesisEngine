@@ -1,11 +1,18 @@
 #include "Sandbox3D.hpp"
 #include <imgui.h>
+#include <GenesisCore/world/World.hpp>
 
 namespace sb {
 	void Sandbox3D::onAttach() {
 		GE_ProfileFunction();
 
 		ge::clientcore::Application::getInstance().getWindow().setCursorGrabbed(true);
+
+		ge::core::World world("world");
+		ge::core::ChunkColumn* column = world.getColumn(ChunkPos(0, 0));
+		ge::core::ChunkColumn* column2 = world.getColumn(ChunkPos(0, 1));
+		ge::core::ChunkColumn* column3 = world.getColumn(ChunkPos(1, 0));
+		ge::core::ChunkColumn* column4 = world.getColumn(ChunkPos(0, 0));
 	}
 	void Sandbox3D::onDetach() {
 		GE_ProfileFunction();
