@@ -1,12 +1,16 @@
 #include "CameraController.hpp"
 #include "GenesisClientCore/Input.hpp"
+#include "GenesisClientCore/Application.hpp"
 
 namespace ge {
 	namespace clientcore {
-		OrthographicCameraController::OrthographicCameraController(float32 aspectRatio, bool rotation):
-			aspectRatio(aspectRatio),
-			camera(-aspectRatio * zoomLevel, aspectRatio * zoomLevel, -zoomLevel, zoomLevel),
-			useRotation(rotation) {
+		/**********************************
+		 * Orthographic Camera Controller *
+		 **********************************/
+
+		OrthographicCameraController::OrthographicCameraController(float32 aspectRatio, bool rotation): aspectRatio(aspectRatio),
+		                                                                                                camera(-aspectRatio * zoomLevel, aspectRatio * zoomLevel, -zoomLevel, zoomLevel),
+		                                                                                                useRotation(rotation) {
 		}
 
 		void OrthographicCameraController::onUpdate(ge::core::Timestep ts) {
@@ -55,6 +59,69 @@ namespace ge {
 		bool OrthographicCameraController::onWindowResized(ge::core::WindowResizeEvent& e) {
 			aspectRatio = (float32) e.getWidth() / (float32) e.getHeight();
 			camera.setProjection(-aspectRatio * zoomLevel, aspectRatio * zoomLevel, -zoomLevel, zoomLevel);
+
+			return false;
+		}
+
+		/*********************************
+		 * Perspective Camera Controller *
+		 *********************************/
+
+		PerspectiveCameraController::PerspectiveCameraController(float32 aspectRatio, float32 fov): camera(aspectRatio, fov) {
+		}
+
+		void PerspectiveCameraController::onUpdate(ge::core::Timestep ts) {
+			GE_ProfileFunction();
+
+			if(Input::isKeyDown(Key::W)) {
+				camera.moveForward(ts * translationSpeed);
+			} else if(Input::isKeyDown(Key::S)) {
+				camera.moveForward(ts * -translationSpeed);
+			}
+
+			if(Input::isKeyDown(Key::A)) {
+				camera.moveRight(ts * -translationSpeed);
+			} else if(Input::isKeyDown(Key::D)) {
+				camera.moveRight(ts * translationSpeed);
+			}
+
+			if(Input::isKeyDown(Key::Space)) {
+				camera.moveUp(ts * translationSpeed);
+			} else if(Input::isKeyDown(Key::LeftShift)) {
+				camera.moveUp(ts * -translationSpeed);
+			}
+
+			camera.update();
+		}
+		void PerspectiveCameraController::onEvent(ge::core::Event& e) {
+			GE_ProfileFunction();
+
+			ge::core::EventDispatcher dispatcher(e);
+			dispatcher.dispatch<ge::core::WindowResizeEvent>(GE_BindEventFunction(PerspectiveCameraController::onWindowResize));
+			dispatcher.dispatch<ge::core::MouseMovedEvent>(GE_BindEventFunction(PerspectiveCameraController::onMouseMoved));
+			dispatcher.dispatch<ge::core::KeyDownEvent>(GE_BindEventFunction(PerspectiveCameraController::onKeyDown));
+		}
+		bool PerspectiveCameraController::onMouseMoved(ge::core::MouseMovedEvent& e) {
+			if(Application::getInstance().getWindow().isCursorGrabbed()) {
+				float32 xRel = e.getXRel();
+				float32 yRel = e.getYRel();
+	
+				camera.setYaw(camera.getYaw() + e.getXRel() * rotationSpeed);
+				camera.setPitch(camera.getPitch() - e.getYRel() * rotationSpeed);
+				camera.updateRotation();
+			}
+
+			return false;
+		}
+		bool PerspectiveCameraController::onWindowResize(ge::core::WindowResizeEvent& e) {
+			camera.setPerspective((float32) e.getWidth() / (float32) e.getHeight(), camera.getFov());
+
+			return false;
+		}
+		bool PerspectiveCameraController::onKeyDown(ge::core::KeyDownEvent& e) {
+			if(e.getKeyCode() == Key::Escape) {
+				Application::getInstance().getWindow().setCursorGrabbed(!Application::getInstance().getWindow().isCursorGrabbed());
+			}
 
 			return false;
 		}

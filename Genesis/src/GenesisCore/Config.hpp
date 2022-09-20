@@ -9,3 +9,7 @@
  *                                                        *
  * It is used to modify the compile output at one place   *
  **********************************************************/
+
+#define GE_CONFIG_CAMERA_PERSPECTIVE_NEAR 0.1f
+#define GE_CONFIG_CAMERA_PERSPECTIVE_FAR 1000.f
+#define GE_CONFIG_GL_DEBUG 0

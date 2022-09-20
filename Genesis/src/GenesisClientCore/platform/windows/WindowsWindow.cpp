@@ -159,7 +159,10 @@ namespace ge {
 			data.vSync = enable;
 			glfwSwapInterval(data.vSync ? 1 : 0);
 		}
-		bool WindowsWindow::isVSync() const { return data.vSync; }
+		void WindowsWindow::setCursorGrabbed(bool grabbed) {
+			data.cursorGrabbed = grabbed;
+			glfwSetInputMode(handle, GLFW_CURSOR, grabbed ? GLFW_CURSOR_DISABLED : GLFW_CURSOR_NORMAL);
+		}
 
 		void WindowsWindow::shutdown() {
 			glfwWindowCount--;

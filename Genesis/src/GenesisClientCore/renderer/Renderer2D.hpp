@@ -10,7 +10,7 @@ namespace ge {
 		class IShader;
 
 		/**
-		 * @brief Pure static renderer class for rendering 2D objects
+		 * @brief Pure static renderer class for rendering 2D scenes
 		 */
 		class Renderer2D {
 		public:

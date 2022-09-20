@@ -36,6 +36,9 @@ namespace ge {
 			virtual void setVSync(bool enable) = 0;
 			virtual bool isVSync() const = 0;
 
+			virtual void setCursorGrabbed(bool grabbed) = 0;
+			virtual bool isCursorGrabbed() const = 0;
+
 			virtual void* getNativeWindow() const = 0;
 
 			virtual const String toString() const override = 0;

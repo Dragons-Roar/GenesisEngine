@@ -1,4 +1,5 @@
 #pragma once
+#include "GenesisCore/Config.hpp"
 #include "GenesisCore/GenesisConfig.hpp"
 #include "GenesisCore/debug/Instrumentation.hpp"
 
@@ -123,8 +124,8 @@ namespace ge {
 #define GE_Max(left, right) left < right ? right : left
 // Returns max if the value is bigger than max, min if the value is less than min, value if the value is between min and max
 // WARNING: Macro based, can produced errors
-#define GE_Clamp(value, min, max) = (value > max) ? max : (value < min) ? min \
-	                                                                    : value
+#define GE_Clamp(value, min, max) (value > max) ? max : (value < min) ? min \
+	                                                                  : value
 
 #define GE_MacroCombine(a, b) a##b
 

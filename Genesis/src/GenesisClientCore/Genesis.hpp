@@ -14,6 +14,8 @@
 #include "GenesisClientCore/renderer/Camera.hpp"
 #include "GenesisClientCore/renderer/RenderCommand.hpp"
 #include "GenesisClientCore/renderer/Renderer.hpp"
+#include "GenesisClientCore/renderer/Renderer2D.hpp"
+#include "GenesisClientCore/renderer/Renderer3D.hpp"
 #include "GenesisClientCore/renderer/Shader.hpp"
 #include "GenesisClientCore/renderer/VertexArray.hpp"
 #include "GenesisClientCore/renderer/Texture.hpp"

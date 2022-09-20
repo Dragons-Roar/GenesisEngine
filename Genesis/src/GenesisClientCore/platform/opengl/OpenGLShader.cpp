@@ -40,6 +40,8 @@ namespace ge {
 		}
 
 		String OpenGLShader::readFile(const String& file) {
+			GE_Info("Compiling {0}...", file);
+
 			std::ifstream in(file, std::ios::in | std::ios::binary);
 			String res;
 			if(in) {
@@ -132,8 +134,8 @@ namespace ge {
 				}
 			}
 
-			for(auto id: shaderIDs) {
-				glDetachShader(handle, id);
+			for(uint8 i = 0; i < index; ++i) {
+				glDetachShader(handle, shaderIDs[i]);
 			}
 		}
 

@@ -7,7 +7,7 @@ namespace ge {
 	namespace core {
 		Version::Version(const String& str) {
 			build = 0;
-			if(str.contains('+')) {
+			if(str.find('+') != String::npos) {
 				build = UInt32::parse(str.substr(str.find('+') + 1));
 			}
 

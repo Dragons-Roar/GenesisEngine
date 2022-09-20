@@ -1,6 +1,7 @@
 #include "Renderer.hpp"
 #include "GenesisClientCore/renderer/RenderCommand.hpp"
 #include "GenesisClientCore/renderer/Renderer2D.hpp"
+#include "GenesisClientCore/renderer/Renderer3D.hpp"
 
 namespace ge {
 	namespace clientcore {
@@ -9,6 +10,7 @@ namespace ge {
 		void Renderer::init() {
 			RenderCommand::init();
 			Renderer2D::init();
+			Renderer3D::init();
 		}
 
 		void Renderer::beginScene(OrthographicCamera& camera) {

@@ -2,6 +2,7 @@
 #include <GLFW/glfw3.h>
 #include <glad/glad.h>
 #include <GenesisCore/Logger.hpp>
+#include <GenesisCore/Config.hpp>
 
 #include "GenesisClientCore/platform/opengl/OpenGLError.hpp"
 
@@ -31,7 +32,7 @@ namespace ge {
 			}
 
 			// Enable OpenGL Debug Callback
-			#if 0
+			#if GE_CONFIG_GL_DEBUG
 			glEnable(GL_DEBUG_OUTPUT);
 			glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
 			glDebugMessageCallback(openGLDebugCallback, 0);

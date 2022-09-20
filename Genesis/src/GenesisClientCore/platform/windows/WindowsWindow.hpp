@@ -17,7 +17,7 @@ namespace ge {
 
 			String title;
 			uint32 width, height;
-			bool vSync;
+			bool vSync, cursorGrabbed;
 			IWindow::EventCallback eventFunc;
 		};
 
@@ -38,8 +38,11 @@ namespace ge {
 			inline float32 getHeightF() const override;
 
 			void setEventCallback(const EventCallback& func) override;
+			
 			void setVSync(bool enable) override;
-			bool isVSync() const override;
+			bool isVSync() const override { return data.vSync; }
+			void setCursorGrabbed(bool grabbed) override;
+			bool isCursorGrabbed() const override { return data.cursorGrabbed; }
 
 			bool shouldClose() const override {
 				return glfwWindowShouldClose(handle);
@@ -59,6 +62,7 @@ namespace ge {
 			OpenGLContext* context;
 
 			static uint8 glfwWindowCount;
+			bool cursorGrabbed;
 		};
 	}
 }

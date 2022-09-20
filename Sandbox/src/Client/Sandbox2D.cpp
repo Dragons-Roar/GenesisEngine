@@ -46,9 +46,6 @@ namespace sb {
 		checkerboardTexture = ge::clientcore::Texture2D::create("assets/textures/checkerboard.png");
 		glowTexture = ge::clientcore::Texture2D::create("assets/textures/glow.png");
 
-		ge::core::exceptions::GenesisRuntimeException e("Command error");
-		ge::core::exceptions::GenesisRuntimeException::print(e);
-
 		TestThread* t = new TestThread();
 		t->start();
 	}
