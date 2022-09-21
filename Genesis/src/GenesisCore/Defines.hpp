@@ -76,7 +76,7 @@ typedef uint16 KeyCode;
 /// @brief Used for storing voxel/block ids
 typedef uint16 Voxel;
 /// @brief Used for storing meta data of voxels/blocks
-typedef uint16 Meta; 
+typedef uint16 Meta;
 
 /// @brief A position of a voxel relative to the origin of the current chunk
 typedef glm::vec<3, uint8> VoxelChunkPos;
@@ -95,6 +95,13 @@ public:
 	}
 	bool operator!=(const ChunkPos& b) const {
 		return b.x != x || b.y != y;
+	}
+
+	operator glm::vec2() const {
+		return glm::vec2(x, y);
+	}
+	operator glm::vec3() const {
+		return glm::vec3(x, 1.f, y);
 	}
 };
 

@@ -32,6 +32,8 @@ namespace ge {
 			const ChunkColumn* getChunkColumn() const { return chunkColumn; }
 			ChunkColumn* getChunkColumn() { return chunkColumn; }
 
+			uint8 getPos() const { return pos; }
+
 		protected:
 			/// @brief A reference the the chunk column where this chunk is stored in
 			ChunkColumn* chunkColumn;

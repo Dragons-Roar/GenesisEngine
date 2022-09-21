@@ -5,7 +5,7 @@
 
 namespace ge {
 	namespace core {
-		World::World(const String& name) {
+		World::World(const String& name, WorldGenerator* generator): generator(generator) {
 			meta = new Data(name);
 			GE_Info("Creating {} {}", meta->name, meta->uuid.format());
 		}
@@ -33,6 +33,7 @@ namespace ge {
 			ChunkColumn* column = new ChunkColumn(pos, this); 
 			for(uint8 i = 0; i < GE_WORLD_HEIGHT; ++i) {
 				column->createChunk(i);
+				generator->generate(column);
 			}
 
 			chunks[pos] = column;

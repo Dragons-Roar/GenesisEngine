@@ -1,6 +1,7 @@
 #pragma once
 #include "GenesisCore/Defines.hpp"
 #include "GenesisCore/UUID.hpp"
+#include "GenesisCore/world/generator/WorldGenerator.hpp"
 
 namespace ge {
 	namespace core {
@@ -16,7 +17,7 @@ namespace ge {
 				UUID uuid;
 			};
 
-			World(const String& name);
+			World(const String& name, WorldGenerator* generator);
 			~World();
 
 			void setVoxel(Voxel voxel, int32 x, int32 y, int32 z) { setVoxel(voxel, 0, VoxelWorldPos{x, y, z}); }
@@ -30,9 +31,13 @@ namespace ge {
 			void createChunkColumn(const ChunkPos& pos);
 			ChunkColumn* getColumn(const ChunkPos& pos);
 
+			std::list<std::pair<const ChunkPos, ChunkColumn*>>::const_iterator begin() const { return chunks.begin(); }
+			std::list<std::pair<const ChunkPos, ChunkColumn*>>::const_iterator end() const { return chunks.end(); }
+
 		protected:
 			std::unordered_map<ChunkPos, ChunkColumn*> chunks;
 			Data* meta;
+			WorldGenerator* generator;
 		};
 	}
 }
