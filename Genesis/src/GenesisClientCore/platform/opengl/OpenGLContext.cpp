@@ -38,6 +38,9 @@ namespace ge {
 			glDebugMessageCallback(openGLDebugCallback, 0);
 			#endif
 
+			glEnable(GL_CULL_FACE);
+			glCullFace(GL_BACK);
+
 			// Sets the clear color to a standard
 			// Does not need to use RenderComand abstraction because
 			// this code will only be ran if OpenGL is the selected

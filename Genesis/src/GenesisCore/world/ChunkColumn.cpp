@@ -6,6 +6,7 @@
 namespace ge {
 	namespace core {
 		ChunkColumn::~ChunkColumn() {
+			GE_Info("Deleting Chunk Column...");
 			for(uint32 i = 0; i < GE_WORLD_HEIGHT; ++i) {
 				delete chunks[i];
 			}

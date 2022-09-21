@@ -54,7 +54,7 @@ namespace ge {
 			PerspectiveCamera camera;
 
 			float32 translationSpeed = 5.f;
-			float32 rotationSpeed = 0.1f;
+			float32 rotationSpeed = 0.05f;
 		};
 	}
 }

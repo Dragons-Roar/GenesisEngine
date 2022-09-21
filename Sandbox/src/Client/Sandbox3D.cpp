@@ -1,7 +1,11 @@
 #include "Sandbox3D.hpp"
 #include <imgui.h>
 #include <GenesisCore/world/World.hpp>
+#include <GenesisCore/world/ChunkColumn.hpp>
+#include <GenesisCore/world/Chunk.hpp>
 #include <GenesisCore/registry/Registry.hpp>
+#include <GenesisClientCore/renderer/WorldRenderer.hpp>
+#include <glad/glad.h>
 
 namespace sb {
 	void Sandbox3D::onAttach() {
@@ -9,16 +13,8 @@ namespace sb {
 
 		ge::clientcore::Application::getInstance().getWindow().setCursorGrabbed(true);
 
-		ge::core::World world("world");
 		ge::core::ChunkColumn* column = world.getColumn(ChunkPos(0, 0));
-		ge::core::ChunkColumn* column2 = world.getColumn(ChunkPos(0, 1));
-		ge::core::ChunkColumn* column3 = world.getColumn(ChunkPos(1, 0));
-		ge::core::ChunkColumn* column4 = world.getColumn(ChunkPos(0, 0));
-
-		ge::core::Registry::init();
-		ge::core::Registry::registerBlock("stone", ge::core::BlockData());
-		ge::core::Registry::registerBlock("dirt", ge::core::BlockData());
-		ge::core::Registry::registerBlock("grass", ge::core::BlockData());
+		column->chunks[0]->setVoxel(10, 0, 0, 0);
 
 		ge::core::Registry::printRegisteredBlocks();
 	}
@@ -31,9 +27,10 @@ namespace sb {
 		camera.onUpdate(ts);
 
 		ge::clientcore::RenderCommand::clear();
-		ge::clientcore::Renderer3D::beginScene(camera.getCamera());
-		ge::clientcore::Renderer3D::drawCube(glm::vec3(0.f, 0.f, 0.f), glm::vec3(1.f, 1.f, 1.f), glm::vec4(1.f, 1.f, 1.f, 1.f));
-		ge::clientcore::Renderer3D::endScene();
+
+		ge::clientcore::WorldRenderer::beginScene(camera.getCamera());
+		ge::clientcore::WorldRenderer::renderColumn(world.getColumn(ChunkPos(0, 0)));
+		ge::clientcore::WorldRenderer::endScene();
 	}
 	void Sandbox3D::onImGUIRender() {
 		GE_ProfileFunction();
@@ -41,6 +38,7 @@ namespace sb {
 		ImGui::Begin("Camera Stats");
 		ImGui::Text("X: %f, Y: %f, Z: %f", camera.getCamera().getPos().x, camera.getCamera().getPos().y, camera.getCamera().getPos().z);
 		ImGui::Text("Yaw: %f, Pitch: %f", camera.getCamera().getYaw(), camera.getCamera().getPitch());
+		ImGui::Text("Voxel: %i", world.getColumn(ChunkPos(0, 0))->chunks[0]->getVoxel(0, 0, 0));
 		ImGui::End();
 	}
 	void Sandbox3D::onEvent(ge::core::Event& e) {
