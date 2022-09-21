@@ -1,6 +1,7 @@
 #pragma once
 #include "GenesisClientCore/Defines.hpp"
 #include <glm/glm.hpp>
+#include <GenesisCore/Location.hpp>
 
 namespace ge {
 	namespace clientcore {
@@ -51,7 +52,7 @@ namespace ge {
 			 */
 			void updateRotation();
 
-			void setPos(glm::vec3& pos) { this->pos = pos; }
+			void setPos(const glm::vec3& pos) { this->pos = pos; }
 			const glm::vec3& getPos() const { return pos; }
 			glm::vec3& getPos() { return pos; }
 
@@ -63,6 +64,9 @@ namespace ge {
 
 			const float32 getAspectRatio() const { return aspectRatio; }
 			const float32 getFov() const { return fov; }
+
+			const ge::core::Location getLocation() const { return ge::core::Location(pos); }
+			ge::core::Location getLocation() { return ge::core::Location(pos); }
 
 			const glm::mat4& getViewProjectionMatrix() const { return viewProjectionMatrix; }
 			glm::mat4& getViewProjectionMatrix() { return viewProjectionMatrix; }

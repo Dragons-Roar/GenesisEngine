@@ -40,7 +40,7 @@ namespace ge {
 		}
 		ChunkColumn* World::getColumn(const ChunkPos& pos) {
 			if(chunks.find(pos) == chunks.end()) {
-				GE_Info("Creating column {} {}", pos.x, pos.y);
+				//GE_Info("Creating column {} {}", pos.x, pos.y);
 				createChunkColumn(pos);
 			}
 			return chunks[pos];

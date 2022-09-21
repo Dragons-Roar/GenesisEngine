@@ -47,10 +47,11 @@ namespace sb {
 	void Sandbox3D::onImGUIRender() {
 		GE_ProfileFunction();
 
+		ge::core::Location loc = camera.getCamera().getLocation();
+
 		ImGui::Begin("Camera Stats");
-		ImGui::Text("X: %f, Y: %f, Z: %f", camera.getCamera().getPos().x, camera.getCamera().getPos().y, camera.getCamera().getPos().z);
+		ImGui::Text("%i / %i / %i (%f / %f / %f)", (int) loc.getX(), (int) loc.getY(), (int) loc.getZ(), loc.getXr(), loc.getYr(), loc.getZr());
 		ImGui::Text("Yaw: %f, Pitch: %f", camera.getCamera().getYaw(), camera.getCamera().getPitch());
-		ImGui::Text("Voxel: %i", world.getColumn(ChunkPos(0, 0))->chunks[0]->getVoxel(0, 0, 0));
 		ImGui::End();
 	}
 	void Sandbox3D::onEvent(ge::core::Event& e) {

@@ -36,7 +36,7 @@ namespace ge {
 		}
 		void PerspectiveCamera::setPerspective(float32 aspectRatio, float32 fov) {
 			this->aspectRatio = aspectRatio; this->fov = fov;
-			projectionMatrix = glm::perspective(glm::radians(fov * 0.5f), aspectRatio, 0.1f, 1000.f);
+			projectionMatrix = glm::perspective(glm::radians(fov * 0.5f), aspectRatio, 0.1f, 100000.f);
 			update();
 			updateRotation();
 		}

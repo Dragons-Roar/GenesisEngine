@@ -78,6 +78,11 @@ typedef uint16 Voxel;
 /// @brief Used for storing meta data of voxels/blocks
 typedef uint16 Meta;
 
+constexpr float32 GE_VOXEL_SIZE = 1.f;
+
+/// @brief The render distance in chunks around the player
+constexpr uint8 GE_RENDER_DISTANCE = 4;
+
 /// @brief A position of a voxel relative to the origin of the current chunk
 typedef glm::vec<3, uint8> VoxelChunkPos;
 /// @brief A position of a voxel relative to the world origin

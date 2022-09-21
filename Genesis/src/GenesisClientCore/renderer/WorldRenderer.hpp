@@ -1,5 +1,6 @@
 #pragma once
 #include <GenesisCore/world/World.hpp>
+#include <GenesisCore/Location.hpp>
 
 #include "GenesisClientCore/Defines.hpp"
 #include "GenesisClientCore/renderer/Camera.hpp"
@@ -41,6 +42,8 @@ namespace ge {
 				ge::core::World* world;
 				std::vector<ge::core::Chunk*> chunkUpdates;
 				std::unordered_map<ChunkPos, ChunkDrawData> chunkDrawables;
+
+				ChunkPos lastChunkPos;
 			};
 
 			static void init();

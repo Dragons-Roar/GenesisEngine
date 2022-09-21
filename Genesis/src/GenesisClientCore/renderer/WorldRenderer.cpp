@@ -5,8 +5,6 @@
 #include <GenesisCore/world/Chunk.hpp>
 #include <GenesisCore/world/ChunkColumn.hpp>
 
-constexpr float32 GE_VOXEL_SIZE = 1.f;
-
 namespace ge {
 	namespace clientcore {
 		WorldRenderer::Data* WorldRenderer::data = nullptr;
@@ -43,6 +41,9 @@ namespace ge {
 				offset += 4;
 			}
 
+			// Current hardcoded default value
+			data->lastChunkPos = ChunkPos(-99, -99);
+
 			ge::core::Ref<IIndexBuffer> quadIndexBuffer = IIndexBuffer::create(quadIndices, data->maxIndices);
 			data->vertexArray->setIndexBuffer(quadIndexBuffer);
 			delete[] quadIndices;
@@ -71,6 +72,20 @@ namespace ge {
 
 			data->worldShader->bind();
 			data->worldShader->setUniformMatrix4fv("u_viewProjectionMatrix", camera.getViewProjectionMatrix());
+
+			// Check for chunks that need to be loaded
+			ge::core::Location loc = camera.getLocation();
+			ChunkPos pos(loc.getX() / (float32) GE_CHUNK_SIZE, loc.getZ() / (float32) GE_CHUNK_SIZE);
+			if(data->lastChunkPos != pos) {
+				GE_Info("Player crossed chunk border! Searching for new chunks...");
+				for(int32 x = pos.x - GE_RENDER_DISTANCE; x < pos.x + GE_RENDER_DISTANCE; ++x) {
+					for(int32 z = pos.y - GE_RENDER_DISTANCE; z < pos.y + GE_RENDER_DISTANCE; ++z) {
+						data->world->getColumn(ChunkPos(x, z));
+					}
+				}
+			}
+
+			data->lastChunkPos = pos;
 
 			// Checking for dirty chunks and adding them to update list
 			for(auto it = data->world->begin(); it != data->world->end(); ++it) {

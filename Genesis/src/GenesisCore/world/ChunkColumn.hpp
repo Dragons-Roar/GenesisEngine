@@ -9,7 +9,7 @@ namespace ge {
 
 		class ChunkColumn: public DirtyFlag {
 		public:
-			ChunkColumn(ChunkPos pos, World* world): pos(pos), world(world), DirtyFlag(true) { }
+			ChunkColumn(ChunkPos pos, World* world): pos(pos), world(world), DirtyFlag(false) { }
 			~ChunkColumn();
 
 			void setVoxel(Voxel voxel, uint8 x, uint16 y, uint8 z) { setVoxel(voxel, 0, x, y, z); }
