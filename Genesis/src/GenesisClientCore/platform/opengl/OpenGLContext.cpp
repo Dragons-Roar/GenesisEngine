@@ -41,6 +41,8 @@ namespace ge {
 			glEnable(GL_CULL_FACE);
 			glCullFace(GL_BACK);
 
+			glEnable(GL_COLOR_MATERIAL);
+
 			// Sets the clear color to a standard
 			// Does not need to use RenderComand abstraction because
 			// this code will only be ran if OpenGL is the selected
