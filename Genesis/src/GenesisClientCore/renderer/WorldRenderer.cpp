@@ -8,6 +8,7 @@
 namespace ge {
 	namespace clientcore {
 		WorldRenderer::Data* WorldRenderer::data = nullptr;
+		ge::core::Ref<WorldRenderer::Stats> WorldRenderer::stats = ge::core::CreateRef<WorldRenderer::Stats>();
 
 		void WorldRenderer::init() {
 			GE_ProfileFunction();
@@ -75,12 +76,39 @@ namespace ge {
 
 			// Check for chunks that need to be loaded
 			ge::core::Location loc = camera.getLocation();
-			ChunkPos pos(loc.getX() / (float32) GE_CHUNK_SIZE, loc.getZ() / (float32) GE_CHUNK_SIZE);
+			ChunkPos pos = loc.getChunkPos();
 			if(data->lastChunkPos != pos) {
 				GE_Info("Player crossed chunk border! Searching for new chunks...");
 				for(int32 x = pos.x - GE_RENDER_DISTANCE; x < pos.x + GE_RENDER_DISTANCE; ++x) {
 					for(int32 z = pos.y - GE_RENDER_DISTANCE; z < pos.y + GE_RENDER_DISTANCE; ++z) {
 						data->world->getColumn(ChunkPos(x, z));
+					}
+				}
+				GE_Info("Searching for old chunks...");
+				if(data->lastChunkPos.x < pos.x) {
+					// Player crossed chunks in x+
+					int32 x = pos.x - GE_RENDER_DISTANCE - 1;
+					for(int32 z = pos.y - GE_RENDER_DISTANCE; z < pos.y + GE_RENDER_DISTANCE; ++z) {
+						dropChunk(ChunkPos(x, z));
+					}
+				} else if(data->lastChunkPos.x > pos.x) {
+					// Player crossed chunks in x-
+					int32 x = pos.x + GE_RENDER_DISTANCE + 1;
+					for(int32 z = pos.y - GE_RENDER_DISTANCE; z < pos.y + GE_RENDER_DISTANCE; ++z) {
+						dropChunk(ChunkPos(x, z));
+					}
+				}
+				if(data->lastChunkPos.y < pos.y) {
+					// Player crossed chunks in z+
+					int32 z = pos.y - GE_RENDER_DISTANCE - 1;
+					for(int32 x = pos.x - GE_RENDER_DISTANCE; x < pos.x + GE_RENDER_DISTANCE; ++x) {
+						dropChunk(ChunkPos(x, z));
+					}
+				} else if(data->lastChunkPos.y > pos.y) {
+					// Player crossed chunks in z-
+					int32 z = pos.y + GE_RENDER_DISTANCE + 1;
+					for(int32 x = pos.x - GE_RENDER_DISTANCE; x < pos.x + GE_RENDER_DISTANCE; ++x) {
+						dropChunk(ChunkPos(x, z));
 					}
 				}
 			}
@@ -168,6 +196,7 @@ namespace ge {
 
 		void WorldRenderer::drawChunks() {
 			for(auto it = data->chunkDrawables.begin(); it != data->chunkDrawables.end(); ++it) {
+				stats->chunkCount++;
 				RenderCommand::drawIndexed(it->second.array, it->second.indicesCount);
 			}
 		}
@@ -285,6 +314,15 @@ namespace ge {
 			data->current++;
 
 			data->indexCount += 36;
+		}
+
+		void WorldRenderer::dropChunk(const ChunkPos& pos) {
+			GE_Info("Dropping chunk at {}/{}", pos.x, pos.y);
+			data->chunkDrawables.erase(pos);
+		}
+
+		void WorldRenderer::clearStats() {
+			stats->chunkCount = 0;
 		}
 	}
 }

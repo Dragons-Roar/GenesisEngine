@@ -54,6 +54,12 @@ namespace ge {
 			inline int32 getY() const { return iy; }
 			inline int32 getZ() const { return iz; }
 
+			inline int32 getChunkX() const { return ix / GE_CHUNK_SIZE_F; }
+			inline int32 getChunkY() const { return iy / GE_CHUNK_SIZE_F; }
+			inline int32 getChunkZ() const { return iz / GE_CHUNK_SIZE_F; }
+
+			inline ChunkPos getChunkPos() const { return ChunkPos(getChunkX(), getChunkZ()); }
+
 			operator glm::vec3() const {
 				return glm::vec3(fx + ix, fy + iy, fz + iz);
 			}

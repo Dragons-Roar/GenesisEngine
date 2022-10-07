@@ -37,6 +37,8 @@ namespace sb {
 	void Sandbox3D::onUpdate(ge::core::Timestep ts) {
 		GE_ProfileFunction();
 
+		ge::clientcore::WorldRenderer::clearStats();
+
 		camera.onUpdate(ts);
 
 		ge::clientcore::RenderCommand::clear();
@@ -48,10 +50,14 @@ namespace sb {
 		GE_ProfileFunction();
 
 		ge::core::Location loc = camera.getCamera().getLocation();
+		auto chunk = loc.getChunkPos();
+		auto worldStats = ge::clientcore::WorldRenderer::getStats();
 
 		ImGui::Begin("Camera Stats");
-		ImGui::Text("%i / %i / %i (%f / %f / %f)", (int) loc.getX(), (int) loc.getY(), (int) loc.getZ(), loc.getXr(), loc.getYr(), loc.getZr());
-		ImGui::Text("Yaw: %f, Pitch: %f", camera.getCamera().getYaw(), camera.getCamera().getPitch());
+		ImGui::Text("X/Y/Z %i / %i / %i (%f / %f / %f)", (int) loc.getX(), (int) loc.getY(), (int) loc.getZ(), loc.getXr(), loc.getYr(), loc.getZr());
+		ImGui::Text("CX/CZ %i / %i", chunk.x, chunk.y);
+		ImGui::Text("Yaw/Pitch: %f / %f", camera.getCamera().getYaw(), camera.getCamera().getPitch());
+		ImGui::Text("Chunks: %i (%i)", (int) worldStats->chunkCount, (int) (worldStats->chunkCount * GE_WORLD_HEIGHT));
 		ImGui::End();
 	}
 	void Sandbox3D::onEvent(ge::core::Event& e) {

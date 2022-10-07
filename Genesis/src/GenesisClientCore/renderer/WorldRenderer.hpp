@@ -46,22 +46,53 @@ namespace ge {
 				ChunkPos lastChunkPos;
 			};
 
+			struct Stats {
+				uint32 chunkCount = 0;
+			};
+
+			/// @brief Initializes the world renderer
 			static void init();
+			/// @brief Destorys the world renderer
 			static void shutdown();
 
-			static void addToDrawable(const ChunkPos& pos);
-			static void createNewData();
-			static void flush();
-
+		public:
+			/// @brief Begins a new word
 			static void beginWorld(ge::core::World* world);
 
+			/**
+			 * @brief Begins a new scene using to before bound world
+			 * @param camera The camera used to "capture" the graphics
+			 */
 			static void beginScene(const PerspectiveCamera& camera);
+			/// @brief Searches for dirty chunks and updates them in beginScene()
 			static void updateChunks();
+			/// @brief Draws chunks to the render target
+			static void drawChunks();
+			/// @brief Clears current render stats
+			static void clearStats();
+			/// @brief Get current render stats
+			/// @return const ge::core::Ref<Stats>
+			static const ge::core::Ref<Stats> getStats() { return stats; }
+
+		private:
+			/// @brief Add chunk to current drawable
+			static void addToDrawable(const ChunkPos& pos);
+			/// @brief Resets the render data and intializes it to prepare for next frame
+			static void createNewData();
+			/// @brief Flushes the data to the gpu
+			static void flush();
+			/**
+			 * @brief Adds a new voxel to the current updating chunk
+			 * @param pos Ths pos of the voxel (in world coordiantes)
+			 * @param d The data of the voxel
+			 */
 			static void renderVoxel(const VoxelWorldPos& pos, const BlockData& d);
 
-			static void drawChunks();
+			/// @brief Removes a chunk from the drawables 
+			static void dropChunk(const ChunkPos& pos);
 
 			static Data* data;
+			static ge::core::Ref<Stats> stats;
 		};
 	}
 }

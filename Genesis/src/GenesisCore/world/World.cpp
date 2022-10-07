@@ -7,7 +7,7 @@ namespace ge {
 	namespace core {
 		World::World(const String& name, WorldGenerator* generator): generator(generator) {
 			meta = new Data(name);
-			GE_Info("Creating {} {}", meta->name, meta->uuid.format());
+			GE_Info("Creating {} ({})", meta->name, meta->uuid.format());
 		}
 		World::~World() {
 			GE_Info("Deleting world... (" + meta->name + ", " + meta->uuid.format() + ")");
