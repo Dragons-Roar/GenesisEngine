@@ -1,7 +1,7 @@
 #include "WorldRenderer.hpp"
 
-#include "GenesisClientCore/renderer/RenderCommand.hpp"
 #include "GenesisClientCore/registry/Registry.hpp"
+#include "GenesisClientCore/renderer/RenderCommand.hpp"
 #include <GenesisCore/world/Chunk.hpp>
 #include <GenesisCore/world/ChunkColumn.hpp>
 
@@ -16,14 +16,17 @@ namespace ge {
 			GE_Info("Initializing World Renderer...");
 
 			data = new Data();
+			data->chunkVisibleList = std::vector<ChunkPos>();
+			data->oldChunKVisibleList = std::vector<ChunkPos>();
+			data->chunkDropList = std::vector<ChunkPos>();
 			data->worldShader = IShader::create("assets/shader/3d/basic.glsl");
 			data->vertexArray = IVertexArray::create();
 			data->vertexBuffer = IVertexBuffer::create(data->maxVertices * sizeof(Vertex));
 			data->vertexBuffer->setLayout({
-				{ ShaderDataType::FLOAT3, "a_pos" },
-				{ ShaderDataType::FLOAT2, "a_uv" },
-				{ ShaderDataType::FLOAT4, "a_color" }
-			});
+			    {ShaderDataType::FLOAT3, "a_pos"  },
+			    {ShaderDataType::FLOAT2, "a_uv"   },
+			    {ShaderDataType::FLOAT4, "a_color"}
+            });
 			data->vertexArray->addVertexBuffer(data->vertexBuffer);
 
 			data->base = new Vertex[data->maxVertices];
@@ -79,57 +82,59 @@ namespace ge {
 			ChunkPos pos = loc.getChunkPos();
 			if(data->lastChunkPos != pos) {
 				GE_Info("Player crossed chunk border! Searching for new chunks...");
-				for(int32 x = pos.x - GE_RENDER_DISTANCE; x < pos.x + GE_RENDER_DISTANCE; ++x) {
-					for(int32 z = pos.y - GE_RENDER_DISTANCE; z < pos.y + GE_RENDER_DISTANCE; ++z) {
-						data->world->getColumn(ChunkPos(x, z));
+				GE_Info("Recalculating potentially visible chunks...");
+
+				data->oldChunKVisibleList = std::vector(data->chunkVisibleList);
+
+				data->chunkVisibleList.clear();
+				data->chunkVisibleList.reserve(GE_RENDER_DISTANCE * GE_RENDER_DISTANCE);
+				for(int16 x = pos.x - GE_RENDER_DISTANCE; x < pos.x + GE_RENDER_DISTANCE; ++x) {
+					for(int16 z = pos.y - GE_RENDER_DISTANCE; z < pos.y + GE_RENDER_DISTANCE; ++z) {
+						data->chunkVisibleList.push_back(ChunkPos(x, z));
 					}
 				}
-				GE_Info("Searching for old chunks...");
-				if(data->lastChunkPos.x < pos.x) {
-					// Player crossed chunks in x+
-					int32 x = pos.x - GE_RENDER_DISTANCE - 1;
-					for(int32 z = pos.y - GE_RENDER_DISTANCE; z < pos.y + GE_RENDER_DISTANCE; ++z) {
-						dropChunk(ChunkPos(x, z));
+
+				data->chunkDropList.clear();
+				for(uint32 i = 0; i < data->oldChunKVisibleList.size(); ++i) {
+					bool found = false;
+					for(uint32 j = 0; j < data->chunkVisibleList.size(); ++j) {
+						if(data->oldChunKVisibleList[i].x == data->chunkVisibleList[j].x && data->oldChunKVisibleList[i].y == data->chunkVisibleList[j].y) {
+							found = true;
+							break;
+						}
 					}
-				} else if(data->lastChunkPos.x > pos.x) {
-					// Player crossed chunks in x-
-					int32 x = pos.x + GE_RENDER_DISTANCE + 1;
-					for(int32 z = pos.y - GE_RENDER_DISTANCE; z < pos.y + GE_RENDER_DISTANCE; ++z) {
-						dropChunk(ChunkPos(x, z));
-					}
-				}
-				if(data->lastChunkPos.y < pos.y) {
-					// Player crossed chunks in z+
-					int32 z = pos.y - GE_RENDER_DISTANCE - 1;
-					for(int32 x = pos.x - GE_RENDER_DISTANCE; x < pos.x + GE_RENDER_DISTANCE; ++x) {
-						dropChunk(ChunkPos(x, z));
-					}
-				} else if(data->lastChunkPos.y > pos.y) {
-					// Player crossed chunks in z-
-					int32 z = pos.y + GE_RENDER_DISTANCE + 1;
-					for(int32 x = pos.x - GE_RENDER_DISTANCE; x < pos.x + GE_RENDER_DISTANCE; ++x) {
-						dropChunk(ChunkPos(x, z));
-					}
+
+					if(!found) data->chunkDropList.push_back(data->oldChunKVisibleList[i]);
 				}
 			}
 
 			data->lastChunkPos = pos;
 
 			// Checking for dirty chunks and adding them to update list
-			for(auto it = data->world->begin(); it != data->world->end(); ++it) {
-				if(it->second->isDirty()) {
-					for(uint8 i = 0; i < GE_WORLD_HEIGHT; i++) {
-						// Adds dirty chunks to chunk updates and removes dirty flag from column aswell as chunks
-						if(!it->second->chunks[i]->isDirty()) continue;
-						data->chunkUpdates.push_back(it->second->chunks[i]);
-						it->second->chunks[i]->setDirty(false);
+			for(auto it = data->chunkVisibleList.begin(); it != data->chunkVisibleList.end(); ++it) {
+				auto chunk = data->world->getColumn(ChunkPos(it->x, it->y));
+				if(chunk->isDirty()) {
+					for(uint8 i = 0; i < GE_WORLD_HEIGHT; ++i) {
+						if(!chunk->chunks[i]->isDirty()) continue;
+						data->chunkUpdates.push_back(chunk->chunks[i]);
+						chunk->chunks[i]->setDirty(false);
 					}
-					it->second->setDirty(false);
+					chunk->setDirty(false);
 				}
 			}
 		}
 
 		void WorldRenderer::updateChunks() {
+			GE_ProfileFunction();
+
+			if(data->chunkDropList.size() > 0) {
+				GE_Info("Processing {} chunk drops...", data->chunkUpdates.size());
+			}
+			for(auto it = data->chunkDropList.begin(); it != data->chunkDropList.end(); ++it) {
+				dropChunk(ChunkPos(it->x, it->y));
+			}
+			data->chunkDropList.clear();
+
 			if(data->chunkUpdates.size() > 0) {
 				GE_Info("Processing {} chunk updates...", data->chunkUpdates.size());
 			}
@@ -151,24 +156,29 @@ namespace ge {
 				// Flush at the end to reset render data
 				addToDrawable(chunk->getChunkColumn()->getChunkPos());
 			}
+
 			data->chunkUpdates.clear();
 		}
 
 		void WorldRenderer::addToDrawable(const ChunkPos& pos) {
+			GE_ProfileFunction();
+
 			size_t size = (uint8*) data->current - (uint8*) data->base;
 			data->vertexBuffer->setData(data->base, size);
-			data->chunkDrawables[pos] = ChunkDrawData { data->vertexArray, data->indexCount };
+			data->chunkDrawables[pos] = ChunkDrawData {data->vertexArray, data->indexCount};
 
 			createNewData();
 		}
 		void WorldRenderer::createNewData() {
+			GE_ProfileFunction();
+
 			data->vertexArray = IVertexArray::create();
 			data->vertexBuffer = IVertexBuffer::create(data->maxVertices * sizeof(Vertex));
 			data->vertexBuffer->setLayout({
-				{ ShaderDataType::FLOAT3, "a_pos" },
-				{ ShaderDataType::FLOAT2, "a_uv" },
-				{ ShaderDataType::FLOAT4, "a_color" }
-			});
+			    {ShaderDataType::FLOAT3, "a_pos"  },
+			    {ShaderDataType::FLOAT2, "a_uv"   },
+			    {ShaderDataType::FLOAT4, "a_color"}
+            });
 			data->vertexArray->addVertexBuffer(data->vertexBuffer);
 
 			uint32* quadIndices = new uint32[data->maxIndices];
@@ -195,6 +205,8 @@ namespace ge {
 		}
 
 		void WorldRenderer::drawChunks() {
+			GE_ProfileFunction();
+
 			for(auto it = data->chunkDrawables.begin(); it != data->chunkDrawables.end(); ++it) {
 				stats->chunkCount++;
 				RenderCommand::drawIndexed(it->second.array, it->second.indicesCount);
@@ -202,6 +214,8 @@ namespace ge {
 		}
 
 		void WorldRenderer::renderVoxel(const VoxelWorldPos& pos, const BlockData& d) {
+			GE_ProfileFunction();
+
 			const glm::vec3 add = glm::vec3(pos) * GE_VOXEL_SIZE;
 			const glm::vec4 color = d.color;
 

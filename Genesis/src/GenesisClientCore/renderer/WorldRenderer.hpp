@@ -1,12 +1,12 @@
 #pragma once
-#include <GenesisCore/world/World.hpp>
 #include <GenesisCore/Location.hpp>
+#include <GenesisCore/world/World.hpp>
 
 #include "GenesisClientCore/Defines.hpp"
-#include "GenesisClientCore/renderer/Camera.hpp"
-#include "GenesisClientCore/renderer/VertexArray.hpp"
-#include "GenesisClientCore/renderer/Shader.hpp"
 #include "GenesisClientCore/registry/BlockData.hpp"
+#include "GenesisClientCore/renderer/Camera.hpp"
+#include "GenesisClientCore/renderer/Shader.hpp"
+#include "GenesisClientCore/renderer/VertexArray.hpp"
 
 namespace ge {
 	namespace clientcore {
@@ -17,7 +17,7 @@ namespace ge {
 				glm::vec2 uv;
 				glm::vec4 color;
 			};
-			
+
 			struct ChunkDrawData {
 				ge::core::Ref<IVertexArray> array;
 				uint32 indicesCount;
@@ -29,7 +29,7 @@ namespace ge {
 				/// @brief The max vertices per chunk
 				const uint32 maxVertices = 800000;
 				const uint32 maxIndices = maxVertices * 6;
-				
+
 				ge::core::Ref<IShader> worldShader;
 
 				ge::core::Ref<IVertexArray> vertexArray;
@@ -44,6 +44,12 @@ namespace ge {
 				std::unordered_map<ChunkPos, ChunkDrawData> chunkDrawables;
 
 				ChunkPos lastChunkPos;
+
+				/// @brief Stores chunks that are POTENTIALLY visible
+				std::vector<ChunkPos> chunkVisibleList;
+				std::vector<ChunkPos> oldChunKVisibleList;
+
+				std::vector<ChunkPos> chunkDropList;
 			};
 
 			struct Stats {
@@ -88,7 +94,7 @@ namespace ge {
 			 */
 			static void renderVoxel(const VoxelWorldPos& pos, const BlockData& d);
 
-			/// @brief Removes a chunk from the drawables 
+			/// @brief Removes a chunk from the drawables
 			static void dropChunk(const ChunkPos& pos);
 
 			static Data* data;
